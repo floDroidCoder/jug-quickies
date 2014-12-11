@@ -10,30 +10,51 @@ h1 {
 }
 .container {
 	.session {
-		line-height: 50px;
 		height: 60px;
 		margin: 0;
 		margin-bottom: 3px;
 		border: 2px solid #22A7F0;
 		box-sizing: content-box;
 		background-color: rgba(255,255,255,0.7);
-
+	
 		div {
 			height: 60px;
-			width: 60px;
-			line-height: 60px;
-
-			padding-left: 0px;
-			padding-right: 0px;
-			text-align: center;
-			color: white;
+			
+			
+			color: #6C7A89;
 			font-weight: 600;
-			&.open {
-				background-color: @baseColor;
+
+			&.like {
+				font-size: 2rem;
+				line-height: 60px;
+				width: 60px;
+				text-align: center;
+				color: white;
+				padding-left: 0px;
+				padding-right: 0px;
+
+				&.open {
+					background-color: @baseColor;
+				}
+				&.closed {
+					background-color: #E26A6A;
+				}
 			}
-			&.closed {
-				background-color: #E26A6A;
-			}
+			
 		}
+		a {
+			text-decoration: none;
+			color: @baseColor;
+			font-size: 1.5rem;
+		}
+	}
+}
+
+.carousel {
+	height: 175px !important;
+
+	img {
+		height: 175px !important;	
+		width: 100%;	
 	}
 }
