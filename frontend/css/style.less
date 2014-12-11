@@ -32,13 +32,7 @@ h1 {
 				color: white;
 				padding-left: 0px;
 				padding-right: 0px;
-
-				&.open {
-					background-color: @baseColor;
-				}
-				&.closed {
-					background-color: #E26A6A;
-				}
+				background-color: @baseColor;
 			}
 			
 		}
@@ -46,6 +40,15 @@ h1 {
 			text-decoration: none;
 			color: @baseColor;
 			font-size: 1.5rem;
+		}
+		.session-date {
+			font-style: italic;
+			&.open {
+				color: @baseColor;
+			}
+			&.closed {
+				color: #E26A6A;
+			}
 		}
 	}
 }
