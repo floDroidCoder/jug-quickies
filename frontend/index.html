@@ -29,26 +29,32 @@
   		<div class="row" id="content"></div>
   	</div>
 
-	<script type="text/jsx" src="js/top3.js"></script>
-	<script type="text/jsx" src="js/carousel.js"></script>
+	<div class="footer">
+		<div id="twitter"></div>
+	</div>
+
+	
   	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="bower_components/twitter-fetcher/js/twitterFetcher_min.js"></script>
+	<script type="text/jsx" src="js/top3.js"></script>
+	<script type="text/jsx" src="js/carousel.js"></script>
 	<script type="text/jsx">
 		var listOpenData =  [ 
 			{key:1, 
-				name:"Chaton etc...", date:"01.01.2015 19:00", url:"/sessions/1/detail", author:'Florian', open: true, nbLike:10},
+				name:"Chaton etc...", date:"01.01.2015 19:00", url:"/sessions/1/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: true, nbLike:10},
 			{key:2, 
-				name:"Chaton etc...", date:"02.01.2015 19:00", url:"/sessions/2/detail", author:'Florian', open: true, nbLike:20},
+				name:"Chaton etc...", date:"02.01.2015 19:00", url:"/sessions/2/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: true, nbLike:20},
 			{key:3, 
-				name:"Chaton etc...", date:"03.01.2015 19:00", url:"/sessions/3/detail", author:'Florian', open: true, nbLike:30}
+				name:"Chaton etc...", date:"03.01.2015 19:00", url:"/sessions/3/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: true, nbLike:30}
 		];
 		var listClosedData =  [ 
 			{key:1, 
-				name:"Chaton etc...", date:"01.01.2015 19:00", url:"/sessions/1/detail", author:'Florian', open: false, nbLike:10},
+				name:"Chaton etc...", date:"01.01.2015 19:00", url:"/sessions/1/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: false, nbLike:10},
 			{key:2, 
-				name:"Chaton etc...", date:"02.01.2015 19:00", url:"/sessions/2/detail", author:'Florian', open: false, nbLike:20},
+				name:"Chaton etc...", date:"02.01.2015 19:00", url:"/sessions/2/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: false, nbLike:20},
 			{key:3, 
-				name:"Chaton etc...", date:"03.01.2015 19:00", url:"/sessions/3/detail", author:'Florian', open: false, nbLike:30}
+				name:"Chaton etc...", date:"03.01.2015 19:00", url:"/sessions/3/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: false, nbLike:30}
 		];
 		var bannerData = [
 			{src:'img/ads_banner/kitten_0.gif', alt:'kitten_0'},
@@ -64,6 +70,38 @@
 		  </div>,
 		  document.getElementById('content')
 		);
+	</script>
+	<script type="text/javascript">
+		var config = {
+		  "id": '543076616558370818',
+		  "domId": 'twitter',
+		  "maxTweets": 20,
+		  "enableLinks": true,
+		  "showUser": true,
+		  "showTime": true,
+		  "dateFunction": dateFormatter,
+		  "customCallback": handleTweets,
+		  "showRetweet": false
+		};
+
+		function dateFormatter(date) {
+		  return date.toTimeString();
+		}
+
+		function handleTweets(tweets){
+		    var x = tweets.length;
+		    var n = 0;
+		    var element = document.getElementById('twitter');
+		    var html = '<div class="row">';
+		    while(n < x) {
+		      html += '<div class="col-xs-12 col-sm-6 col-md-4 twitWrapper">' + tweets[n] + '</div>';
+		      n++;
+		    }
+		    html += '</div>';
+		    element.innerHTML = html;
+		}
+
+		twitterFetcher.fetch(config);
 	</script>
 </body>
 </html>

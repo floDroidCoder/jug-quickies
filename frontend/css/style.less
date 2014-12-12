@@ -1,4 +1,5 @@
 @baseColor: #22A7F0;
+@textColor: #6C7A89;
 
 html, body {
 	background: url('../img/background.jpg');
@@ -21,7 +22,7 @@ h1 {
 			height: 60px;
 			
 			
-			color: #6C7A89;
+			color: @textColor;
 			font-weight: 600;
 
 			&.like {
@@ -40,6 +41,10 @@ h1 {
 			text-decoration: none;
 			color: @baseColor;
 			font-size: 1.5rem;
+			&.authorLink {
+				color: @textColor;
+				text-decoration: underline;
+			}
 		}
 		.session-date {
 			font-style: italic;
@@ -50,6 +55,9 @@ h1 {
 				color: #E26A6A;
 			}
 		}
+		p {
+			margin-bottom: 3px;
+		}
 	}
 }
 
@@ -59,5 +67,37 @@ h1 {
 	img {
 		height: 175px !important;	
 		width: 100%;	
+	}
+}
+
+
+div.footer {
+	background: rgba(0,0,0,0.7);
+	margin-top: 50px;
+	text-align: center;
+	padding: 15px;
+
+	p.interact {	
+		display: none;
+	}
+	p.timePosted {
+		font-weight: 100;
+	}
+	div.twitWrapper {
+		color: white;
+		border: 2px solid @baseColor;
+		border-radius: 5px;
+		padding: 15px;
+	}
+	a {
+		color: @baseColor;
+	}
+	div.user {
+		span:first-child {
+			font-weight: 600;
+		}
+		img {
+			border-radius: 5px;
+		}
 	}
 }
