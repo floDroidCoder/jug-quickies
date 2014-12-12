@@ -5,10 +5,10 @@ var Session = React.createClass({
 
     return (
       <div className="session row">
-      	<div className="col-xs-3 like">
+      	<div className="col-xs-3 col-sm-2 like">
       		{this.props.session.nbLike} <span className="glyphicon glyphicon-heart"/>
       	</div>
-      	<div className="col-xs-9">
+      	<div className="col-xs-9 col-sm-10 session-text">
         	<p>
         		<a href={this.props.session.url}>{this.props.session.name}</a>
         	 	by <a href={this.props.session.author.url} className="authorLink">{this.props.session.author.name}</a>
