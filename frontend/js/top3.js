@@ -6,7 +6,7 @@ var Session = React.createClass({
     return (
       <div className="session row">
       	<div className="col-xs-3 col-sm-2 like">
-      		{this.props.session.nbLike} <span className="glyphicon glyphicon-heart"/>
+      		{this.props.session.nbLike} <span className="glyphicon glyphicon-heart-empty"/>
       	</div>
       	<div className="col-xs-9 col-sm-10 session-text">
         	<p>
@@ -14,7 +14,10 @@ var Session = React.createClass({
         	 	by <a href={this.props.session.author.url} className="authorLink">{this.props.session.author.name}</a>
         	 </p>
         	<p className={dateClass}>
-        		<span className="glyphicon glyphicon-time"></span>{this.props.session.date}
+        		<span className="glyphicon glyphicon-calendar"></span>&nbsp;{this.props.session.date}
+        	</p>
+        	<p className="location">
+        		<span className="glyphicon glyphicon-tree-conifer"></span>&nbsp;{this.props.session.location}
         	</p>
         </div>
       </div>
