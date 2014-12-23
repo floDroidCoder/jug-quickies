@@ -1,6 +1,5 @@
 package com.julien_roux.jug.quickies.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,22 +11,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.julien_roux.jug.quickies.model.Account;
-import com.julien_roux.jug.quickies.repository.AccountRepository;
+import com.julien_roux.jug.quickies.model.Quicky;
+import com.julien_roux.jug.quickies.repository.QuickyRepository;
 
 @Controller
-public class AccountController {
-
-	private AccountRepository accountRepository;
+public class QuickyController {
+	
+	private QuickyRepository quickyRepository;
 
 	@Autowired
-	public AccountController(AccountRepository accountRepository) {
-		this.accountRepository = accountRepository;
+	public QuickyController(QuickyRepository quickyRepository) {
+		this.quickyRepository = quickyRepository;
 	}
 
-    @RequestMapping(value = "/accounts", method = RequestMethod.GET)
+    @RequestMapping(value = "/quickies", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public List<Account> accounts() {
-        return accountRepository.findAll();
+    public List<Quicky> getAllQuickies() {
+        return quickyRepository.findAll();
     }
 }
