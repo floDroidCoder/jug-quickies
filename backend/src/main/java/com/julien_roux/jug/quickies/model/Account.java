@@ -1,12 +1,34 @@
 package com.julien_roux.jug.quickies.model;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Document
 public class Account extends AbstractDocument {
+	
+    public static final String ROLE_USER = "ROLE_USER";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
-	private String lastname, firstname, email, role, shamefulTechnologie, company;
+	private String lastname, firstname, email, role, shamefulTechnologie, company, password;
 
+	public Account(String email, String password, String role) {
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority(getRole()));
+    }
+
+    public boolean isAdmin() {
+        return ROLE_ADMIN.equals(getRole());
+    }
+	
 	public String getLastname() {
 		return lastname;
 	}
@@ -53,5 +75,13 @@ public class Account extends AbstractDocument {
 
 	public void setCompany(String company) {
 		this.company = company;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

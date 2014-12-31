@@ -1,6 +1,5 @@
 package com.julien_roux.jug.quickies.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,4 +6,5 @@ import com.julien_roux.jug.quickies.model.Account;
 
 public interface AccountRepository extends MongoRepository<Account, Long> {
 
+	public Account findByEmail(String email);
 }
