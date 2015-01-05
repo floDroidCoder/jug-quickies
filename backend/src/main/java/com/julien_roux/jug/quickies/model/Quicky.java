@@ -13,6 +13,10 @@ public class Quicky extends AbstractDocument {
 	
 	private Date submissionDate;
 
+	public Quicky() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public String getTitle() {
 		return title;
 	}
