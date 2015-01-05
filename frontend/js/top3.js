@@ -10,7 +10,7 @@ var Session = React.createClass({
       	</div>
       	<div className="col-xs-9 col-sm-10 session-text">
         	<p>
-        		<a href={this.props.session.url}>{this.props.session.name}</a>
+        		<a href={this.props.session.url}>{this.props.session.name}</a>&nbsp;
         	 	by <a href={this.props.session.author.url} className="authorLink">{this.props.session.author.name}</a>
         	 </p>
         	<p className={dateClass}>

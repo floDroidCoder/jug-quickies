@@ -24,106 +24,6 @@
   		</div>
   	</nav>
 
-	<!-- MODAL SIGN IN -->
-  	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  	  <div class="modal-dialog">
-  	    <div class="modal-content">
-  	      <div class="modal-header">
-  	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-  	        <h4 class="modal-title" id="myModalLabel">Sign In</h4>
-  	      </div>
-  	      <div class="modal-body">
-  	        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-			  <div class="panel panel-default">
-			    <div class="panel-heading" role="tab" id="headingOne">
-			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-			          Use my existing account
-			        </a>
-			      </h4>
-			    </div>
-			    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-			      <div class="panel-body">
-			        <form action="/j_security_check">
-						<form class="form-horizontal" role="form">
-						  <div class="form-group">
-						    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-						    <div class="col-sm-10">
-						      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-						    <div class="col-sm-10">
-						      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-2 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input type="checkbox"> Remember me
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						</form>
-			        </form>
-			      </div>
-			    </div>
-			  </div>
-			  <div class="panel panel-default">
-			    <div class="panel-heading" role="tab" id="headingTwo">
-			      <h4 class="panel-title">
-			        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-			          Create an account
-			        </a>
-			      </h4>
-			    </div>
-			    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-			      <div class="panel-body">
-			        <form class="form-horizontal" role="form">
-						  <div class="form-group">
-						    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-						    <div class="col-sm-10">
-						      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-						    <div class="col-sm-10">
-						      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <label for="inputPassword4" class="col-sm-2 control-label">Confirm Password</label>
-						    <div class="col-sm-10">
-						      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-2 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input type="checkbox"> Remember me
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						</form>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-  	      </div>
-  	      <div class="modal-footer">
-  	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-  	        <button type="button" class="btn btn-primary">Sign in</button>
-  	      </div>
-  	    </div>
-  	  </div>
-  	</div>
-
   	<div class="container">
 		<!-- CONTENT REACT -->
   		<div class="row" id="content"></div>
@@ -137,16 +37,18 @@
   	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="bower_components/twitter-fetcher/js/twitterFetcher_min.js"></script>
+	<!-- REACT COMPONENTS -->
 	<script type="text/jsx" src="js/top3.js"></script>
 	<script type="text/jsx" src="js/carousel.js"></script>
+	<script type="text/jsx" src="js/sign-in.js"></script>
 	<script type="text/jsx">
 		var listOpenData =  [ 
 			{key:1, 
-				name:"Chaton etc...", date:"01.01.2015 19:00", location:'Hepia Salle 106 - Genève', url:"/sessions/1/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: true, nbLike:10},
+				name:"Spring boot : from zero to hero", date:"01.01.2015 19:00", location:'Hepia Salle 106 - Genève', url:"/sessions/1/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: true, nbLike:10},
 			{key:2, 
-				name:"Chaton etc...", date:"02.01.2015 19:00", location:'Hepia Salle 106 - Genève', url:"/sessions/2/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: true, nbLike:20},
+				name:"Elastic search", date:"02.01.2015 19:00", location:'Hepia Salle 106 - Genève', url:"/sessions/2/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: true, nbLike:20},
 			{key:3, 
-				name:"Chaton etc...", date:"03.01.2015 19:00", location:'Hepia Salle 106 - Genève', url:"/sessions/3/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: true, nbLike:30}
+				name:"Java 8 Hands-on", date:"03.01.2015 19:00", location:'Hepia Salle 106 - Genève', url:"/sessions/3/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: true, nbLike:30}
 		];
 		var listClosedData =  [ 
 			{key:1, 
@@ -164,8 +66,9 @@
 		];
 		React.render(
 		  <div>
+		  	<SignIn />
 		  	<Carousel data={bannerData} id="carousel-kitten"/>
-		  	<SessionList data={listOpenData} name="Open Sessions"/>
+		  	<SessionList data={listOpenData} name="Next Sessions"/>
 		  	<SessionList data={listClosedData} name="Past Sessions"/>
 		  </div>,
 		  document.getElementById('content')
