@@ -2,6 +2,8 @@ package com.julien_roux.jug.quickies.repository.mongodb;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.math.BigInteger;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +21,7 @@ import com.julien_roux.jug.quickies.model.AbstractDocument;
 public abstract class AbstractMongodbTest<T extends AbstractDocument> {
 	
 	@Autowired
-	protected MongoRepository<T, Long> repository;
+	protected MongoRepository<T, BigInteger> repository;
 
 	abstract T getEntity();
 	abstract void updateEntity(T entity);

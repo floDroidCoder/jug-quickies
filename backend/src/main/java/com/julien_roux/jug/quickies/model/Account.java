@@ -15,6 +15,10 @@ public class Account extends AbstractDocument {
 
 	private String lastname, firstname, email, role, shamefulTechnologie, company, password;
 
+	public Account() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Account(String email, String password, String role) {
 		this.email = email;
 		this.password = password;
