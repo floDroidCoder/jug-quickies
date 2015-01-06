@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jug quickies</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+	<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,700' >
+	<link rel="stylesheet" type="text/less" href="../css/bootstrap.theme.less">
+	<link rel="stylesheet" type="text/less" href="../css/style.less">
+	
+	<script type="text/javascript" src="../bower_components/less/dist/less.min.js"></script>
+	<script src="../bower_components/react/react.js"></script>
+    <script src="../bower_components/react/JSXTransformer.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default" role="navigation">
+  		<div class="container-fluid">
+		   <div class="navbar-header">
+		    <a class="navbar-brand" href="#">JUG Quickies</a>
+			<button type="button" class="btn btn-default navbar-btn pull-right">Disconnect</button>
+		    <div class="navbar-user pull-right">Connected as <a href="/users/0/detail">Florian</a></div>
+		     
+		   </div>
+  		</div>
+  	</nav>
+
+  	<div class="container">
+  		<div class="row">
+  			<div class="col-xs-12 col-md-8">
+  				<div class="panel panel-default">
+  				  <div class="panel-heading">
+  				    <h3 class="panel-title text-center">User Detail</h3>
+  				  </div>
+  				  <div class="panel-body">
+  				    <form class="form-horizontal" role="form">
+  				      <div class="form-group">
+  				        <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+  				        <div class="col-sm-10">
+  				          <input type="email" class="form-control" name="inputEmail" placeholder="Email">
+  				        </div>
+  				      </div>
+  				      <div class="form-group">
+  				        <label for="inputPassword" class="col-sm-2 control-label">Change Password</label>
+  				        <div class="col-sm-10">
+  				          <input type="password" class="form-control" name="inputPassword" placeholder="Password">
+  				        </div>
+  				      </div>
+  				      <div class="form-group">
+  				        <label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
+  				        <div class="col-sm-10">
+  				          <input type="text" class="form-control" name="inputFirstName" placeholder="First name">
+  				        </div>
+  				      </div>
+  				      <div class="form-group">
+  				        <label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
+  				        <div class="col-sm-10">
+  				          <input type="text" class="form-control" name="inputLastName" placeholder="Last name">
+  				        </div>
+  				      </div>
+  				      <div class="form-group">
+  				        <label for="inputCompany" class="col-sm-2 control-label">Current company</label>
+  				        <div class="col-sm-10">
+  				          <input type="text" class="form-control" name="inputCompany" placeholder="Current company">
+  				        </div>
+  				      </div>
+  				      <div class="form-group">
+  				        <label for="inputAbout" class="col-sm-2 control-label">About you</label>
+  				        <div class="col-sm-10">
+  				          <textarea class="form-control" rows="3" name="inputAbout"></textarea>
+  				        </div>
+  				      </div>
+  				      <div class="form-group">
+  				        <label for="inputShame" class="col-sm-2 control-label">Shameful technos you like</label>
+  				        <div class="col-sm-10">
+  				          <textarea class="form-control" rows="3" name="inputShame"></textarea>
+  				        </div>
+  				      </div>
+  				      <div class="form-group">
+  				        <div class="col-sm-offset-3 col-sm-6">
+  				          <button type="submit" class="btn btn-default btn-lg btn-block">Save</button>
+  				        </div>
+  				      </div>
+  				    </form>
+  				  </div>
+  				</div>
+  			</div>
+
+			<div class="col-xs-6 col-md-4">
+				<div class="panel panel-default">
+  				  <div class="panel-heading">
+  				    <h3 class="panel-title text-center">Next Sessions</h3>
+  				  </div>
+  				  <div class="panel-body">
+  				  	...
+  				  </div>
+  				</div>
+			</div>
+
+			<div class="col-xs-6 col-md-4">
+				<div class="panel panel-default">
+  				  <div class="panel-heading">
+  				    <h3 class="panel-title text-center">Attended Sessions</h3>
+  				  </div>
+  				  <div class="panel-body">
+  				  	...
+  				  </div>
+  				</div>
+			</div>
+
+  		</div>
+  	</div>
+
+	<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

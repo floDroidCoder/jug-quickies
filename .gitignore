@@ -1,0 +1,5 @@
+journal
+_tmp
+local.0
+local.ns
+mongod.lock

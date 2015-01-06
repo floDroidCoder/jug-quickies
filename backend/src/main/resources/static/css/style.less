@@ -1,0 +1,121 @@
+@baseColor: #22A7F0;
+@textColor: #6C7A89;
+
+html, body {
+	background: url('../img/background.jpg');
+	font-family: 'Open Sans', sans-serif;
+}
+h1 {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+}
+.container {
+	.session {
+		height: 100px;
+		margin: 0;
+		margin-bottom: 3px;
+		border: 2px solid #22A7F0;
+		box-sizing: content-box;
+		background-color: rgba(255,255,255,0.7);
+	
+		div {
+			height: 100px;
+			
+			
+			color: @textColor;
+			font-weight: 600;
+
+			&.like {
+				font-size: 2rem;
+				line-height: 100px;
+				text-align: center;
+				color: white;
+				padding-left: 0px;
+				padding-right: 0px;
+				background-color: @baseColor;
+			}
+			
+		}
+		a {
+			text-decoration: none;
+			color: @baseColor;
+			font-size: 1.5rem;
+			&.authorLink {
+				color: @textColor;
+				text-decoration: underline;
+			}
+			&:hover {
+				background-color: black;
+				-webkit-transition: background-color 330ms;	
+			}
+		}
+		.session-date {
+			font-style: italic;
+			&.open {
+				color: @baseColor;
+			}
+			&.closed {
+				color: #E26A6A;
+			}
+		}
+		p {
+			margin-bottom: 3px;
+		}
+	}
+}
+
+.carousel {
+	height: 175px !important;
+
+	img {
+		height: 175px !important;	
+		width: 100%;	
+	}
+}
+
+
+div.footer {
+	background: rgba(0,0,0,0.7);
+	margin-top: 50px;
+	text-align: center;
+	padding: 15px;
+
+	p.interact {	
+		display: none;
+	}
+	p.timePosted {
+		font-weight: 100;
+	}
+	div.twitWrapper {
+		color: white;
+		border: 2px solid @baseColor;
+		border-radius: 5px;
+		padding: 15px;
+	}
+	a {
+		color: @baseColor;
+	}
+	div.user {
+		span:first-child {
+			font-weight: 600;
+		}
+		img {
+			border-radius: 5px;
+		}
+	}
+}
+#content {
+	margin-bottom: 90px;
+}
+.navbar-user {
+	height: 50px;
+	line-height: 50px;
+	margin-right: 5px;
+	font-weight: 100;
+
+	a {
+		text-decoration: none;
+		color: @baseColor;
+		font-weight: 600;
+	}
+}

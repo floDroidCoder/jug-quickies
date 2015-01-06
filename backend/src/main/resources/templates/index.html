@@ -1,4 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jug quickies</title>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
 
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,700' />
+	<link rel="stylesheet" type="text/less" href="css/bootstrap.theme.less" />
+	<link rel="stylesheet" type="text/less" href="css/style.less" />
+	
+	<script type="text/javascript" src="bower_components/less/dist/less.min.js"></script>
+	<script src="bower_components/react/react.js"></script>
+    <script src="bower_components/react/JSXTransformer.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default" role="navigation">
+  		<div class="container-fluid">
+		   <div class="navbar-header">
+		     <a class="navbar-brand" href="#">JUG Quickies</a>
+		     <button type="button" class="btn btn-default navbar-btn pull-right" data-toggle="modal" data-target="#myModal">Sign in</button>
+		   </div>
+  		</div>
+  	</nav>
 
-<a href="/accounts">/accounts</a><br />
-<a href="/quickies">/quickies</a><br />
+  	<div class="container">
+		<!-- CONTENT REACT -->
+  		<div class="row" id="content"></div>
+  	</div>
+
+	<div class="footer">
+		<div id="twitter"></div>
+	</div>
+
+	
+  	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	
+	<!-- REACT COMPONENTS -->
+	<script type="text/jsx" src="js/components/top3.js"></script>
+	<script type="text/jsx" src="js/components/carousel.js"></script>
+	<script type="text/jsx" src="js/components/sign-in.js"></script>
+	
+	<!-- REACT MAIN -->
+	<script type="text/jsx" src="js/pages/index.js"></script>
+	
+	<!-- TWITTER -->
+	<script type="text/javascript" src="bower_components/twitter-fetcher/js/twitterFetcher_min.js"></script>
+	<script type="text/javascript" src="js/components/twitter_wall.js"></script>
+	<script type="text/javascript">
+		TwitterWall.fetch();
+	</script>
+</body>
+</html>
