@@ -42,7 +42,7 @@ public class QuickyController {
 	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.GET)
 	public String getQuicky(@PathVariable BigInteger id, Model model) {
 		model.addAttribute("quicky", quickyRepository.findOne(id));
-		return "/quickies/quicky-details";
+		return "/quickies/quicky-detail";
 	}
 
 	@RequestMapping(value = "/quicky/{id}/edit", method = RequestMethod.GET)
