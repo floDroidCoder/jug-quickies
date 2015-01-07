@@ -59,7 +59,7 @@ var SignIn = React.createClass({
 					    </div>
 					    <div id="collapseTwo" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 					      <div className="panel-body">
-					        <form className="form-horizontal" role="form">
+					        <form className="form-horizontal" role="form" action="/j_security_check">
 								  <div className="form-group">
 								    <label for="inputEmail3" className="col-sm-2 control-label">Email</label>
 								    <div className="col-sm-10">
