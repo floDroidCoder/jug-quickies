@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var listOpenData =  [ 
 	{key:1, 
 		name:"Spring boot : from zero to hero", date:"01.01.2015 19:00", location:'Hepia Salle 106 - Genève', url:"/sessions/1/detail", author : {name:'Florian Genaudet', id:0, url:'/users/0/detail'}, open: true, nbLike:10},
