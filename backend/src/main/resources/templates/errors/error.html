@@ -2,13 +2,13 @@
 <html>
 <head>
 	<title>Jug quickies</title>
-	<meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+	<meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
-	<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />
-	<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,700'  />
-	<link rel="stylesheet" type="text/less" href="../css/bootstrap.theme.less" />
-	<link rel="stylesheet" type="text/less" href="../css/style.less" />
+	<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,700' >
+	<link rel="stylesheet" type="text/less" href="../css/bootstrap.theme.less">
+	<link rel="stylesheet" type="text/less" href="../css/style.less">
 	
 	<script type="text/javascript" src="../bower_components/less/dist/less.min.js"></script>
 	<script src="../bower_components/react/react.js"></script>
@@ -25,7 +25,12 @@
 		   </div>
   		</div>
   	</nav>
-
+  	
+		<div>
+			There was an unexpected error (type=<span th:text="${error}">Bad</span>, status=<span th:text="${status}">500</span>).
+		</div>
+		
+		<div th:text="${message}">Fake content</div>
 	
 
   	<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>

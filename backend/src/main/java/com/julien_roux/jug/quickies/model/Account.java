@@ -3,12 +3,14 @@ package com.julien_roux.jug.quickies.model;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Document
-public class Account extends AbstractDocument {
+public class Account extends Entity {
 	
     public static final String ROLE_USER = "ROLE_USER";
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
@@ -24,6 +26,27 @@ public class Account extends AbstractDocument {
 		this.password = password;
 		this.role = role;
 	}
+
+	// ************************************************************************
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		return new EqualsBuilder().append(email, other.email).isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(email).toHashCode();
+	}
+	
+	// ************************************************************************
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(getRole()));

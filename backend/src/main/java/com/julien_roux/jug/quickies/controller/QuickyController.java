@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,10 +23,7 @@ import com.julien_roux.jug.quickies.model.Quicky;
 import com.julien_roux.jug.quickies.repository.QuickyRepository;
 
 @Controller
-@RequestMapping("/quickies")
 public class QuickyController {
-
-	private final Logger logger = LoggerFactory.getLogger(QuickyController.class);
 
 	private QuickyRepository quickyRepository;
 
@@ -34,50 +32,45 @@ public class QuickyController {
 		this.quickyRepository = quickyRepository;
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public Quicky getQuicky(@PathVariable BigInteger id) {
-		logger.debug("get quicky " + id);
-		Quicky quicky = quickyRepository.findOne(id);
-		logger.debug("get quicky performed");
-		return quicky;
-	}
-
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/quickies", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<Quicky> getAllQuickies() {
-		logger.debug("get all quickies");
-		List<Quicky> findAll = quickyRepository.findAll();
-		logger.debug("get all quickies performed");
-		return findAll;
+		return quickyRepository.findAll();
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.GET)
+	public String getQuicky(@PathVariable BigInteger id, Model model) {
+		model.addAttribute("quicky", quickyRepository.findOne(id));
+		return "/quickies/quicky-details";
+	}
+
+	@RequestMapping(value = "/quicky/{id}/edit", method = RequestMethod.GET)
+	public String editQuicky(@PathVariable BigInteger id, Model model) {
+		model.addAttribute("quicky", quickyRepository.findOne(id));
+		return "/quickies/quicky-edit";
+	}
+
+	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
 	public Quicky addQuicky(@Valid @ModelAttribute("quicky") Quicky quicky) {
-		logger.debug("add quicky");
 		quicky.setId(null);
-		Quicky save = quickyRepository.save(quicky);
-		logger.debug("add quicky performed");
-		return save;
+		return quickyRepository.save(quicky);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.PUT)
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
 	public Quicky updateQuicky(@RequestBody Quicky quicky, @PathVariable BigInteger id) {
-		logger.debug("update quicky " + id);
 		quicky.setId(id);
-		Quicky save = quickyRepository.save(quicky);
-		logger.debug("update quicky performed");
-		return save;
+		return quickyRepository.save(quicky);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public void deleteQuicky(@PathVariable BigInteger id) {
-		logger.debug("delete quicky " + id);
 		quickyRepository.delete(id);
-		logger.debug("delete quicky performed");
 	}
 }

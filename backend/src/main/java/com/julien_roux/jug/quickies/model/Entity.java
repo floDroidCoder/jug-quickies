@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 import org.springframework.data.annotation.Id;
 
-public class AbstractDocument {
+public abstract class Entity {
 
 	@Id
 	private BigInteger id;
