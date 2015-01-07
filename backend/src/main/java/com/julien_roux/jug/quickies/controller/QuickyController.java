@@ -51,7 +51,7 @@ public class QuickyController {
 		return "/quickies/quicky-edit";
 	}
 
-	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/quicky", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public Quicky addQuicky(@Valid @ModelAttribute("quicky") Quicky quicky) {
@@ -62,7 +62,8 @@ public class QuickyController {
 	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.PUT)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public Quicky updateQuicky(@RequestBody Quicky quicky, @PathVariable BigInteger id) {
+	public Quicky updateQuicky(@Valid @ModelAttribute("quicky") Quicky quicky, @PathVariable BigInteger id) {
+		System.out.println("udpdate");
 		quicky.setId(id);
 		return quickyRepository.save(quicky);
 	}
