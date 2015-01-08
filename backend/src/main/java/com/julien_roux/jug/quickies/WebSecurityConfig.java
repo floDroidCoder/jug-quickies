@@ -13,11 +13,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().permitAll()
+		http
+		.exceptionHandling().accessDeniedPage("/403")
+			.and()
+		.authorizeRequests().anyRequest().permitAll()
 			.and()
 		.formLogin().loginPage("/login").permitAll()
 			.and()
-		.logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
+		.logout().logoutUrl("/logout").logoutSuccessUrl("/").deleteCookies("JSESSIONID").invalidateHttpSession(true)
+		;
 	}
 
 	@Autowired

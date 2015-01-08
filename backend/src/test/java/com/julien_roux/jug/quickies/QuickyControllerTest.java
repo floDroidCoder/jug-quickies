@@ -63,6 +63,14 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	}
 	
 	@Test
+	public void newQuicky() throws Exception {
+		ResultActions result = mockMvc.perform(get("/quicky/new").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("description", "description").param("title", "title"));
+		result.andExpect(status().isOk());
+		result.andExpect(view().name("/quickies/quicky-edit"));
+	}
+	
+	@Test
 	public void updateQuicky() throws Exception {
 		ResultActions resultPut = mockMvc.perform(put("/quicky/"+quicky.getId()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				.param("description", "description").param("title", "title").sessionAttr("quicky", quicky));
