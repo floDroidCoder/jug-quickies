@@ -23,23 +23,29 @@
 	  				    <h3 class="panel-title text-center">Create a quicky</h3>
 	  				  </div>
 	  				  <div class="panel-body">
-	  				    <form class="form-horizontal" role="form" action="/quicky">
+	  				    <form class="form-horizontal" role="form" th:action="@{/quicky}" method="POST">
 	  				      <div class="form-group">
-	  				        <label for="inputTitle" class="col-sm-2 control-label">Title</label>
+	  				        <label for="title" class="col-sm-2 control-label">Title</label>
 	  				        <div class="col-sm-10">
-	  				          <input type="text" class="form-control" name="inputTitle" placeholder="Title" />
+	  				          <input type="text" class="form-control" name="title" placeholder="Title" />
 	  				        </div>
 	  				      </div>
 	  				      <div class="form-group">
-	  				        <label for="inputDescription" class="col-sm-2 control-label">Description</label>
+	  				        <label for="description" class="col-sm-2 control-label">Description</label>
 	  				        <div class="col-sm-10">
-	  				          <input type="text" class="form-control" name="inputDescription" placeholder="Description" />
+	  				          <input type="text" class="form-control" name="description" placeholder="Description" />
 	  				        </div>
 	  				      </div>
 	  				      <div class="form-group">
-	  				        <label for="inputTitle" class="col-sm-2 control-label">User Group</label>
+	  				        <label for="submissionDate" class="col-sm-2 control-label">Description</label>
 	  				        <div class="col-sm-10">
-	  				          <select class="form-control" name="inputTitle">
+	  				          <input type="date" class="form-control" name="submissionDate" placeholder="Date" />
+	  				        </div>
+	  				      </div>
+	  				      <div class="form-group">
+	  				        <label for="usergroup" class="col-sm-2 control-label">User Group</label>
+	  				        <div class="col-sm-10">
+	  				          <select class="form-control" name="usergroup">
 	  				          	<option value="">--</option>
 	  				          	<option value="JUG">Java User Group</option>
 	  				          	<option value="JSR">JS Romandie</option>

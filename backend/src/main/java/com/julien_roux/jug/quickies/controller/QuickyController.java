@@ -47,6 +47,11 @@ public class QuickyController {
 		model.addAttribute("quicky", quickyRepository.findOne(id));
 		return "/quickies/quicky-edit";
 	}
+	
+	@RequestMapping(value = "/quicky/new", method = RequestMethod.GET)
+	public String newQuicky(Model model) {
+		return "/quickies/quicky-edit";
+	}
 
 	@RequestMapping(value = "/quicky", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
