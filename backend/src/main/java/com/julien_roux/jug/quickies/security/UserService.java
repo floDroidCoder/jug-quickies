@@ -1,6 +1,11 @@
 package com.julien_roux.jug.quickies.security;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +19,12 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@PostConstruct	
+	protected void initialize() {
+		userRepository.save(new User("user", "demo", "ROLE_USER"));
+		userRepository.save(new User("admin", "admin", "ROLE_ADMIN"));
+	}
 	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByEmail(username);
@@ -25,6 +36,14 @@ public class UserService implements UserDetailsService {
 		return new SecuredUser(user);
 	}
 
+	public void signin(User account) {
+		SecurityContextHolder.getContext().setAuthentication(authenticate(account));
+	}
+	
+	private Authentication authenticate(User account) {
+		return new UsernamePasswordAuthenticationToken(new SecuredUser(account), null, account.getAuthorities());
+	}
+	
 	private static class SecuredUser extends org.springframework.security.core.userdetails.User {
 
 		private static final long serialVersionUID = 2960622572589129994L;

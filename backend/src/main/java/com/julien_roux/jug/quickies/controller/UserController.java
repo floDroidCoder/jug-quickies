@@ -1,6 +1,7 @@
 package com.julien_roux.jug.quickies.controller;
 
 import java.math.BigInteger;
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -18,15 +19,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.julien_roux.jug.quickies.model.User;
 import com.julien_roux.jug.quickies.repository.UserRepository;
+import com.julien_roux.jug.quickies.security.UserService;
 
 @Controller
 public class UserController {
 
 	private UserRepository userRepository;
+	private UserService userService;
 
 	@Autowired
-	public UserController(UserRepository userRepository) {
+	public UserController(UserRepository userRepository, UserService userService) {
 		this.userRepository = userRepository;
+		this.userService = userService;
 	}
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -39,22 +43,30 @@ public class UserController {
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public String getUser(@PathVariable BigInteger id, Model model) {
 		model.addAttribute("user", userRepository.findOne(id));
+		return "/user/user-detail";
+	}
+
+
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public String getProfile(@PathVariable BigInteger id, Principal principal, Model model) {
+		model.addAttribute("user", userRepository.findByEmail(principal.getName()));
 		return "/profile/profile-detail";
 	}
 
-	@RequestMapping(value = "/user/{id}/edit", method = RequestMethod.GET)
-	public String editUser(@PathVariable BigInteger id, Model model) {
-		model.addAttribute("user", userRepository.findOne(id));
+	@RequestMapping(value = "/profile/edit", method = RequestMethod.GET)
+	public String editProfile(Principal principal, Model model) {
+		model.addAttribute("user", userRepository.findByEmail(principal.getName()));
 		return "/profile/profile-edit";
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public User addUser(@Valid @ModelAttribute("user") User user) {
+	public String addUser(@Valid @ModelAttribute("user") User user, Model model) {
 		user.setId(null);
 		user.setRole("USER_ROLE");
-		return userRepository.save(user);
+		userRepository.save(user);
+		userService.signin(user);
+		model.addAttribute("user", user);
+		return "/profile/profile-detail";
 	}
 
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
