@@ -24,47 +24,54 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	
 	@Autowired
 	private QuickyRepository quickyRepository;
-	private Quicky entity;
+	private Quicky quicky;
 
 	@Before
 	public void setup() throws Exception {
 		super.setup();
 		
 		quickyRepository.deleteAll();
-		entity = new Quicky();
-		quickyRepository.save(entity);
-		assertThat(entity.getId()).isNotNull();
+		quicky = new Quicky();
+		quickyRepository.save(quicky);
+		assertThat(quicky.getId()).isNotNull();
+	}
+	
+	@Test
+	public void findAll() throws Exception {
+		ResultActions result = mockMvc.perform(get("/quickies").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("description", "description").param("title", "title"));
+		result.andExpect(status().isOk());
+		result.andExpect(content().string(startsWith("[{\"id\":"+quicky.getId())));
 	}
 	
 	@Test
 	public void getQuicky() throws Exception {
-		ResultActions result = mockMvc.perform(get("/quicky/"+entity.getId()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+		ResultActions result = mockMvc.perform(get("/quicky/"+quicky.getId()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				.param("description", "description").param("title", "title"));
 		result.andExpect(status().isOk());
-		result.andExpect(view().name("/quickies/quicky-details"));
-		result.andExpect(model().attribute("quicky", entity));
+		result.andExpect(view().name("/quickies/quicky-detail"));
+		result.andExpect(model().attribute("quicky", quicky));
 	}
 	
 	@Test
 	public void editQuicky() throws Exception {
-		ResultActions result = mockMvc.perform(get("/quicky/"+entity.getId()+"/edit").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+		ResultActions result = mockMvc.perform(get("/quicky/"+quicky.getId()+"/edit").contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				.param("description", "description").param("title", "title"));
 		result.andExpect(status().isOk());
 		result.andExpect(view().name("/quickies/quicky-edit"));
-		result.andExpect(model().attribute("quicky", entity));
+		result.andExpect(model().attribute("quicky", quicky));
 	}
 	
 	@Test
-	public void testUpdateQuicky() throws Exception {
-		System.out.println("test");
-		ResultActions resultPut = mockMvc.perform(put("/quicky/"+entity.getId()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.param("description", "description").param("title", "title").sessionAttr("quicky", entity));
+	public void updateQuicky() throws Exception {
+		ResultActions resultPut = mockMvc.perform(put("/quicky/"+quicky.getId()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("description", "description").param("title", "title").sessionAttr("quicky", quicky));
 		resultPut.andExpect(status().isOk());
-		resultPut.andExpect(content().string(startsWith("{\"id\":"+entity.getId())));
+		resultPut.andExpect(content().string(startsWith("{\"id\":"+quicky.getId())));
 	}
 	
 	@Test
-	public void testCreateQuicky() throws Exception {
+	public void createQuicky() throws Exception {
 		ResultActions resultPut = mockMvc.perform(post("/quicky").contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				.param("description", "description").param("title", "title").sessionAttr("quicky", new Quicky()));
 		resultPut.andExpect(status().isOk());
@@ -72,8 +79,8 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	}
 	
 	@Test
-	public void testDeleteQuicky() throws Exception {
-		ResultActions resultPut = mockMvc.perform(delete("/quicky/"+entity.getId()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+	public void deleteQuicky() throws Exception {
+		ResultActions resultPut = mockMvc.perform(delete("/quicky/"+quicky.getId()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				.param("description", "description").param("title", "title"));
 		resultPut.andExpect(status().isOk());
 		resultPut.andExpect(content().string(startsWith("")));

@@ -1,11 +1,11 @@
 package com.julien_roux.jug.quickies.repository.mongodb;
 
-import com.julien_roux.jug.quickies.model.Account;
+import com.julien_roux.jug.quickies.model.User;
 
-public class AccountRepositoryMongoDbTest extends AbstractMongodbTest<Account> {
+public class UserRepositoryMongoDbTest extends AbstractMongodbTest<User> {
 
-	public Account getEntity() {
-		Account entity = new Account("email", "password", "role");
+	public User getEntity() {
+		User entity = new User("email", "password", "role");
 		entity.setCompany("company");
 		entity.setFirstname("firstname");
 		entity.setLastname("lastname");
@@ -14,7 +14,7 @@ public class AccountRepositoryMongoDbTest extends AbstractMongodbTest<Account> {
 	}
 
 	@Override
-	public void updateEntity(Account entity) {
+	public void updateEntity(User entity) {
 		entity.setCompany("company UPDATED");
 		entity.setFirstname("firstname UPDATED");
 		entity.setLastname("lastname UPDATED");

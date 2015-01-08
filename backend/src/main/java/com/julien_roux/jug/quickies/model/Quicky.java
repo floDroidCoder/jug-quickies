@@ -11,7 +11,7 @@ public class Quicky extends Entity {
 
 	private String title, description, usergroup;
 
-	private Account presenter;
+	private User presenter;
 
 	private Date submissionDate;
 
@@ -66,11 +66,11 @@ public class Quicky extends Entity {
 		this.usergroup = usergroup;
 	}
 
-	public Account getPresenter() {
+	public User getPresenter() {
 		return presenter;
 	}
 
-	public void setPresenter(Account presenter) {
+	public void setPresenter(User presenter) {
 		this.presenter = presenter;
 	}
 

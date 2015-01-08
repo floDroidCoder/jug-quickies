@@ -10,18 +10,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Document
-public class Account extends Entity {
+public class User extends Entity {
 	
     public static final String ROLE_USER = "ROLE_USER";
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
 	private String lastname, firstname, email, role, shamefulTechnologie, company, password;
 
-	public Account() {
+	public User() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Account(String email, String password, String role) {
+	public User(String email, String password, String role) {
 		this.email = email;
 		this.password = password;
 		this.role = role;
@@ -37,7 +37,7 @@ public class Account extends Entity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Account other = (Account) obj;
+		User other = (User) obj;
 		return new EqualsBuilder().append(email, other.email).isEquals();
 	}
 
