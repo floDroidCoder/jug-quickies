@@ -1,0 +1,18 @@
+<html>
+	<body th:fragment="common-footer">
+		<div class="footer">
+			<div id="twitter"></div>
+		</div>
+	
+		
+	  	<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		
+		<!-- TWITTER -->
+		<script type="text/javascript" src="/bower_components/twitter-fetcher/js/twitterFetcher_min.js"></script>
+		<script type="text/javascript" src="/js/components/twitter_wall.js"></script>
+		<script type="text/javascript">
+			TwitterWall.fetch();
+		</script>
+	</body>
+</html>

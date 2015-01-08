@@ -1,7 +1,14 @@
-<html>
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+	<head th:include="common/header :: common-header"></head>
+	
 	<body>
 		QUICKIES DETAIL
 		
 		data model: "quicky"
+		
+		<div th:replace="common/footer :: common-footer"></div>
 	</body>
 </html>
