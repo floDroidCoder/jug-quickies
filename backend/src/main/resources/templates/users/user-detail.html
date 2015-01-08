@@ -5,17 +5,8 @@
 	<head th:include="common/header :: common-header"></head>
 	
 	<body>
-		<nav class="navbar navbar-default" role="navigation">
-	  		<div class="container-fluid">
-			   <div class="navbar-header">
-			    <a class="navbar-brand" href="#">JUG Quickies</a>
-				<button type="button" class="btn btn-default navbar-btn pull-right">Disconnect</button>
-			    <div class="navbar-user pull-right">Connected as <a href="/users/0/detail">Florian</a></div>
-			     
-			   </div>
-	  		</div>
-	  	</nav>
-	
+		<nav th:replace="common/navbar :: navbar"></nav>
+		USER DETAIL
 	  	<div th:replace="common/footer :: common-footer"></div>
 	</body>
 </html>
