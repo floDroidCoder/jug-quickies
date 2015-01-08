@@ -1,15 +1,49 @@
 <!DOCTYPE html>
-<html
-	xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org">
-    
-    <head th:include="common/header :: common-header"></head>
-    
-	<body>
-		<nav th:replace="common/navbar :: navbar"></nav>
-		
-		PROFILE
-		
-		<div th:replace="common/footer :: common-footer"></div>
-	</body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="common/header :: common-header"></head>
+
+<body>
+	<nav th:replace="common/navbar :: navbar"></nav>
+
+	<div class="container" th:inline="text">
+		<div class="row">
+			<div class="col-xs-12 col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title text-center">My Profile</h3>
+					</div>
+					<div class="panel-body">
+							<div class="form-group">
+								[[${user.email}]]
+							</div>
+							<div class="form-group">
+								[[${user.firstname}]]
+							</div>
+							<div class="form-group">
+								[[${user.lastname}]]
+							</div>
+							<div class="form-group">
+								[[${user.company}]]
+							</div>
+							<div class="form-group">
+								[[${user.about}]]
+							</div>
+							<div class="form-group">
+								[[${user.shamefulTechnologie}]]
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-6">
+									<a th:href="@{/profile/edit}" class="btn btn-default btn-lg btn-block">Edit</a>
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="common/footer :: common-footer"></div>
+</body>
 </html>

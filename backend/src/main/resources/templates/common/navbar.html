@@ -14,7 +14,12 @@
 		     <a th:if="${#httpServletRequest.remoteUser != null}" th:href="@{/quicky/new}" class="btn btn-default navbar-btn pull-right" style="margin-right: 5px;">
 		     	<span class="glyphicon glyphicon-pencil"></span>
 		     </a>
-		     <div th:if="${#httpServletRequest.remoteUser != null}"  class="navbar-user pull-right" th:inline="text">Connected as <a href="/users/0/detail">[[${#httpServletRequest.remoteUser}]]</a></div>
+		     <div th:if="${#httpServletRequest.remoteUser != null}"  class="navbar-user pull-right" th:inline="text">
+		     	Connected as 
+		     	<a th:href="@{/profile}">
+		     		[[${#httpServletRequest.remoteUser}]]
+		     	</a>
+		     </div>
 		   </div>
   		</div>
   	</nav>

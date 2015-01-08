@@ -48,7 +48,7 @@ public class UserController {
 
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public String getProfile(@PathVariable BigInteger id, Principal principal, Model model) {
+	public String getProfile(Principal principal, Model model) {
 		model.addAttribute("user", userRepository.findByEmail(principal.getName()));
 		return "/profile/profile-detail";
 	}
