@@ -53,6 +53,7 @@ public class UserController {
 	@ResponseBody
 	public User addUser(@Valid @ModelAttribute("user") User user) {
 		user.setId(null);
+		user.setRole("USER_ROLE");
 		return userRepository.save(user);
 	}
 
