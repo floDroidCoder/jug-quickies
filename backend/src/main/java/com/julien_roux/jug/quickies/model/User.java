@@ -11,16 +11,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Document
 public class User extends Entity {
-	
-    public static final String ROLE_USER = "ROLE_USER";
-    public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
-	private String lastname, firstname, email, role, shamefulTechnologie, company, password;
+	public static final String ROLE_USER = "ROLE_USER";
+	public static final String ROLE_ADMIN = "ROLE_ADMIN";
+
+	private String lastname, firstname, email, role, shamefulTechnologie, company, password, about;
 
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public User(String email, String password, String role) {
 		this.email = email;
 		this.password = password;
@@ -45,17 +45,17 @@ public class User extends Entity {
 	public int hashCode() {
 		return new HashCodeBuilder().append(email).toHashCode();
 	}
-	
+
 	// ************************************************************************
 
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(getRole()));
-    }
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.singleton(new SimpleGrantedAuthority(getRole()));
+	}
 
-    public boolean isAdmin() {
-        return ROLE_ADMIN.equals(getRole());
-    }
-	
+	public boolean isAdmin() {
+		return ROLE_ADMIN.equals(getRole());
+	}
+
 	public String getLastname() {
 		return lastname;
 	}
@@ -110,5 +110,13 @@ public class User extends Entity {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getAbout() {
+		return about;
+	}
+
+	public void setAbout(String about) {
+		this.about = about;
 	}
 }
