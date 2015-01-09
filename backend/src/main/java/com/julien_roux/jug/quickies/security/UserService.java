@@ -22,8 +22,8 @@ public class UserService implements UserDetailsService {
 
 	@PostConstruct	
 	protected void initialize() {
-		userRepository.save(new User("user", "demo", "ROLE_USER"));
-		userRepository.save(new User("admin", "admin", "ROLE_ADMIN"));
+		userRepository.save(new User("user@user.com", "demo", "ROLE_USER"));
+		userRepository.save(new User("admin@admin.com", "admin", "ROLE_ADMIN"));
 	}
 	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

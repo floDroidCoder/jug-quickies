@@ -11,12 +11,10 @@
   	        <h4 class="modal-title" id="myModalLabel">Sign In</h4>
   	      </div>
   	      <div class="modal-body">
-  	      	<div th:if="${param.error}">
-	            Invalid username and password.
+  	      	<div id="errors" class="text-center errors" style="display:none; color: red; font-weigth: bold">
+	            <span class="glyphicon glyphicon-warning-sign"></span> Oh no ! Authentication failed !
 	        </div>
-	        <div th:if="${param.logout}">
-	            You have been logged out.
-	        </div>
+	     
   	        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			  <div class="panel panel-default">
 			    <div class="panel-heading" role="tab" id="headingOne">
@@ -28,7 +26,7 @@
 			    </div>
 			    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 			      <div class="panel-body">
-			        <form  class="form-horizontal" role="form" th:action="@{/login}" method="POST">
+			        <form  class="form-horizontal" role="form" th:action="@{/login}" method="POST" id="loginForm">
 					  <div class="form-group">
 					    <label for="username" class="col-sm-2 control-label">Email</label>
 					    <div class="col-sm-10">
@@ -64,7 +62,7 @@
 			    </div>
 			    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 			      <div class="panel-body">
-			        <form class="form-horizontal" role="form" th:action="@{/user}" method="POST">
+			        <form class="form-horizontal" role="form" th:action="@{/user}" method="POST" id="createUser">
 						  <div class="form-group">
 						    <label for="email" class="col-sm-2 control-label">Email</label>
 						    <div class="col-sm-10">
@@ -99,7 +97,7 @@
 			</div>
   	      </div>
   	      <div class="modal-footer">
-  	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="close()">Close</button>
   	        <button type="button" class="btn btn-primary" onclick="handleClick()">Sign in</button>
   	      </div>
   	    </div>
@@ -108,7 +106,27 @@
   	
   	<script>
 	  	function handleClick() {
-	  		$('#accordion .collapse.in form').submit();
+	  		var form = $('#accordion .collapse.in form');
+	  		var username = $('#accordion .collapse.in input[name="username"]');
+	  		var password = $('#accordion .collapse.in input[name="password"]');
+	  		var csrf = $('#accordion .collapse.in input[name="_csrf"]');
+	  		var action = form.attr('action');
+	  		
+  			$.post(action,
+ 					{
+ 						username: username.val(),
+ 						password: password.val(),
+ 						_csrf: csrf.val()
+ 					}
+  			).fail(function(data, status) {
+  				$('#errors').show();
+  			}
+  			).done(function() {
+  				location.reload(true);
+  			});	
+	  	}
+	  	function close() {
+	  		$('#errors').hide();
 	  	}
   	</script>
 </body>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+	<head th:include="common/header :: common-header"></head>
+<body>
+	<nav th:replace="common/navbar :: navbar"></nav>
+  	<div class="container" style="color:white; font-size:1.2rem;">
+		<div class="row">
+			There was an unexpected error (type=<span th:text="${error}">Bad</span>, status=<span th:text="${status}">500</span>).
+		</div>
+		
+		<div th:text="${message}">Fake content</div>
+	</div>
+	
+	<nav th:replace="common/footer :: common-footer"></nav>
+</body>
+</html>

@@ -70,11 +70,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public User updateUser(@Valid @ModelAttribute("user") User user, @PathVariable BigInteger id) {
+	public String updateUser(@Valid @ModelAttribute("user") User user, @PathVariable BigInteger id, Model model) {
 		user.setId(id);
-		return userRepository.save(user);
+		userRepository.save(user);
+		model.addAttribute("user", user);
+		return "/profile/profile-detail";
 	}
 
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
