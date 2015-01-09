@@ -14,41 +14,41 @@
   				    <h3 class="panel-title text-center">My Profile</h3>
   				  </div>
   				  <div class="panel-body">
-  				    <form class="form-horizontal" role="form" method="POST" th:action="@{/user/{id}(id=${user.id})}">
+  				    <form class="form-horizontal" role="form" method="POST" th:action="@{/profile}">
   				      <div class="form-group">
-  				        <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+  				        <label for="email" class="col-sm-2 control-label">Email</label>
   				        <div class="col-sm-10">
-  				          <input type="email" class="form-control" name="inputEmail" placeholder="Email" th:value="${user.email}"/>
+  				          <input type="email" class="form-control" name="email" placeholder="Email" th:value="${user.email}"/>
   				        </div>
   				      </div>
   				      <div class="form-group">
-  				        <label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
+  				        <label for="firstname" class="col-sm-2 control-label">First Name</label>
   				        <div class="col-sm-10">
-  				          <input type="text" class="form-control" name="inputFirstName" placeholder="First name" th:value="${user.firstname}"/>
+  				          <input type="text" class="form-control" name="firstname" placeholder="First name" th:value="${user.firstname}"/>
   				        </div>
   				      </div>
   				      <div class="form-group">
-  				        <label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
+  				        <label for="lastname" class="col-sm-2 control-label">Last Name</label>
   				        <div class="col-sm-10">
-  				          <input type="text" class="form-control" name="inputLastName" placeholder="Last name" th:value="${user.lastname}"/>
+  				          <input type="text" class="form-control" name="lastname" placeholder="Last name" th:value="${user.lastname}"/>
   				        </div>
   				      </div>
   				      <div class="form-group">
-  				        <label for="inputCompany" class="col-sm-2 control-label">Current company</label>
+  				        <label for="company" class="col-sm-2 control-label">Current company</label>
   				        <div class="col-sm-10">
-  				          <input type="text" class="form-control" name="inputCompany" placeholder="Current company" th:value="${user.company}"/>
+  				          <input type="text" class="form-control" name="company" placeholder="Current company" th:value="${user.company}"/>
   				        </div>
   				      </div>
   				      <div class="form-group">
-  				        <label for="inputAbout" class="col-sm-2 control-label">About you</label>
+  				        <label for="about" class="col-sm-2 control-label">About you</label>
   				        <div class="col-sm-10">
-  				          <textarea class="form-control" rows="3" name="inputAbout" th:value="${user.about}"></textarea>
+  				          <textarea class="form-control" rows="3" name="about" th:value="${user.about}"></textarea>
   				        </div>
   				      </div>
   				      <div class="form-group">
-  				        <label for="inputShame" class="col-sm-2 control-label">Shameful technos you like</label>
+  				        <label for="shamefulTechnologie" class="col-sm-2 control-label">Shameful technos you like</label>
   				        <div class="col-sm-10">
-  				          <textarea class="form-control" rows="3" name="inputShame" th:value="${user.shamefulTechnologie}"></textarea>
+  				          <textarea class="form-control" rows="3" name="shamefulTechnologie" th:value="${user.shamefulTechnologie}"></textarea>
   				        </div>
   				      </div>
   				      <div class="form-group">

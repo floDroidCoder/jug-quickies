@@ -69,9 +69,9 @@ public class UserController {
 		return "/profile/profile-detail";
 	}
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-	public String updateUser(@Valid @ModelAttribute("user") User user, @PathVariable BigInteger id, Model model) {
-		user.setId(id);
+	@RequestMapping(value = "/profile", method = RequestMethod.POST)
+	public String updateUser(@Valid @ModelAttribute("user") User user, Model model) {
+		//TODO Add security constraint : current user only (or admin) can save 
 		userRepository.save(user);
 		model.addAttribute("user", user);
 		return "/profile/profile-detail";
