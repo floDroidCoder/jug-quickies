@@ -1,15 +1,57 @@
 <!DOCTYPE html>
-<html
-	xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org">
-	<head th:include="common/header :: common-header"></head>
-	
-	<body>
-		<nav th:replace="common/navbar :: navbar"></nav>
-		QUICKIES DETAIL
-		
-		data model: "quicky"
-		
-		<div th:replace="common/footer :: common-footer"></div>
-	</body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header :: common-header"></head>
+
+<body>
+	<nav th:replace="common/navbar :: navbar"></nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title text-center">Quicky detail</h3>
+					</div>
+					<div class="panel-body">
+						<div class="form-group" th:inline="text">
+							[[${quicky.title}]]
+						</div>
+						<div class="form-group" th:inline="text">
+							[[${quicky.description}]]
+						</div>
+						<div class="form-group" th:inline="text">
+							[[${quicky.submissionDate}]]
+						</div>
+						<div class="form-group" th:inline="text">
+							[[${quicky.usergroup}]]
+						</div>
+						<div class="form-group">
+							<div class="col-xs-3">
+								<a th:href="@{/quicky/{id}/edit(id=${quicky.id})}" class="btn btn-default btn-lg btn-block">Edit</a>
+							</div>
+							<div class="col-xs-3">
+								<a th:href="@{/quicky/{id}/edit(id=${quicky.id})}" class="btn btn-default btn-lg btn-block">
+									<i class="fa fa-thumbs-o-up"></i> Vote
+								</a>
+							</div>
+							<div class="col-xs-3">
+								<a th:href="@{/quicky/{id}/edit(id=${quicky.id})}" class="btn btn-default btn-lg btn-block">
+									<i class="fa fa-facebook"></i> Share
+								</a>
+							</div>
+							<div class="col-xs-3">
+								<a th:href="@{/quicky/{id}/edit(id=${quicky.id})}" class="btn btn-default btn-lg btn-block">
+									<i class="fa fa-twitter"></i> Tweet
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="common/footer :: common-footer"></div>
+</body>
 </html>

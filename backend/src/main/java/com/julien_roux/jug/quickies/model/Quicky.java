@@ -2,17 +2,22 @@ package com.julien_roux.jug.quickies.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Document
 public class Quicky extends Entity {
 
+	@NotNull
 	private String title, description, usergroup;
 
 	private User presenter;
 
+	@DateTimeFormat(pattern="YYYY-MM-DD hh:mm")
 	private Date submissionDate;
 
 	public Quicky() {

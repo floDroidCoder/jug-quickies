@@ -14,29 +14,32 @@
 	  				    <h3 class="panel-title text-center">Create a quicky</h3>
 	  				  </div>
 	  				  <div class="panel-body">
+	  				  	<div th:if="${param.error}" th:inline="text">
+	  				  		[[${param.error}]]
+	  				  	</div>
 	  				    <form class="form-horizontal" role="form" th:action="@{/quicky}" method="POST">
 	  				      <div class="form-group">
 	  				        <label for="title" class="col-sm-2 control-label">Title</label>
 	  				        <div class="col-sm-10">
-	  				          <input type="text" class="form-control" name="title" placeholder="Title" />
+	  				          <input type="text" class="form-control" name="title" placeholder="Title" th:value="${quicky.title}"/>
 	  				        </div>
 	  				      </div>
 	  				      <div class="form-group">
 	  				        <label for="description" class="col-sm-2 control-label">Description</label>
 	  				        <div class="col-sm-10">
-	  				          <input type="text" class="form-control" name="description" placeholder="Description" />
+	  				          <input type="text" class="form-control" name="description" placeholder="Description" th:value="${quicky.description}"/>
 	  				        </div>
 	  				      </div>
 	  				      <div class="form-group">
-	  				        <label for="submissionDate" class="col-sm-2 control-label">Description</label>
+	  				        <label for="submissionDate" class="col-sm-2 control-label">Date</label>
 	  				        <div class="col-sm-10">
-	  				          <input type="date" class="form-control" name="submissionDate" placeholder="Date" />
+	  				          <input type="datetime-local" class="form-control" name="submissionDate" placeholder="Date" th:value="${quicky.submissionDate}"/>
 	  				        </div>
 	  				      </div>
 	  				      <div class="form-group">
 	  				        <label for="usergroup" class="col-sm-2 control-label">User Group</label>
 	  				        <div class="col-sm-10">
-	  				          <select class="form-control" name="usergroup">
+	  				          <select class="form-control" name="usergroup" th:value="${quicky.usergroup}">
 	  				          	<option value="">--</option>
 	  				          	<option value="JUG">Java User Group</option>
 	  				          	<option value="JSR">JS Romandie</option>
