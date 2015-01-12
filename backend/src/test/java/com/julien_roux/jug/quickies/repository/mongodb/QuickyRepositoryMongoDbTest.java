@@ -7,13 +7,10 @@ import com.julien_roux.jug.quickies.model.Quicky;
 public class QuickyRepositoryMongoDbTest extends AbstractMongodbTest<Quicky> {
 
 	public Quicky getEntity() {
-		Quicky entity = new Quicky();
-		entity.setDescription("description");
+		Quicky entity = new Quicky("titleDb", "descriptionDb", "usergroupDb");
 		entity.setId(null);
 		entity.setPresenter(null);
 		entity.setSubmissionDate(new Date());
-		entity.setTitle("title");
-		entity.setUsergroup("usergroup");
 		return entity;
 	}
 

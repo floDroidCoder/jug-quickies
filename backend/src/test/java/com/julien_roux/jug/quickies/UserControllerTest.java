@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.julien_roux.jug.quickies.model.User;
 import com.julien_roux.jug.quickies.repository.UserRepository;
 
+@Ignore
 public class UserControllerTest extends AbstractControllerTest {
 	
 	@Autowired

@@ -21,67 +21,99 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.julien_roux.jug.quickies.model.Quicky;
 import com.julien_roux.jug.quickies.model.User;
 import com.julien_roux.jug.quickies.repository.QuickyRepository;
+import com.julien_roux.jug.quickies.repository.UserRepository;
 
 @Controller
 public class QuickyController {
 
 	private QuickyRepository quickyRepository;
+	private UserRepository userRepository;
 
 	@Autowired
-	public QuickyController(QuickyRepository quickyRepository) {
+	public QuickyController(QuickyRepository quickyRepository, UserRepository userRepository) {
 		this.quickyRepository = quickyRepository;
+		this.userRepository = userRepository;
 	}
 
 	@RequestMapping(value = "/quickies", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<Quicky> getAllQuickies() {
+	public List<Quicky> findAll() {
 		return quickyRepository.findAll();
 	}
 
 	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.GET)
-	public String getQuicky(@PathVariable BigInteger id, Model model) {
+	public String get(@PathVariable BigInteger id, Model model) {
 		model.addAttribute("quicky", quickyRepository.findOne(id));
 		return "/quickies/quicky-detail";
 	}
 
-	@RequestMapping(value = "/quicky/{id}/edit", method = RequestMethod.GET)
-	public String editQuicky(@PathVariable BigInteger id, Model model) {
-		model.addAttribute("quicky", quickyRepository.findOne(id));
-		return "/quickies/quicky-edit";
-	}
+	// ************************************************************************
+	// Create
+	// ************************************************************************
 	
-	@RequestMapping(value = "/quicky/new", method = RequestMethod.GET)
-	public String newQuicky(Model model) {
-		model.addAttribute("quicky", new Quicky());
+	@RequestMapping(value = "/quicky/create", method = RequestMethod.GET)
+	public String create(Model model) {
+		model.addAttribute("quicky", new Quicky("", "", ""));
 		return "/quickies/quicky-edit";
 	}
 
-	@RequestMapping(value = "/quicky", method = RequestMethod.POST)
-	public String addQuicky(@Valid @ModelAttribute("quicky") Quicky quicky, BindingResult result, Principal principal, Model model) {
+	@RequestMapping(value = "/quicky/create", method = RequestMethod.POST)
+	public String submit(@Valid @ModelAttribute("quicky") Quicky quicky, BindingResult result, Principal principal, Model model) {
 		if (result.hasErrors()) {
             return "/quickies/quicky-edit";
         }
 		
+		User presenter = userRepository.findByEmail(principal.getName());		
 		quicky.setId(null);
+		quicky.setPresenter(presenter);
 		quickyRepository.save(quicky);
 		model.addAttribute("quicky", quicky);
 		
 		return "/quickies/quicky-detail";
 	}
 
-	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.PUT)
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public Quicky updateQuicky(@Valid @ModelAttribute("quicky") Quicky quicky, @PathVariable BigInteger id) {
-		quicky.setId(id);
-		return quickyRepository.save(quicky);
+	// ************************************************************************
+	// Modify
+	// ************************************************************************
+
+	@RequestMapping(value = "/quicky/{id}/edit", method = RequestMethod.GET)
+	public String edit(@PathVariable BigInteger id, Model model, Principal principal) throws Exception {
+		Quicky quicky = quickyRepository.findOne(id);
+		if(!quicky.getPresenter().getEmail().equals(principal.getName())) {
+			//TODO 
+			throw new Exception();
+		}
+		model.addAttribute("quicky", quicky);
+		return "/quickies/quicky-edit";
 	}
 
-	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/quicky/{id}/edit", method = RequestMethod.POST)
+	public String update(@Valid @ModelAttribute("quicky") Quicky quicky, @PathVariable BigInteger id, Model model) {
+		quicky.setId(id);
+		quickyRepository.save(quicky);
+		model.addAttribute("quicky", quicky);
+		return "/quickies/quicky-detail";
+	}
+
+	// ************************************************************************
+	// Vote
+	// ************************************************************************
+
+	@RequestMapping(value = "/quicky/{id}/vote", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public void deleteQuicky(@PathVariable BigInteger id) {
+	public void vote(@PathVariable BigInteger id) {
+	}
+
+	// ************************************************************************
+	// Delete
+	// ************************************************************************
+
+	@RequestMapping(value = "/quicky/{id}/delete", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public void delete(@PathVariable BigInteger id) {
 		quickyRepository.delete(id);
 	}
 }

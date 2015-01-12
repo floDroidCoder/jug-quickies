@@ -6,13 +6,13 @@ import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Document
 public class Quicky extends Entity {
 
-	@NotNull
 	private String title, description, usergroup;
 
 	private User presenter;
@@ -21,7 +21,12 @@ public class Quicky extends Entity {
 	private Date submissionDate;
 
 	public Quicky() {
-		// TODO Auto-generated constructor stub
+	}
+	
+	public Quicky(String title, String description, String usergroup) {
+		this.title = title;
+		this.description = description;
+		this.usergroup = usergroup;
 	}
 
 	// ************************************************************************
@@ -43,6 +48,11 @@ public class Quicky extends Entity {
 	public int hashCode() {
 		return new HashCodeBuilder().append(title).append(description).append(submissionDate).append(presenter)
 				.toHashCode();
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 	// ************************************************************************
