@@ -97,7 +97,9 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	@Test
 	public void updateQuicky() throws Exception {
 		String url = "/quicky/{0}/edit";
-		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, quicky.getId()).sessionAttr("quicky", quicky));
+		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, quicky.getId())
+					.param("id", quicky.getId().toString())
+					.param("title", quicky.getTitle()));
 		ResultActions result = executeRequest(request);
 		result.andExpect(view().name("/quickies/quicky-detail"));
 		result.andExpect(model().attributeExists("quicky"));
