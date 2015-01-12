@@ -4,14 +4,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-import java.security.Principal;
-
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -64,11 +61,11 @@ public abstract class AbstractControllerTest {
 	}
 	
 	protected MockHttpServletRequestBuilder prepareSecureRequest(MockHttpServletRequestBuilder builder) throws Exception {
-		return builder.principal(auth);
+		return prepareNonSecureRequest(builder).principal(auth);
 	}
 	
 	protected MockHttpServletRequestBuilder prepareNonSecureRequest(MockHttpServletRequestBuilder builder) throws Exception {
-		return builder;
+		return builder; //.header("X-Requested-With", "XMLHttpRequest");
 	}
 
 	protected ResultActions executeRequest(MockHttpServletRequestBuilder request) throws Exception {

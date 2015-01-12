@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.julien_roux.jug.quickies.model.Quicky;
 import com.julien_roux.jug.quickies.model.User;
+import com.julien_roux.jug.quickies.model.dto.QuickyDTO;
 import com.julien_roux.jug.quickies.repository.QuickyRepository;
 import com.julien_roux.jug.quickies.repository.UserRepository;
 
@@ -59,16 +60,20 @@ public class QuickyController {
 	}
 
 	@RequestMapping(value = "/quicky/create", method = RequestMethod.POST)
-	public String submit(@Valid @ModelAttribute("quicky") Quicky quicky, BindingResult result, Principal principal, Model model) {
+	public String submit(@Valid @ModelAttribute("quicky") QuickyDTO quickyDTO, BindingResult result, Principal principal, Model model) {
 		if (result.hasErrors()) {
             return "/quickies/quicky-edit";
         }
+		Quicky quicky = new Quicky();
+		quicky.setDescription(quickyDTO.getDescription());
+		quicky.setUsergroup(quickyDTO.getUsergroup());
+		quicky.setTitle(quickyDTO.getTitle());
 		
 		User presenter = userRepository.findByEmail(principal.getName());		
 		quicky.setId(null);
 		quicky.setPresenter(presenter);
 		quickyRepository.save(quicky);
-		model.addAttribute("quicky", quicky);
+		model.addAttribute("quicky", new QuickyDTO(quicky));
 		
 		return "/quickies/quicky-detail";
 	}
@@ -84,15 +89,22 @@ public class QuickyController {
 			//TODO 
 			throw new Exception();
 		}
-		model.addAttribute("quicky", quicky);
+		model.addAttribute("quicky", new QuickyDTO(quicky));
 		return "/quickies/quicky-edit";
 	}
 
 	@RequestMapping(value = "/quicky/{id}/edit", method = RequestMethod.POST)
-	public String update(@Valid @ModelAttribute("quicky") Quicky quicky, @PathVariable BigInteger id, Model model) {
-		quicky.setId(id);
+	public String update(@Valid @ModelAttribute("quicky") QuickyDTO quickyDTO, @PathVariable BigInteger id, Model model) {
+		
+		Quicky quicky = quickyRepository.findOne(id);
+		quicky.setDescription(quickyDTO.getDescription());
+		quicky.setUsergroup(quickyDTO.getUsergroup());
+		quicky.setTitle(quickyDTO.getTitle());
+		quicky.setDescription(quickyDTO.getDescription());
+		quickyDTO.setId(id);
+		
 		quickyRepository.save(quicky);
-		model.addAttribute("quicky", quicky);
+		model.addAttribute("quicky", new QuickyDTO(quicky));
 		return "/quickies/quicky-detail";
 	}
 

@@ -2,10 +2,8 @@ package com.julien_roux.jug.quickies;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.hamcrest.Matchers.startsWith;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -15,10 +13,12 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.julien_roux.jug.quickies.model.Quicky;
+import com.julien_roux.jug.quickies.model.dto.QuickyDTO;
 import com.julien_roux.jug.quickies.repository.QuickyRepository;
 
 public class QuickyControllerTest extends AbstractControllerTest {
@@ -71,14 +71,20 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	@Test
 	public void createQuicky() throws Exception {
 		String url = "/quicky/create";
-		Quicky toCreate = new Quicky("titleTest", "descriptionTest", "usergroupTest");
-		toCreate.setSubmissionDate(new Date());
-		toCreate.setUsergroup("usergroupTest");
-		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url).sessionAttr("quicky", toCreate));
+		QuickyDTO toCreate = new QuickyDTO();
+		toCreate.setDescription("description");
+		toCreate.setTitle("title");
+		toCreate.setUsergroup("usergroup");
+		
+		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url).//
+				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
+				param("description", toCreate.getDescription()).//
+				param("title", toCreate.getTitle()).//
+				param("usergroup", toCreate.getUsergroup()));
+		
 		ResultActions result = executeRequest(request);
 		result.andExpect(view().name("/quickies/quicky-detail"));
 		result.andExpect(model().attributeExists("quicky"));
-		result.andExpect(model().attribute("quicky", toCreate));
 	}
 
 	// ************************************************************************
@@ -91,17 +97,21 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, quicky.getId()));
 		ResultActions result = executeRequest(request);
 		result.andExpect(view().name("/quickies/quicky-edit"));
-		result.andExpect(model().attribute("quicky", quicky));
+		result.andExpect(model().attribute("quicky", new QuickyDTO(quicky)));
 	}
 	
 	@Test
 	public void updateQuicky() throws Exception {
 		String url = "/quicky/{0}/edit";
-		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, quicky.getId()).sessionAttr("quicky", quicky));
+		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, quicky.getId()).//
+				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
+				param("description", quicky.getDescription()).//
+				param("email", quicky.getPresenter().getEmail()).//
+				param("title", quicky.getTitle()).//
+				param("usergroup", quicky.getUsergroup()));
 		ResultActions result = executeRequest(request);
 		result.andExpect(view().name("/quickies/quicky-detail"));
 		result.andExpect(model().attributeExists("quicky"));
-		result.andExpect(model().attribute("quicky", quicky));
 	}
 	
 	@Test

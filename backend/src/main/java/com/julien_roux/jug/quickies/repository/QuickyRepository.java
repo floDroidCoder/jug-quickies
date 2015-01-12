@@ -5,7 +5,6 @@ import java.math.BigInteger;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.julien_roux.jug.quickies.model.Quicky;
-import com.julien_roux.jug.quickies.model.User;
 
 public interface QuickyRepository extends MongoRepository<Quicky, BigInteger> {
 
