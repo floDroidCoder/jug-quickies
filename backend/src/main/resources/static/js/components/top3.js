@@ -10,11 +10,11 @@ var Session = React.createClass({
       	</div>
       	<div className="col-xs-9 col-sm-10 session-text">
         	<p>
-        		<a href={this.props.session.url}>{this.props.session.name}</a>&nbsp;
-        	 	by <a href={this.props.session.author.url} className="authorLink">{this.props.session.author.name}</a>
+        		<a href={this.props.session.url}>{this.props.session.title}</a>&nbsp;
+        	 	by <a href={this.props.session.presenter.url} className="authorLink">{this.props.session.presenter.firstname} {this.props.session.presenter.lastname}</a>
         	 </p>
         	<p className={dateClass}>
-        		<span className="glyphicon glyphicon-calendar"></span>&nbsp;{this.props.session.date}
+        		<span className="glyphicon glyphicon-calendar"></span>&nbsp;{this.props.session.submissionDate}
         	</p>
         	<p className="location">
         		<span className="glyphicon glyphicon-tree-conifer"></span>&nbsp;{this.props.session.location}
@@ -26,8 +26,23 @@ var Session = React.createClass({
 });
 
 var SessionList = React.createClass({
+  getInitialState: function() {
+	    return {data: []};
+   },
+  componentDidMount: function() { 
+	    $.ajax({
+	      url: this.props.url,
+	      dataType: 'json',
+	      success: function(data) {
+	        this.setState({data: data});
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
   render: function() {
-  	var sessionNodes = this.props.data.map(function(session) {
+  	var sessionNodes = this.state.data.map(function(session) {
   		return (
   			<Session session={session}></Session>
   		);
