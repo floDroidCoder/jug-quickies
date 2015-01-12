@@ -16,6 +16,7 @@ public class QuickyDTO {
 	
 	private String title, description, usergroup, email;
 	
+	@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
 	private Date submissionDate;
 
 	public QuickyDTO() {
