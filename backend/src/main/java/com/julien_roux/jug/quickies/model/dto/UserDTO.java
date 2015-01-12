@@ -1,5 +1,7 @@
 package com.julien_roux.jug.quickies.model.dto;
 
+import java.math.BigInteger;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -7,12 +9,15 @@ import com.julien_roux.jug.quickies.model.User;
 
 public class UserDTO {
 
+	private BigInteger id;
+
 	private String lastname, firstname, email, role, shamefulTechnologie, company, about, password;
 
 	public UserDTO() {
 	}
 
 	public UserDTO(User user) {
+		this.id = user.getId();
 		this.lastname = user.getLastname();
 		this.firstname = user.getFirstname();
 		this.email = user.getEmail();
@@ -100,6 +105,14 @@ public class UserDTO {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public BigInteger getId() {
+		return id;
+	}
+
+	public void setId(BigInteger id) {
+		this.id = id;
 	}
 	
 	

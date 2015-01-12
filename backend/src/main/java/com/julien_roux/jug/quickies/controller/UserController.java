@@ -111,7 +111,7 @@ public class UserController {
 		//user.setId(null);
 		user.setLastname(userDTO.getLastname());
 		user.setPassword(userDTO.getPassword());
-		user.setRole("USER_ROLE");
+		//user.setRole("USER_ROLE");
 		user.setShamefulTechnologie(userDTO.getShamefulTechnologie());
 		
 		userRepository.save(user);
