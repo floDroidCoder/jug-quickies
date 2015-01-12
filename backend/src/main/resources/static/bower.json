@@ -1,5 +1,5 @@
 {
-  "name": "static",
+  "name": "bower_components",
   "version": "0.0.1",
   "homepage": "https://github.com/floDroidCoder/jug-quickies",
   "authors": [
@@ -8,9 +8,7 @@
   "license": "MIT",
   "private": true,
   "ignore": [
-    "**/.*",
     "node_modules",
-    "bower_components",
     "test",
     "tests"
   ],
