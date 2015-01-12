@@ -70,8 +70,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/profile", method = RequestMethod.POST)
-	public String updateUser(@Valid @ModelAttribute("user") User user, Model model) {
-		//TODO Add security constraint : current user only (or admin) can save 
+	public String updateUser(@Valid @ModelAttribute("user") User user, Model model, Principal principal) {
+		//TODO Add security constraint : current user only (or admin) can save
+		User presenter = userRepository.findByEmail(principal.getName());	
+		
+		user.setPassword(presenter.getPassword());
+		user.setRole(presenter.getRole());
 		userRepository.save(user);
 		model.addAttribute("user", user);
 		return "/profile/profile-detail";

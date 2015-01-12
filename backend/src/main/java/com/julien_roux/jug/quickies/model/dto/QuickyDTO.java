@@ -6,6 +6,7 @@ import java.util.Date;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.julien_roux.jug.quickies.model.Quicky;
 
