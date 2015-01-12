@@ -2,6 +2,7 @@ package com.julien_roux.jug.quickies.controller;
 
 import java.math.BigInteger;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -27,6 +28,8 @@ import com.julien_roux.jug.quickies.repository.UserRepository;
 @Controller
 public class QuickyController {
 
+	private static final String DETAIL_PAGE = "/quickies/quicky-detail";
+	private static final String EDIT_PAGE = "/quickies/quicky-edit";
 	private QuickyRepository quickyRepository;
 	private UserRepository userRepository;
 
@@ -35,6 +38,10 @@ public class QuickyController {
 		this.quickyRepository = quickyRepository;
 		this.userRepository = userRepository;
 	}
+
+	// ************************************************************************
+	// Get
+	// ************************************************************************
 
 	@RequestMapping(value = "/quickies", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
@@ -45,8 +52,9 @@ public class QuickyController {
 
 	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.GET)
 	public String get(@PathVariable BigInteger id, Model model) {
-		model.addAttribute("quicky", quickyRepository.findOne(id));
-		return "/quickies/quicky-detail";
+		Quicky quicky = quickyRepository.findOne(id);
+		model.addAttribute("quicky", new QuickyDTO(quicky));
+		return DETAIL_PAGE;
 	}
 
 	// ************************************************************************
@@ -55,27 +63,31 @@ public class QuickyController {
 	
 	@RequestMapping(value = "/quicky/create", method = RequestMethod.GET)
 	public String create(Model model) {
-		model.addAttribute("quicky", new Quicky("", "", ""));
-		return "/quickies/quicky-edit";
+		QuickyDTO quickyDTO = new QuickyDTO();
+		model.addAttribute("quicky", quickyDTO);
+		return EDIT_PAGE;
 	}
 
 	@RequestMapping(value = "/quicky/create", method = RequestMethod.POST)
 	public String submit(@Valid @ModelAttribute("quicky") QuickyDTO quickyDTO, BindingResult result, Principal principal, Model model) {
 		if (result.hasErrors()) {
-            return "/quickies/quicky-edit";
+            return EDIT_PAGE;
         }
+		
 		Quicky quicky = new Quicky();
 		quicky.setDescription(quickyDTO.getDescription());
 		quicky.setUsergroup(quickyDTO.getUsergroup());
 		quicky.setTitle(quickyDTO.getTitle());
+		quicky.setSubmissionDate(new Date());
+		quicky.setId(null);
 		
 		User presenter = userRepository.findByEmail(principal.getName());		
-		quicky.setId(null);
+		
 		quicky.setPresenter(presenter);
 		quickyRepository.save(quicky);
-		model.addAttribute("quicky", new QuickyDTO(quicky));
 		
-		return "/quickies/quicky-detail";
+		model.addAttribute("quicky", new QuickyDTO(quicky));
+		return DETAIL_PAGE;
 	}
 
 	// ************************************************************************
@@ -90,22 +102,26 @@ public class QuickyController {
 			throw new Exception();
 		}
 		model.addAttribute("quicky", new QuickyDTO(quicky));
-		return "/quickies/quicky-edit";
+		return EDIT_PAGE;
 	}
 
 	@RequestMapping(value = "/quicky/{id}/edit", method = RequestMethod.POST)
-	public String update(@Valid @ModelAttribute("quicky") QuickyDTO quickyDTO, @PathVariable BigInteger id, Model model) {
-		
+	public String update(@Valid @ModelAttribute("quicky") QuickyDTO quickyDTO, @PathVariable BigInteger id, Model model, Principal principal) throws Exception {
 		Quicky quicky = quickyRepository.findOne(id);
+		
+		if(!quickyDTO.getEmail().equals(principal.getName())) {
+			//TODO 
+			throw new Exception();
+		}
+		
 		quicky.setDescription(quickyDTO.getDescription());
 		quicky.setUsergroup(quickyDTO.getUsergroup());
 		quicky.setTitle(quickyDTO.getTitle());
 		quicky.setDescription(quickyDTO.getDescription());
-		quickyDTO.setId(id);
 		
 		quickyRepository.save(quicky);
 		model.addAttribute("quicky", new QuickyDTO(quicky));
-		return "/quickies/quicky-detail";
+		return DETAIL_PAGE;
 	}
 
 	// ************************************************************************

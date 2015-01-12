@@ -34,7 +34,7 @@ public abstract class AbstractControllerTest {
 	protected WebApplicationContext wac;
 
 	@Autowired
-	private UserRepository userRepository;
+	protected UserRepository userRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -50,7 +50,14 @@ public abstract class AbstractControllerTest {
 	@Before
 	public void setup() throws Exception {
 		this.mockMvc = webAppContextSetup(this.wac).alwaysExpect(status().isOk()).build();
-		user = new User("email", "password", "USER_ROLE");
+		userRepository.deleteAll();
+		user = new User("julien@roux.com", "tOnP#reSuceDesCh4meauX", "USER_ROLE");
+		user.setAbout("about");
+		user.setCompany("company");
+		user.setFirstname("firstname");
+		user.setLastname("lastname");
+		user.setShamefulTechnologie("shamefulTechnologie");
+		
 		user = userRepository.save(user);
 		
 		userService.signin(user);

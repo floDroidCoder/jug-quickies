@@ -1,99 +1,114 @@
 package com.julien_roux.jug.quickies;
 
-import static org.fest.assertions.Assertions.assertThat;
 import static org.hamcrest.Matchers.startsWith;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import com.julien_roux.jug.quickies.model.User;
-import com.julien_roux.jug.quickies.repository.UserRepository;
+import com.julien_roux.jug.quickies.model.dto.UserDTO;
 
-@Ignore
 public class UserControllerTest extends AbstractControllerTest {
 	
-	@Autowired
-	private UserRepository userRepository;
-	private User user;
-
-	@Before
-	public void setup() throws Exception {
-		super.setup();
-		
-		userRepository.deleteAll();
-		user = new User();
-		userRepository.save(user);
-		assertThat(user.getId()).isNotNull();
-	}
+	// ************************************************************************
+	// Get
+	// ************************************************************************
 	
 	@Test
 	public void findAll() throws Exception {
-		ResultActions result = mockMvc.perform(get("/users").contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.param("description", "description").param("title", "title"));
-		result.andExpect(status().isOk());
+		String url = "/users";
+		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
+		ResultActions result = executeRequest(request);
 		result.andExpect(content().string(startsWith("[{\"id\":"+user.getId())));
 	}
 	
 	@Test
-	public void getUser() throws Exception {
-		ResultActions result = mockMvc.perform(get("/user/"+user.getId()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.param("description", "description").param("title", "title"));
-		result.andExpect(status().isOk());
+	public void getProfile() throws Exception {
+		String url = "/profile";
+		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
+		ResultActions result = executeRequest(request);
 		result.andExpect(view().name("/profile/profile-detail"));
+		result.andExpect(model().attribute("user", new UserDTO(user)));
+	}
+	
+	@Test
+	public void getUser() throws Exception {
+		String url = "/user/{0}";
+		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, user.getId()));
+		ResultActions result = executeRequest(request);
+		result.andExpect(view().name("/users/user-detail"));
 		result.andExpect(model().attribute("user", user));
 	}
-	
-	@Test
-	public void editUser() throws Exception {
-		ResultActions result = mockMvc.perform(get("/user/"+user.getId()+"/edit").contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.param("description", "description").param("title", "title"));
-		result.andExpect(status().isOk());
-		result.andExpect(view().name("/profile/profile-edit"));
-		result.andExpect(model().attribute("user", user));
-	}
-	
-	@Test
-	@Ignore
-	public void updateUser() throws Exception {
-		ResultActions resultPut = mockMvc.perform(put("/user/"+user.getId()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.param("description", "description").param("title", "title").sessionAttr("user", user));
-		resultPut.andExpect(status().isOk());
-		resultPut.andExpect(content().string(startsWith("{\"id\":"+user.getId())));
-	}
-	
-	@Test
-	public void updateUserWithPost() throws Exception {
-		ResultActions resultPut = mockMvc.perform(post("/profile").contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.param("description", "description").param("title", "title").sessionAttr("user", user));
-		resultPut.andExpect(status().isOk());
-		resultPut.andExpect(content().string(startsWith("{\"id\":"+user.getId())));
-	}
-	
+
+	// ************************************************************************
+	// Create
+	// ************************************************************************
+
 	@Test
 	public void createUser() throws Exception {
-		ResultActions resultPut = mockMvc.perform(post("/user").contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.param("description", "description").param("title", "title").sessionAttr("user", new User()));
-		resultPut.andExpect(status().isOk());
-		resultPut.andExpect(content().string(startsWith("{\"id\":")));
+		String url = "/user";
+		UserDTO toCreate = new UserDTO(user);
+		toCreate.setPassword(user.getPassword());
+		
+		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url).//
+				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
+				param("lastname", toCreate.getLastname()).//
+				param("firstname", toCreate.getFirstname()).//
+				param("email", toCreate.getEmail()).//
+				param("password", toCreate.getPassword()).//
+				param("company", toCreate.getCompany()).//
+				param("about", toCreate.getAbout()).//
+				param("shamefulTechnologie", toCreate.getShamefulTechnologie()));
+		
+		ResultActions result = executeRequest(request);
+		result.andExpect(view().name("/profile/profile-detail"));
+		result.andExpect(model().attributeExists("user"));
+	}
+
+	// ************************************************************************
+	// Modify
+	// ************************************************************************
+
+	@Test
+	public void editUser() throws Exception {
+		String url = "/profile/edit";
+		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, user.getId()));
+		ResultActions result = executeRequest(request);
+		result.andExpect(view().name("/profile/profile-edit"));
+		result.andExpect(model().attribute("user", new UserDTO(user)));
 	}
 	
 	@Test
+	public void updateUser() throws Exception {
+		String url = "/user/{0}/edit";
+		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, user.getId()).//
+				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
+				param("lastname", user.getLastname()).//
+				param("firstname", user.getFirstname()).//
+				param("email", user.getEmail()).//
+				param("company", user.getCompany()).//
+				param("about", user.getAbout()).//
+				param("shamefulTechnologie", user.getShamefulTechnologie()));
+		ResultActions result = executeRequest(request);
+		result.andExpect(view().name("/profile/profile-detail"));
+		result.andExpect(model().attributeExists("user"));
+	}
+
+	// ************************************************************************
+	// Delete
+	// ************************************************************************
+
+	@Test
 	public void deleteUser() throws Exception {
-		ResultActions resultPut = mockMvc.perform(delete("/user/"+user.getId()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.param("description", "description").param("title", "title"));
-		resultPut.andExpect(status().isOk());
-		resultPut.andExpect(content().string(startsWith("")));
+		String url = "/user/{0}/delete";
+		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, user.getId()));
+		ResultActions result = executeRequest(request);
+		result.andExpect(content().string(startsWith("")));
 	}
 }

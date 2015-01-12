@@ -53,7 +53,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, quicky.getId()));
 		ResultActions result = executeRequest(request);
 		result.andExpect(view().name("/quickies/quicky-detail"));
-		result.andExpect(model().attribute("quicky", quicky));
+		result.andExpect(model().attribute("quicky", new QuickyDTO(quicky)));
 	}
 
 	// ************************************************************************
@@ -113,6 +113,10 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		result.andExpect(view().name("/quickies/quicky-detail"));
 		result.andExpect(model().attributeExists("quicky"));
 	}
+
+	// ************************************************************************
+	// Delete
+	// ************************************************************************
 	
 	@Test
 	public void deleteQuicky() throws Exception {
