@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-<head th:include="common/header :: common-header"></head>
+<head th:include="common/header :: common-header">
+	<meta property="og:title" content="${quicky.title}">
+	<meta property="og:site_name" content="JUG Quicky Challenge"/>
+	<meta property="og:url" content="http://sd-44145.dedibox.fr/quicky/${quicky.id}" />
+</head>
 
 <body>
 	<nav th:replace="common/navbar :: navbar"></nav>

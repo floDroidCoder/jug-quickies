@@ -163,8 +163,8 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		String url = "/quicky/{0}/delete";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, quicky.getId()));
 		ResultActions result = executeRequest(request);
-		result.andExpect(status().is3xxRedirection());
-		result.andExpect(redirectedUrl("/"));
+		result.andExpect(status().isOk());
 		result.andExpect(content().string(startsWith("")));
+		result.andExpect(view().name("index"));
 	}
 }

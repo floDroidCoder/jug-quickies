@@ -10,11 +10,11 @@ var Session = React.createClass({
       	</div>
       	<div className="col-xs-9 col-sm-10 session-text">
         	<p>
-        		<a href={this.props.session.url}>{this.props.session.title}</a>&nbsp;
-        	 	by <a href={this.props.session.presenter.url} className="authorLink">{this.props.session.presenter.firstname} {this.props.session.presenter.lastname}</a>
+        		<a href={'/quicky/' + this.props.session.id }>{this.props.session.title}</a>&nbsp;
+        	 	by <a href={'/user/' + this.props.session.presenter.id} className="authorLink">{this.props.session.presenter.firstname} {this.props.session.presenter.lastname}</a>
         	 </p>
         	<p className={dateClass}>
-        		<span className="glyphicon glyphicon-calendar"></span>&nbsp;{this.props.session.submissionDate}
+        		<span className="glyphicon glyphicon-calendar"></span>&nbsp;{new Date(this.props.session.submissionDate).format('dd-mm-yyyy HH:MM')}
         	</p>
         	<p className="location">
         		<span className="glyphicon glyphicon-tree-conifer"></span>&nbsp;{this.props.session.location}
