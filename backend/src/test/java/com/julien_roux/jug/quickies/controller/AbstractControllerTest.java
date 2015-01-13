@@ -1,4 +1,4 @@
-package com.julien_roux.jug.quickies;
+package com.julien_roux.jug.quickies.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.julien_roux.jug.quickies.QuickiesLauncher;
 import com.julien_roux.jug.quickies.model.User;
 import com.julien_roux.jug.quickies.repository.UserRepository;
 import com.julien_roux.jug.quickies.security.UserService;
@@ -48,7 +49,7 @@ public abstract class AbstractControllerTest {
 
 	@Before
 	public void setup() throws Exception {
-		this.mockMvc = webAppContextSetup(this.wac).alwaysExpect(status().isOk()).build();
+		this.mockMvc = webAppContextSetup(this.wac).build();
 		
 		userRepository.deleteAll();
 		
@@ -84,7 +85,6 @@ public abstract class AbstractControllerTest {
 	protected ResultActions executeRequest(MockHttpServletRequestBuilder request) throws Exception {
 		ResultActions result = mockMvc.perform(request);
 		result.andDo(print());
-		result.andExpect(status().isOk());
 		return result;
 	}
 

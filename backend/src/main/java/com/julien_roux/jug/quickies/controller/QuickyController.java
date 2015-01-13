@@ -140,9 +140,8 @@ public class QuickyController {
 	// ************************************************************************
 
 	@RequestMapping(value = "/quicky/{id}/delete", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public void delete(@PathVariable BigInteger id) {
+	public String delete(@PathVariable BigInteger id) {
 		quickyRepository.delete(id);
+		return "redirect:/";
 	}
 }

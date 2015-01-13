@@ -1,4 +1,4 @@
-package com.julien_roux.jug.quickies;
+package com.julien_roux.jug.quickies.controller;
 
 import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

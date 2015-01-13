@@ -1,4 +1,4 @@
-package com.julien_roux.jug.quickies;
+package com.julien_roux.jug.quickies.controller;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.hamcrest.Matchers.startsWith;
@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 import java.util.Date;
 
@@ -15,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.web.util.RedirectUrlBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -46,6 +48,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		String url = "/quickies";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
 		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
 		result.andExpect(content().string(startsWith("[{\"id\":"+quicky.getId())));
 	}
 	
@@ -55,8 +58,19 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		String url = "/quicky/{0}";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, quicky.getId()));
 		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
 		result.andExpect(view().name("/quickies/quicky-detail"));
 		result.andExpect(model().attribute("quicky", new QuickyDTO(quicky)));
+	}
+	
+	@Test
+	public void getQuickyPost() throws Exception {
+		connectUser();
+		String url = "/quicky/{0}";
+		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, quicky.getId()));
+		ResultActions result = executeRequest(request);
+		result.andExpect(status().is4xxClientError());
+		result.andExpect(status().isMethodNotAllowed());
 	}
 
 	// ************************************************************************
@@ -69,6 +83,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		String url = "/quicky/create";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
 		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
 		result.andExpect(view().name("/quickies/quicky-edit"));
 	}
 	
@@ -88,6 +103,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 				param("usergroup", toCreate.getUsergroup()));
 		
 		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
 		result.andExpect(view().name("/quickies/quicky-detail"));
 		result.andExpect(model().attributeExists("quicky"));
 	}
@@ -102,6 +118,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		String url = "/quicky/{0}/edit";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, quicky.getId()));
 		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
 		result.andExpect(view().name("/quickies/quicky-edit"));
 		result.andExpect(model().attribute("quicky", new QuickyDTO(quicky)));
 	}
@@ -117,6 +134,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 				param("title", quicky.getTitle()).//
 				param("usergroup", quicky.getUsergroup()));
 		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
 		result.andExpect(view().name("/quickies/quicky-detail"));
 		result.andExpect(model().attributeExists("quicky"));
 	}
@@ -145,6 +163,8 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		String url = "/quicky/{0}/delete";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, quicky.getId()));
 		ResultActions result = executeRequest(request);
+		result.andExpect(status().is3xxRedirection());
+		result.andExpect(redirectedUrl("/"));
 		result.andExpect(content().string(startsWith("")));
 	}
 }
