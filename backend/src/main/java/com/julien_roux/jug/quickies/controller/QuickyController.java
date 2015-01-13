@@ -31,6 +31,8 @@ public class QuickyController {
 
 	private static final String DETAIL_PAGE = "/quickies/quicky-detail";
 	private static final String EDIT_PAGE = "/quickies/quicky-edit";
+	private static final String HOME = "index";
+	
 	private QuickyRepository quickyRepository;
 	private UserRepository userRepository;
 
@@ -79,7 +81,7 @@ public class QuickyController {
 		quicky.setDescription(quickyDTO.getDescription());
 		quicky.setUsergroup(quickyDTO.getUsergroup());
 		quicky.setTitle(quickyDTO.getTitle());
-		quicky.setSubmissionDate(new Date());
+		quicky.setSubmissionDate(quickyDTO.getSubmissionDate());
 		quicky.setId(null);
 		
 		User presenter = userRepository.findByEmail(principal.getName());		
@@ -140,9 +142,9 @@ public class QuickyController {
 	// ************************************************************************
 
 	@RequestMapping(value = "/quicky/{id}/delete", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public void delete(@PathVariable BigInteger id) {
+	public String delete(@PathVariable BigInteger id) {
 		quickyRepository.delete(id);
+		
+		return HOME;
 	}
 }
