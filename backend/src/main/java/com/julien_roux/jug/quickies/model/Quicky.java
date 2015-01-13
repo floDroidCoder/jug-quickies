@@ -4,23 +4,22 @@ import java.util.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Document
 public class Quicky extends Entity {
 
-	private String title, description, usergroup;
+	private String title, description, usergroup, location;
 
 	private User presenter;
 
-	@DateTimeFormat(pattern="YYYY-MM-DD hh:mm")
+	@DateTimeFormat(pattern = "YYYY-MM-DD hh:mm")
 	private Date submissionDate;
 
 	public Quicky() {
 	}
-	
+
 	public Quicky(String title, String description, String usergroup) {
 		this.title = title;
 		this.description = description;
@@ -38,19 +37,22 @@ public class Quicky extends Entity {
 		if (getClass() != obj.getClass())
 			return false;
 		Quicky other = (Quicky) obj;
-		return new EqualsBuilder().append(title, other.title).append(description, other.description)
-				.append(submissionDate, other.submissionDate).append(presenter, other.presenter).isEquals();
+		return new EqualsBuilder().//
+				append(title, other.title).//
+				append(description, other.description).//
+				append(submissionDate, other.submissionDate).//
+				append(presenter, other.presenter).//
+				append(location, other.location).isEquals();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(title).append(description).append(submissionDate).append(presenter)
-				.toHashCode();
-	}
-	
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		return new HashCodeBuilder(). //
+				append(title).//
+				append(description).//
+				append(submissionDate).//
+				append(presenter).//
+				append(location).toHashCode();
 	}
 
 	// ************************************************************************
@@ -93,5 +95,13 @@ public class Quicky extends Entity {
 
 	public void setSubmissionDate(Date submissionDate) {
 		this.submissionDate = submissionDate;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

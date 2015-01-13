@@ -3,15 +3,12 @@ package com.julien_roux.jug.quickies.repository.mongodb;
 import java.util.Date;
 
 import com.julien_roux.jug.quickies.model.Quicky;
+import com.julien_roux.jug.quickies.repository.model.QuickyTest;
 
 public class QuickyRepositoryMongoDbTest extends AbstractMongodbTest<Quicky> {
 
 	public Quicky getEntity() {
-		Quicky entity = new Quicky("titleDb", "descriptionDb", "usergroupDb");
-		entity.setId(null);
-		entity.setPresenter(null);
-		entity.setSubmissionDate(new Date());
-		return entity;
+		return new QuickyTest().getEntity();
 	}
 
 	@Override

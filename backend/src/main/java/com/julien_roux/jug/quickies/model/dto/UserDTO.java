@@ -4,26 +4,32 @@ import java.math.BigInteger;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.julien_roux.jug.quickies.model.User;
 
 public class UserDTO {
 
-	private BigInteger id;
-
+	private String id;
 	private String lastname, firstname, email, role, shamefulTechnologie, company, about, password;
 
 	public UserDTO() {
 	}
 
 	public UserDTO(User user) {
-		this.id = user.getId();
+		this();
+		this.id = String.valueOf(user.getId());
 		this.lastname = user.getLastname();
 		this.firstname = user.getFirstname();
 		this.email = user.getEmail();
 		this.shamefulTechnologie = user.getShamefulTechnologie();
 		this.company = user.getCompany();
 		this.about = user.getAbout();
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 	@Override
@@ -107,14 +113,11 @@ public class UserDTO {
 		this.password = password;
 	}
 
-	public BigInteger getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(BigInteger id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	
-	
-
 }

@@ -12,33 +12,56 @@ import com.julien_roux.jug.quickies.model.Quicky;
 
 public class QuickyDTO {
 
-	private BigInteger id;
-	
-	private String title, description, usergroup, email;
-	
-	@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
+	private String id;
+	private String title, description, usergroup, email, location;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date submissionDate;
 
 	public QuickyDTO() {
 	}
-	
+
 	public QuickyDTO(Quicky quicky) {
 		this();
-		
+		this.id = String.valueOf(quicky.getId());
 		this.title = quicky.getTitle();
 		this.description = quicky.getDescription();
 		this.usergroup = quicky.getUsergroup();
 		this.email = quicky.getPresenter().getEmail();
-		this.id = quicky.getId();
 		this.submissionDate = quicky.getSubmissionDate();
+		this.setLocation(quicky.getLocation());
 	}
 
-	public BigInteger getId() {
-		return id;
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 
-	public void setId(BigInteger id) {
-		this.id = id;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		QuickyDTO other = (QuickyDTO) obj;
+		return new EqualsBuilder().//
+				append(title, other.title).//
+				append(description, other.description).//
+				append(location, other.location).//
+				append(submissionDate, other.submissionDate).//
+				append(email, other.email).isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().//
+				append(title).//
+				append(description).//
+				append(location).//
+				append(submissionDate).//
+				append(email).toHashCode();
 	}
 
 	public String getTitle() {
@@ -80,29 +103,20 @@ public class QuickyDTO {
 	public void setSubmissionDate(Date submissionDate) {
 		this.submissionDate = submissionDate;
 	}
-	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return ToStringBuilder.reflectionToString(this);
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		QuickyDTO other = (QuickyDTO) obj;
-		return new EqualsBuilder().append(title, other.title).append(description, other.description)
-				.append(submissionDate, other.submissionDate).append(email, other.email).isEquals();
+
+	public String getId() {
+		return id;
 	}
 
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(title).append(description).append(submissionDate).append(email)
-				.toHashCode();
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

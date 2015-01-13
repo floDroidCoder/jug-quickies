@@ -36,12 +36,26 @@ public class User extends Entity {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return new EqualsBuilder().append(email, other.email).isEquals();
+		return new EqualsBuilder().//
+				append(lastname, other.lastname).//
+				append(firstname, other.firstname).//
+				append(email, other.email).//
+				append(role, other.role).//
+				append(shamefulTechnologie, other.shamefulTechnologie).//
+				append(company, other.company).//
+				append(about, other.about).isEquals();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(email).toHashCode();
+		return new HashCodeBuilder().//
+				append(lastname).//
+				append(firstname).//
+				append(email).//
+				append(role).//
+				append(shamefulTechnologie).//
+				append(company).//
+				append(about).toHashCode();
 	}
 
 	// ************************************************************************
