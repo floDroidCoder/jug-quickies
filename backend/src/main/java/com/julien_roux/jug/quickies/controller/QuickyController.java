@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -109,7 +110,7 @@ public class QuickyController {
 	public String update(@Valid @ModelAttribute("quicky") QuickyDTO quickyDTO, @PathVariable BigInteger id, Model model, Principal principal) throws Exception {
 		Quicky quicky = quickyRepository.findOne(id);
 		
-		if(!quickyDTO.getEmail().equals(principal.getName())) {
+		if(principal == null || !StringUtils.equals(quickyDTO.getEmail(), principal.getName())) {
 			//TODO 
 			throw new Exception();
 		}

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -101,8 +102,12 @@ public class UserController {
 		return PROFILE_EDIT_PAGE;
 	}
 	
-	@RequestMapping(value = "/profile", method = RequestMethod.POST)
-	public String updateUser(@Valid @ModelAttribute("user") User userDTO, Model model, Principal principal) {
+	@RequestMapping(value = "/profile/edit", method = RequestMethod.POST)
+	public String updateUser(@Valid @ModelAttribute("user") User userDTO, Model model, Principal principal) throws Exception {
+		if(principal == null || !StringUtils.equals(userDTO.getEmail(), principal.getName())) {
+			throw new Exception();
+			//TODO
+		}
 		User user = userRepository.findByEmail(principal.getName());
 		user.setAbout(userDTO.getAbout());
 		user.setCompany(userDTO.getCompany());

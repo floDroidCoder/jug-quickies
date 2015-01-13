@@ -42,31 +42,37 @@ public abstract class AbstractControllerTest {
 	protected MockMvc mockMvc;
 
 	protected User user;
+	protected User admin;
 
 	private Authentication auth;
 
-	private UserDetails userDetails;
-	
 	@Before
 	public void setup() throws Exception {
 		this.mockMvc = webAppContextSetup(this.wac).alwaysExpect(status().isOk()).build();
+		
 		userRepository.deleteAll();
-		user = new User("julien@roux.com", "tOnP#reSuceDesCh4meauX", "USER_ROLE");
-		user.setAbout("about");
-		user.setCompany("company");
-		user.setFirstname("firstname");
-		user.setLastname("lastname");
-		user.setShamefulTechnologie("shamefulTechnologie");
 		
-		user = userRepository.save(user);
+		user = new User("julien@roux.com", "tOnPèreSuceD#sCh4me@uX", "USER_ROLE");
+		userRepository.save(user);
 		
-		userService.signin(user);
-        userDetails = userService.loadUserByUsername(user.getEmail());
-		auth = new UsernamePasswordAuthenticationToken(userDetails,null);
-        SecurityContextHolder.getContext().setAuthentication(auth);
-
+		admin = new User("florian@genaudet.com", "T@MèreB4iseDesDroMadAires", "USER_ADMIN");
+		userRepository.save(admin);
 	}
 	
+	protected void connectUser() {
+		userService.signin(user);
+		UserDetails userDetails = userService.loadUserByUsername(user.getEmail());
+		auth = new UsernamePasswordAuthenticationToken(userDetails,null);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+	}
+	
+	protected void connectAdmin() {
+		userService.signin(admin);
+		UserDetails userDetails = userService.loadUserByUsername(admin.getEmail());
+		auth = new UsernamePasswordAuthenticationToken(userDetails,null);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+	}
+ 	
 	protected MockHttpServletRequestBuilder prepareSecureRequest(MockHttpServletRequestBuilder builder) throws Exception {
 		return prepareNonSecureRequest(builder).principal(auth);
 	}

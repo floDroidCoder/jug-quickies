@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -41,6 +42,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	
 	@Test
 	public void findAll() throws Exception {
+		connectUser();
 		String url = "/quickies";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
 		ResultActions result = executeRequest(request);
@@ -49,6 +51,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	
 	@Test
 	public void getQuicky() throws Exception {
+		connectUser();
 		String url = "/quicky/{0}";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, quicky.getId()));
 		ResultActions result = executeRequest(request);
@@ -62,6 +65,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	
 	@Test
 	public void newQuicky() throws Exception {
+		connectUser();
 		String url = "/quicky/create";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
 		ResultActions result = executeRequest(request);
@@ -70,6 +74,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	
 	@Test
 	public void createQuicky() throws Exception {
+		connectUser();
 		String url = "/quicky/create";
 		QuickyDTO toCreate = new QuickyDTO();
 		toCreate.setDescription("description");
@@ -93,6 +98,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	
 	@Test
 	public void editQuicky() throws Exception {
+		connectUser();
 		String url = "/quicky/{0}/edit";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, quicky.getId()));
 		ResultActions result = executeRequest(request);
@@ -102,6 +108,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	
 	@Test
 	public void updateQuicky() throws Exception {
+		connectUser();
 		String url = "/quicky/{0}/edit";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, quicky.getId()).//
 				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
@@ -114,12 +121,27 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		result.andExpect(model().attributeExists("quicky"));
 	}
 
+	@Test(expected = Exception.class)
+	public void updateQuickyWrongUser() throws Exception {
+		connectUser();
+		String url = "/quicky/{0}/edit";
+		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, quicky.getId()).//
+				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
+				param("description", quicky.getDescription()).//
+				param("email", "fake@gmail.com").//
+				param("title", quicky.getTitle()).//
+				param("usergroup", quicky.getUsergroup()));
+		ResultActions result = executeRequest(request);
+		result.andExpect(status().isUnauthorized());
+	}
+	
 	// ************************************************************************
 	// Delete
 	// ************************************************************************
 	
 	@Test
 	public void deleteQuicky() throws Exception {
+		connectUser();
 		String url = "/quicky/{0}/delete";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, quicky.getId()));
 		ResultActions result = executeRequest(request);

@@ -22,6 +22,7 @@ public class UserControllerTest extends AbstractControllerTest {
 	
 	@Test
 	public void findAll() throws Exception {
+		connectUser();
 		String url = "/users";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
 		ResultActions result = executeRequest(request);
@@ -30,6 +31,7 @@ public class UserControllerTest extends AbstractControllerTest {
 	
 	@Test
 	public void getProfile() throws Exception {
+		connectUser();
 		String url = "/profile";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
 		ResultActions result = executeRequest(request);
@@ -39,6 +41,7 @@ public class UserControllerTest extends AbstractControllerTest {
 	
 	@Test
 	public void getUser() throws Exception {
+		connectUser();
 		String url = "/user/{0}";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, user.getId()));
 		ResultActions result = executeRequest(request);
@@ -52,6 +55,7 @@ public class UserControllerTest extends AbstractControllerTest {
 
 	@Test
 	public void createUser() throws Exception {
+		connectUser();
 		String url = "/user";
 		UserDTO toCreate = new UserDTO(user);
 		toCreate.setPassword(user.getPassword());
@@ -77,6 +81,7 @@ public class UserControllerTest extends AbstractControllerTest {
 
 	@Test
 	public void editUser() throws Exception {
+		connectUser();
 		String url = "/profile/edit";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, user.getId()));
 		ResultActions result = executeRequest(request);
@@ -86,7 +91,8 @@ public class UserControllerTest extends AbstractControllerTest {
 	
 	@Test
 	public void updateUser() throws Exception {
-		String url = "/user/{0}/edit";
+		connectUser();
+		String url = "/profile/edit";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, user.getId()).//
 				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
 				param("lastname", user.getLastname()).//
@@ -106,6 +112,7 @@ public class UserControllerTest extends AbstractControllerTest {
 
 	@Test
 	public void deleteUser() throws Exception {
+		connectUser();
 		String url = "/user/{0}/delete";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, user.getId()));
 		ResultActions result = executeRequest(request);
