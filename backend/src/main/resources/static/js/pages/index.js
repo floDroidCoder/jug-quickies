@@ -23,8 +23,8 @@ var bannerData = [
 React.render(
   <div>
   	<Carousel data={bannerData} id="carousel-kitten"/>
-  	<SessionList data={listOpenData} name="Next Sessions" url="/quickies"/>
-  	<SessionList data={listClosedData} name="Past Sessions" url="/quickies"/>
+  	<SessionList data={listOpenData} name="Next Sessions" url="/quickies" pollInterval="2000"/>
+  	<SessionList data={listClosedData} name="Past Sessions" url="/quickies" pollInterval="2000"/>
   </div>,
   document.getElementById('content')
 );
