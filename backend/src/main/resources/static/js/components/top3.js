@@ -28,9 +28,9 @@ var Session = React.createClass({
 var SessionList = React.createClass({
   getInitialState: function() {
 	    return {data: []};
-   },
-  componentDidMount: function() { 
-	    $.ajax({
+  },
+  loadData: function() {
+	  $.ajax({
 	      url: this.props.url,
 	      dataType: 'json',
 	      success: function(data) {
@@ -40,7 +40,11 @@ var SessionList = React.createClass({
 	        console.error(this.props.url, status, err.toString());
 	      }.bind(this)
 	    });
-	  },
+  },
+  componentDidMount: function() { 
+	this.loadData();
+	setInterval(this.loadData, this.props.pollInterval);
+  },
   render: function() {
   	var sessionNodes = this.state.data.map(function(session) {
   		return (
