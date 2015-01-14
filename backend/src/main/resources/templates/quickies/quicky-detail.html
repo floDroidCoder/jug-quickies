@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head th:include="common/header :: common-header">
-	<meta property="og:title" content="${quicky.title}">
+	<meta property="og:title" content="${quicky.title}" />
 	<meta property="og:site_name" content="JUG Quicky Challenge"/>
 	<meta property="og:url" content="http://sd-44145.dedibox.fr/quicky/${quicky.id}" />
 </head>
@@ -43,17 +43,18 @@
 						</div>
 						<div class="form-group row">
 							<div class="col-md-3 col-xs-4">
-								<a th:href="@{/quicky/{id}/edit(id=${quicky.id})}" class="btn btn-default btn-lg btn-block">
+								<a th:href="@{/quicky/{id}/vote(id=${quicky.id})}" class="btn btn-default btn-lg btn-block">
 									<i class="fa fa-thumbs-o-up"></i> Vote 
 								</a>
 							</div>
 							<div class="col-md-3 col-xs-4">
-								<a th:href="'https://www.facebook.com/sharer/sharer.php?u=' + @{/quicky/{id}/edit(id=${quicky.id})}" class="btn btn-default btn-lg btn-block">
+								<a th:href="'https://www.facebook.com/sharer/sharer.php?u=http://sd-44145.dedibox.fr' + @{/quicky/{id}(id=${quicky.id})}" class="btn btn-default btn-lg btn-block">
 									<i class="fa fa-facebook"></i> Share
 								</a>
 							</div>
 							<div class="col-md-3 col-xs-4">
-								<a th:href="@{/quicky/{id}/edit(id=${quicky.id})}" class="btn btn-default btn-lg btn-block">
+							
+								<a th:href="'http://www.twitter.com/share?url=' + @{/quicky/{id}(id=${quicky.id}) } + '&amp;text=${quicky.title}'" class="btn btn-default btn-lg btn-block">
 									<i class="fa fa-twitter"></i> Tweet
 								</a>
 							</div>
