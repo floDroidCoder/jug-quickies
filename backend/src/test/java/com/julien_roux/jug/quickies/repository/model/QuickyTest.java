@@ -11,6 +11,7 @@ public class QuickyTest extends AbstractEntityTest<Quicky> {
 		entity.setId(null);
 		entity.setPresenter(null);
 		entity.setSubmissionDate(new Date());
+		entity.setLocation("locationDb");
 		return entity;
 	}	
 }

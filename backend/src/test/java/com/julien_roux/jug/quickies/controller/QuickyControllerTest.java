@@ -5,10 +5,9 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 import java.util.Date;
 
@@ -16,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.web.util.RedirectUrlBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -38,6 +36,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		quicky = new Quicky("Jsf en environnement pro", "du troll de qualité", "jug");
 		quicky.setSubmissionDate(new Date());
 		quicky.setPresenter(user);
+		quicky.setLocation("Edinburgh");
 		quickyRepository.save(quicky);
 		assertThat(quicky.getId()).isNotNull();
 	}
@@ -92,14 +91,16 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		connectUser();
 		String url = "/quicky/create";
 		QuickyDTO toCreate = new QuickyDTO();
-		toCreate.setDescription("description");
-		toCreate.setTitle("title");
-		toCreate.setUsergroup("usergroup");
+		toCreate.setDescription("JavaServer Faces (abrégé en JSF) est un framework Java.");
+		toCreate.setTitle("JSF est la meilleure technologie du moment.");
+		toCreate.setLocation("Genève");
+		toCreate.setUsergroup("GenevaJug");
 		
 		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url).//
 				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
 				param("description", toCreate.getDescription()).//
 				param("title", toCreate.getTitle()).//
+				param("location", toCreate.getLocation()).//
 				param("usergroup", toCreate.getUsergroup()));
 		
 		ResultActions result = executeRequest(request);

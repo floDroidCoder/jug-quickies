@@ -15,6 +15,7 @@ public class QuickyDTOTest extends AbstractModelTest<QuickyDTO> {
 		dto.setSubmissionDate(new Date());
 		dto.setTitle("title");
 		dto.setUsergroup("usergroup");
+		dto.setId("id");
 		return dto;
 	}
 

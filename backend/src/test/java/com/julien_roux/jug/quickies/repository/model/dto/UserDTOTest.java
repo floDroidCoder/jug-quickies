@@ -16,6 +16,7 @@ public class UserDTOTest extends AbstractModelTest<UserDTO> {
 		dto.setPassword("password");
 		dto.setRole("role");
 		dto.setShamefulTechnologie("shamefulTechnologie");
+		dto.setId("id");
 		return dto;
 	}
 
