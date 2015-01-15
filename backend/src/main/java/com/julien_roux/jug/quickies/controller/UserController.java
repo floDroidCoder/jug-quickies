@@ -68,12 +68,7 @@ public class UserController {
 	// ************************************************************************
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
-	public String create(@Valid @ModelAttribute("user") UserDTO userDTO, Model model, Principal principal) throws Exception {
-		if(!userDTO.getEmail().equals(principal.getName())) {
-			//TODO 
-			throw new Exception();
-		}
-		
+	public String create(@Valid @ModelAttribute("user") UserDTO userDTO, Model model) throws Exception {
 		User user = new User();
 		user.setAbout(userDTO.getAbout());
 		user.setCompany(userDTO.getCompany());
