@@ -2,7 +2,8 @@
 var Session = React.createClass({
   render: function() {
   	var dateClass = 'session-date ' + (this.props.session.open ? 'open' : 'closed');
-
+    var user =  this.props.session.presenter.firstname ? this.props.session.presenter.firstname + ' ' + this.props.session.presenter.lastname : this.props.session.presenter.email;
+    	
     return (
       <div className="session row">
       	<div className="col-xs-3 col-sm-2 like">
@@ -11,7 +12,7 @@ var Session = React.createClass({
       	<div className="col-xs-9 col-sm-10 session-text">
         	<p>
         		<a href={'/quicky/' + this.props.session.id }>{this.props.session.title}</a>&nbsp;
-        	 	by <a href={'/user/' + this.props.session.presenter.id} className="authorLink">{this.props.session.presenter.firstname} {this.props.session.presenter.lastname}</a>
+        	 	by <a href={'/user/' + this.props.session.presenter.id} className="authorLink">{user}</a>
         	 </p>
         	<p className={dateClass}>
         		<span className="glyphicon glyphicon-calendar"></span>&nbsp;{new Date(this.props.session.submissionDate).format('dd-mm-yyyy HH:MM')}
