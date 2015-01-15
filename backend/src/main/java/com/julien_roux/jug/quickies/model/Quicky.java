@@ -14,7 +14,6 @@ public class Quicky extends Entity {
 
 	private User presenter;
 
-	@DateTimeFormat(pattern = "YYYY-MM-DD hh:mm")
 	private Date submissionDate;
 
 	public Quicky() {

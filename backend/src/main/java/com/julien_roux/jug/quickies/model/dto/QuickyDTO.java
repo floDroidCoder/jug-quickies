@@ -1,7 +1,9 @@
 package com.julien_roux.jug.quickies.model.dto;
 
+import java.math.BigInteger;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -29,6 +31,18 @@ public class QuickyDTO {
 		this.email = quicky.getPresenter().getEmail();
 		this.submissionDate = quicky.getSubmissionDate();
 		this.setLocation(quicky.getLocation());
+	}
+	
+	public Quicky toQuicky() {
+		Quicky quicky = new Quicky();
+		quicky.setDescription(this.getDescription());
+		quicky.setLocation(this.getLocation());
+		quicky.setUsergroup(this.getUsergroup());
+		quicky.setTitle(this.getTitle());
+		quicky.setSubmissionDate(this.getSubmissionDate());
+		quicky.setId(StringUtils.isEmpty(this.id) ? null : new BigInteger(this.id));
+		
+		return quicky;
 	}
 
 	@Override

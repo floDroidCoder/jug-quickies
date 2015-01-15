@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.julien_roux.jug.quickies.exception.UnauthorizedActionException;
 import com.julien_roux.jug.quickies.model.Quicky;
 import com.julien_roux.jug.quickies.model.User;
 import com.julien_roux.jug.quickies.model.dto.QuickyDTO;
@@ -77,15 +78,9 @@ public class QuickyController {
             return EDIT_PAGE;
         }
 		
-		Quicky quicky = new Quicky();
-		quicky.setDescription(quickyDTO.getDescription());
-		quicky.setUsergroup(quickyDTO.getUsergroup());
-		quicky.setTitle(quickyDTO.getTitle());
-		quicky.setSubmissionDate(quickyDTO.getSubmissionDate());
-		quicky.setId(null);
+		Quicky quicky = quickyDTO.toQuicky();
 		
 		User presenter = userRepository.findByEmail(principal.getName());		
-		
 		quicky.setPresenter(presenter);
 		quickyRepository.save(quicky);
 		
@@ -100,9 +95,8 @@ public class QuickyController {
 	@RequestMapping(value = "/quicky/{id}/edit", method = RequestMethod.GET)
 	public String edit(@PathVariable BigInteger id, Model model, Principal principal) throws Exception {
 		Quicky quicky = quickyRepository.findOne(id);
-		if(!quicky.getPresenter().getEmail().equals(principal.getName())) {
-			//TODO 
-			throw new Exception();
+		if(principal == null || !quicky.getPresenter().getEmail().equals(principal.getName())) {
+			throw new UnauthorizedActionException();
 		}
 		model.addAttribute("quicky", new QuickyDTO(quicky));
 		model.addAttribute("dateformat", "yyyy-MM-dd'T'HH:mm");

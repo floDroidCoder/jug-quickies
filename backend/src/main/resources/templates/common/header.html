@@ -6,7 +6,7 @@
 	<head th:fragment="common-header">
 		<title>Jug quickies</title>
 		
-		<meta charset="utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
 	
 		<link rel="icon" href="favicon.ico" />
@@ -15,6 +15,10 @@
 		<link rel="stylesheet" type="text/less" href="/bower_components/font-awesome/css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/less" href="/css/bootstrap.theme.less" />
 		<link rel="stylesheet" type="text/less" href="/css/style.less" />
+		
+		<!--[if lt IE 9]>
+		    <script src="bower_components/html5shiv/dist/html5shiv.js"></script>
+		<![endif]-->
 		
 		<script type="text/javascript" src="/bower_components/less/dist/less.min.js"></script>
 		<script src="/bower_components/react/react.js"></script>

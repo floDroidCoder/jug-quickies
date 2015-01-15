@@ -34,9 +34,9 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		
 		quickyRepository.deleteAll();
 		quicky = new Quicky("Jsf en environnement pro", "du troll de qualité", "jug");
+		quicky.setLocation("HEPIA");
 		quicky.setSubmissionDate(new Date());
 		quicky.setPresenter(user);
-		quicky.setLocation("Edinburgh");
 		quickyRepository.save(quicky);
 		assertThat(quicky.getId()).isNotNull();
 	}
@@ -91,17 +91,18 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		connectUser();
 		String url = "/quicky/create";
 		QuickyDTO toCreate = new QuickyDTO();
-		toCreate.setDescription("JavaServer Faces (abrégé en JSF) est un framework Java.");
-		toCreate.setTitle("JSF est la meilleure technologie du moment.");
-		toCreate.setLocation("Genève");
-		toCreate.setUsergroup("GenevaJug");
+		toCreate.setDescription("description");
+		toCreate.setTitle("title");
+		toCreate.setUsergroup("usergroup");
+		toCreate.setLocation("location");
 		
 		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url).//
 				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
 				param("description", toCreate.getDescription()).//
 				param("title", toCreate.getTitle()).//
-				param("location", toCreate.getLocation()).//
-				param("usergroup", toCreate.getUsergroup()));
+				param("usergroup", toCreate.getUsergroup()).
+				param("location", toCreate.getLocation())
+				);
 		
 		ResultActions result = executeRequest(request);
 		result.andExpect(status().isOk());
@@ -133,7 +134,8 @@ public class QuickyControllerTest extends AbstractControllerTest {
 				param("description", quicky.getDescription()).//
 				param("email", quicky.getPresenter().getEmail()).//
 				param("title", quicky.getTitle()).//
-				param("usergroup", quicky.getUsergroup()));
+				param("usergroup", quicky.getUsergroup()).//
+				param("location", quicky.getLocation()));
 		ResultActions result = executeRequest(request);
 		result.andExpect(status().isOk());
 		result.andExpect(view().name("/quickies/quicky-detail"));
