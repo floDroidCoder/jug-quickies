@@ -39,15 +39,15 @@
 					      <input type="password" class="form-control" name="password" placeholder="Password" />
 					    </div>
 					  </div>
-					  <div class="form-group">
-					    <div class="col-sm-offset-2 col-sm-10">
-					      <div class="checkbox">
-					        <label>
-					          <input type="checkbox" /> Remember me
-					        </label>
-					      </div>
-					    </div>
-					  </div>
+<!-- 					  <div class="form-group"> -->
+<!-- 					    <div class="col-sm-offset-2 col-sm-10"> -->
+<!-- 					      <div class="checkbox"> -->
+<!-- 					        <label> -->
+<!-- 					          <input type="checkbox" /> Remember me -->
+<!-- 					        </label> -->
+<!-- 					      </div> -->
+<!-- 					    </div> -->
+<!-- 					  </div> -->
 			        </form>
 			      </div>
 			    </div>
@@ -76,20 +76,20 @@
 						    </div>
 						  </div>
 						  <div class="form-group">
-						    <label for="inputPassword4" class="col-sm-2 control-label">Confirm Password</label>
+						    <label for="confirmPassword" class="col-sm-2 control-label">Confirm Password</label>
 						    <div class="col-sm-10">
-						      <input type="password" class="form-control" id="inputPassword4" placeholder="Password" />
+						      <input type="password" class="form-control" name="confirmPassword" placeholder="Password" />
 						    </div>
 						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-2 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input type="checkbox" /> Remember me
-						        </label>
-						      </div>
-						    </div>
-						  </div>
+<!-- 						  <div class="form-group"> -->
+<!-- 						    <div class="col-sm-offset-2 col-sm-10"> -->
+<!-- 						      <div class="checkbox"> -->
+<!-- 						        <label> -->
+<!-- 						          <input type="checkbox" /> Remember me -->
+<!-- 						        </label> -->
+<!-- 						      </div> -->
+<!-- 						    </div> -->
+<!-- 						  </div> -->
 						</form>
 			      </div>
 			    </div>
@@ -105,16 +105,23 @@
   	</div>
   	
   	<script>
+  		//<![CDATA[
 	  	function handleClick() {
 	  		var form = $('#accordion .collapse.in form');
-	  		var username = $('#accordion .collapse.in input[name="username"]');
+	  		var email = $('#accordion .collapse.in input[name="email"]');
 	  		var password = $('#accordion .collapse.in input[name="password"]');
+	  		var confirm = $('#accordion .collapse.in input[name="confirmPassword"]');
 	  		var csrf = $('#accordion .collapse.in input[name="_csrf"]');
 	  		var action = form.attr('action');
 	  		
+	  		if (confirm && confirm.val() != password.val()) {
+	  			$('#errors').show();
+	  			return false;
+	  		}
+	  		
   			$.post(action,
  					{
- 						username: username.val(),
+ 						email: email.val(),
  						password: password.val(),
  						_csrf: csrf.val()
  					}
@@ -128,6 +135,7 @@
 	  	function close() {
 	  		$('#errors').hide();
 	  	}
+	  	//]]>
   	</script>
 </body>
 </html>
