@@ -7,7 +7,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Document
+@Document(collection = "jug_quicky")
 public class Quicky extends Entity {
 
 	private String title, description, usergroup, location;

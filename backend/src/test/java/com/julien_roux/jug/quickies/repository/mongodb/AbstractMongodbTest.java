@@ -17,7 +17,7 @@ import com.julien_roux.jug.quickies.QuickiesLauncher;
 import com.julien_roux.jug.quickies.model.Entity;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/META-INF/spring/application-test-context.xml"})
+@SpringApplicationConfiguration(classes = {QuickiesLauncher.class})
 public abstract class AbstractMongodbTest<T extends Entity> {
 	
 	@Autowired

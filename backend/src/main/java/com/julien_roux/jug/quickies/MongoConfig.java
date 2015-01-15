@@ -1,5 +1,6 @@
 package com.julien_roux.jug.quickies;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
@@ -14,14 +15,20 @@ import com.mongodb.WriteConcern;
 @EnableMongoRepositories
 public class MongoConfig extends AbstractMongoConfiguration {
 
-	@Override
-	protected String getDatabaseName() {
-		return "genevajug";
-	}
+    @Value("${mongo.db.name}")
+    private String databaseName;
+
+    @Value("${mongo.db.server}")
+    private String databaseServer;
+
+    @Override
+    public String getDatabaseName() {
+        return databaseName;
+    }
 
 	@Override
 	public Mongo mongo() throws Exception {
-		Mongo mongo = new MongoClient();
+		Mongo mongo = new MongoClient(databaseServer);
 		mongo.setWriteConcern(WriteConcern.SAFE);
 		return mongo;
 	}

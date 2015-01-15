@@ -8,15 +8,15 @@ public class UserDTOTest extends AbstractModelTest<UserDTO> {
 	@Override
 	public UserDTO getEntity() {
 		UserDTO dto = new UserDTO();
-		dto.setAbout("about");
-		dto.setCompany("company");
-		dto.setEmail("email");
-		dto.setFirstname("firstname");
-		dto.setLastname("lastname");
-		dto.setPassword("password");
-		dto.setRole("role");
-		dto.setShamefulTechnologie("shamefulTechnologie");
-		dto.setId("id");
+		dto.setAbout("about dto");
+		dto.setCompany("company dto");
+		dto.setEmail("email dto");
+		dto.setFirstname("firstname dto");
+		dto.setLastname("lastname dto");
+		dto.setPassword("password dto");
+		dto.setRole("role dto");
+		dto.setShamefulTechnologie("shamefulTechnologie dto");
+		dto.setId("id dto");
 		return dto;
 	}
 
