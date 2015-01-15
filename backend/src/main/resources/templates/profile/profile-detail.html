@@ -21,23 +21,23 @@
 							</div>
 							<div class="form-group">
 								<label>Firstname</label>
-								[[${user.firstname}]]
+								[[${user.firstname == null ? '--' : user.firstname}]]
 							</div>
 							<div class="form-group">
 								<label>Lastname</label>
-								[[${user.lastname}]]
+								[[${user.lastname == null ? '--' : user.lastname}]]
 							</div>
 							<div class="form-group">
 								<label>Company</label>
-								[[${user.company}]]
+								[[${user.company == null ? '--' : user.company}]]
 							</div>
 							<div class="form-group">
 								<label>About</label>
-								[[${user.about}]]
+								[[${user.about == null ? '--' : user.about}]]
 							</div>
 							<div class="form-group">
 								<label>Technos</label>
-								[[${user.shamefulTechnologie}]]
+								[[${user.shamefulTechnologie == null ? '--' : user.shamefulTechnologie}]]
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-6">
