@@ -5,9 +5,11 @@ import java.util.Collections;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+@Document(collection = "jug_user")
 public class User extends Entity {
 
 	public static final String ROLE_USER = "ROLE_USER";
