@@ -1,6 +1,5 @@
 package com.julien_roux.jug.quickies.model.dto;
 
-import java.math.BigInteger;
 import java.util.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;

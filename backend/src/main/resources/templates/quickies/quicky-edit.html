@@ -33,7 +33,8 @@
 	  				      <div class="form-group">
 	  				        <label for="submissionDate" class="col-sm-2 control-label">Date</label>
 	  				        <div class="col-sm-10">
-	  				          <input type="datetime-local" class="form-control" name="submissionDate" placeholder="Date" th:value="${quicky.submissionDate}"/>
+	  				          <input type="datetime-local" class="form-control" name="submissionDate" placeholder="Date" 
+	  				          	th:value="${#calendars.format(quicky.submissionDate, dateformat)}"/>
 	  				        </div>
 	  				      </div>
 	  				      <div class="form-group">
@@ -41,9 +42,9 @@
 	  				        <div class="col-sm-10">
 	  				          <select class="form-control" name="usergroup" th:value="${quicky.usergroup}">
 	  				          	<option value="">--</option>
-	  				          	<option value="JUG">Java User Group</option>
-	  				          	<option value="JSR">JS Romandie</option>
-	  				          	<option value="NUG">.Net User Group</option>
+	  				          	<option value="JUG" th:selected="${quicky.usergroup == 'JUG'}">Java User Group</option>
+	  				          	<option value="JSR" th:selected="${quicky.usergroup == 'JSR'}">JS Romandie</option>
+	  				          	<option value="NUG" th:selected="${quicky.usergroup == 'NUG'}">.Net User Group</option>
 	  				          	
 	  				          </select>
 	  				        </div>

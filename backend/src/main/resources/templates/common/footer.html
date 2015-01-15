@@ -1,4 +1,6 @@
-<html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
 	<body th:fragment="common-footer">
 		<div class="footer">
 			<div id="twitter"></div>
@@ -11,9 +13,12 @@
 		
 		<!-- TWITTER -->
 		<script type="text/javascript" src="/bower_components/twitter-fetcher/js/twitterFetcher_min.js"></script>
-		<script type="text/javascript" src="/js/components/twitter_wall.js"></script>
-		<script type="text/javascript">
-			TwitterWall.fetch();
+		<script type="text/jsx" src="/js/components/twitter_wall.js"></script>
+		<script type="text/jsx">
+			React.render(
+				<TwitterWall domId="twitter" pollInterval="10000" />,
+ 				document.getElementById('twitter')
+			);
 		</script>
 	</body>
 </html>

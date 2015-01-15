@@ -105,6 +105,7 @@ public class QuickyController {
 			throw new Exception();
 		}
 		model.addAttribute("quicky", new QuickyDTO(quicky));
+		model.addAttribute("dateformat", "yyyy-MM-dd'T'HH:mm");
 		return EDIT_PAGE;
 	}
 
