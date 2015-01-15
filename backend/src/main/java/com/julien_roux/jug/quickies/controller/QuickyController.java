@@ -77,15 +77,9 @@ public class QuickyController {
             return EDIT_PAGE;
         }
 		
-		Quicky quicky = new Quicky();
-		quicky.setDescription(quickyDTO.getDescription());
-		quicky.setUsergroup(quickyDTO.getUsergroup());
-		quicky.setTitle(quickyDTO.getTitle());
-		quicky.setSubmissionDate(quickyDTO.getSubmissionDate());
-		quicky.setId(null);
+		Quicky quicky = quickyDTO.toQuicky();
 		
 		User presenter = userRepository.findByEmail(principal.getName());		
-		
 		quicky.setPresenter(presenter);
 		quickyRepository.save(quicky);
 		

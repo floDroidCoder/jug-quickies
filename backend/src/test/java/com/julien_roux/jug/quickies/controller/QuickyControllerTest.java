@@ -5,10 +5,9 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 import java.util.Date;
 
@@ -16,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.web.util.RedirectUrlBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -36,6 +34,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		
 		quickyRepository.deleteAll();
 		quicky = new Quicky("Jsf en environnement pro", "du troll de qualité", "jug");
+		quicky.setLocation("HEPIA");
 		quicky.setSubmissionDate(new Date());
 		quicky.setPresenter(user);
 		quickyRepository.save(quicky);
@@ -95,12 +94,15 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		toCreate.setDescription("description");
 		toCreate.setTitle("title");
 		toCreate.setUsergroup("usergroup");
+		toCreate.setLocation("location");
 		
 		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url).//
 				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
 				param("description", toCreate.getDescription()).//
 				param("title", toCreate.getTitle()).//
-				param("usergroup", toCreate.getUsergroup()));
+				param("usergroup", toCreate.getUsergroup()).
+				param("location", toCreate.getLocation())
+				);
 		
 		ResultActions result = executeRequest(request);
 		result.andExpect(status().isOk());
@@ -132,7 +134,8 @@ public class QuickyControllerTest extends AbstractControllerTest {
 				param("description", quicky.getDescription()).//
 				param("email", quicky.getPresenter().getEmail()).//
 				param("title", quicky.getTitle()).//
-				param("usergroup", quicky.getUsergroup()));
+				param("usergroup", quicky.getUsergroup()).//
+				param("location", quicky.getLocation()));
 		ResultActions result = executeRequest(request);
 		result.andExpect(status().isOk());
 		result.andExpect(view().name("/quickies/quicky-detail"));
