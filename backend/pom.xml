@@ -136,7 +136,9 @@
 						<executable>bower</executable>
 						<workingDirectory>${basedir}/src/main/resources/static</workingDirectory>
 						<arguments>
-							<argument>install update -f</argument>
+							<argument>install</argument>
+							<argument>update</argument>
+							<argument>-f</argument>
 						</arguments>
 					</configuration>
 				</plugin>
