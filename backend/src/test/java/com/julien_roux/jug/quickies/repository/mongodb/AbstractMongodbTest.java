@@ -6,18 +6,26 @@ import java.math.BigInteger;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.julien_roux.jug.quickies.QuickiesLauncher;
 import com.julien_roux.jug.quickies.model.Entity;
-import com.julien_roux.jug.quickies.repository.model.AbstractEntityTest;
 
-public abstract class AbstractMongodbTest<T extends Entity> extends AbstractEntityTest<T> {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"/META-INF/spring/application-test-context.xml"})
+public abstract class AbstractMongodbTest<T extends Entity> {
 	
 	@Autowired
 	protected MongoRepository<T, BigInteger> repository;
 
 	abstract void updateEntity(T entity);
+
+	public abstract T getEntity();
 	
 	@Before
 	public void setup() {

@@ -68,6 +68,7 @@ public class UserControllerTest extends AbstractControllerTest {
 				param("password", toCreate.getPassword()).//
 				param("company", toCreate.getCompany()).//
 				param("about", toCreate.getAbout()).//
+				param("role", toCreate.getRole()).//
 				param("shamefulTechnologie", toCreate.getShamefulTechnologie()));
 		
 		ResultActions result = executeRequest(request);
