@@ -48,7 +48,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
 		ResultActions result = executeRequest(request);
 		result.andExpect(status().isOk());
-		result.andExpect(content().string(startsWith("[{\"id\":"+quicky.getId())));
+		result.andExpect(content().string(startsWith("[{\"id\":\""+quicky.getId() + "\"")));
 	}
 	
 	@Test

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.julien_roux.jug.quickies.exception.UnauthorizedActionException;
 import com.julien_roux.jug.quickies.model.User;
 import com.julien_roux.jug.quickies.model.dto.UserDTO;
 import com.julien_roux.jug.quickies.repository.UserRepository;
@@ -91,7 +92,10 @@ public class UserController {
 	// ************************************************************************
 
 	@RequestMapping(value = "/profile/edit", method = RequestMethod.GET)
-	public String editProfile(Principal principal, Model model) {
+	public String editProfile(Principal principal, Model model) throws UnauthorizedActionException {
+		if (principal == null) {
+			throw new UnauthorizedActionException();
+		}
 		User user = userRepository.findByEmail(principal.getName());
 		model.addAttribute("user", new UserDTO(user));
 		return PROFILE_EDIT_PAGE;
@@ -100,18 +104,14 @@ public class UserController {
 	@RequestMapping(value = "/profile/edit", method = RequestMethod.POST)
 	public String updateUser(@Valid @ModelAttribute("user") User userDTO, Model model, Principal principal) throws Exception {
 		if(principal == null || !StringUtils.equals(userDTO.getEmail(), principal.getName())) {
-			throw new Exception();
-			//TODO
+			throw new UnauthorizedActionException();
 		}
 		User user = userRepository.findByEmail(principal.getName());
 		user.setAbout(userDTO.getAbout());
 		user.setCompany(userDTO.getCompany());
 		user.setEmail(userDTO.getEmail());
 		user.setFirstname(userDTO.getFirstname());
-		//user.setId(null);
 		user.setLastname(userDTO.getLastname());
-		user.setPassword(userDTO.getPassword());
-		//user.setRole("USER_ROLE");
 		user.setShamefulTechnologie(userDTO.getShamefulTechnologie());
 		
 		userRepository.save(user);

@@ -8,7 +8,7 @@
 
   	<div class="container">
   		<div class="row">
-  			<div class="col-xs-12 col-md-8">
+  			<div class="col-xs-12 col-md-8 col-md-offset-2">
   				<div class="panel panel-default">
   				  <div class="panel-heading">
   				    <h3 class="panel-title text-center">My Profile</h3>
@@ -43,13 +43,13 @@
   				      <div class="form-group">
   				        <label for="about" class="col-sm-2 control-label">About you</label>
   				        <div class="col-sm-10">
-  				          <textarea class="form-control" rows="3" name="about" th:value="${user.about}"></textarea>
+  				          <textarea class="form-control" rows="3" name="about" th:inline="text">[[${user.about}]]</textarea>
   				        </div>
   				      </div>
   				      <div class="form-group">
   				        <label for="shamefulTechnologie" class="col-sm-2 control-label">Shameful technos you like</label>
   				        <div class="col-sm-10">
-  				          <textarea class="form-control" rows="3" name="shamefulTechnologie" th:value="${user.shamefulTechnologie}"></textarea>
+  				          <textarea class="form-control" rows="3" name="shamefulTechnologie" th:inline="text">[[${user.shamefulTechnologie}]]</textarea>
   				        </div>
   				      </div>
   				      <div class="form-group">
@@ -62,27 +62,27 @@
   				</div>
   			</div>
 
-			<div class="col-xs-6 col-md-4">
-				<div class="panel panel-default">
-  				  <div class="panel-heading">
-  				    <h3 class="panel-title text-center">Next Sessions</h3>
-  				  </div>
-  				  <div class="panel-body">
-  				  	...
-  				  </div>
-  				</div>
-			</div>
+<!-- 			<div class="col-xs-6 col-md-4"> -->
+<!-- 				<div class="panel panel-default"> -->
+<!--   				  <div class="panel-heading"> -->
+<!--   				    <h3 class="panel-title text-center">Next Sessions</h3> -->
+<!--   				  </div> -->
+<!--   				  <div class="panel-body"> -->
+<!--   				  	... -->
+<!--   				  </div> -->
+<!--   				</div> -->
+<!-- 			</div> -->
 
-			<div class="col-xs-6 col-md-4">
-				<div class="panel panel-default">
-  				  <div class="panel-heading">
-  				    <h3 class="panel-title text-center">Attended Sessions</h3>
-  				  </div>
-  				  <div class="panel-body">
-  				  	...
-  				  </div>
-  				</div>
-			</div>
+<!-- 			<div class="col-xs-6 col-md-4"> -->
+<!-- 				<div class="panel panel-default"> -->
+<!--   				  <div class="panel-heading"> -->
+<!--   				    <h3 class="panel-title text-center">Attended Sessions</h3> -->
+<!--   				  </div> -->
+<!--   				  <div class="panel-body"> -->
+<!--   				  	... -->
+<!--   				  </div> -->
+<!--   				</div> -->
+<!-- 			</div> -->
 
   		</div>
   	</div>

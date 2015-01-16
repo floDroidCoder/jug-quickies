@@ -2,7 +2,7 @@ package com.julien_roux.jug.quickies.controller;
 
 import java.math.BigInteger;
 import java.security.Principal;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -50,8 +50,15 @@ public class QuickyController {
 	@RequestMapping(value = "/quickies", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<Quicky> findAll() {
-		return quickyRepository.findAll();
+	public List<QuickyDTO> findAll() {
+		List<Quicky> quickies = quickyRepository.findAll();
+		List<QuickyDTO> quickyList = new ArrayList<QuickyDTO>();
+		for (Quicky quicky : quickies) {
+			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
+			quicky.setPresenter(tmpUser);
+			quickyList.add(new QuickyDTO(quicky));
+		}
+		return quickyList;
 	}
 
 	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.GET)
@@ -82,7 +89,7 @@ public class QuickyController {
 		
 		User presenter = userRepository.findByEmail(principal.getName());		
 		quicky.setPresenter(presenter);
-		quickyRepository.save(quicky);
+		quicky = quickyRepository.save(quicky);
 		
 		model.addAttribute("quicky", new QuickyDTO(quicky));
 		return DETAIL_PAGE;

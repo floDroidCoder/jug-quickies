@@ -16,6 +16,8 @@ public class QuickyDTO {
 	private String id;
 	private String title, description, usergroup, email, location;
 
+	private String presenterName, presenterId;
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date submissionDate;
 
@@ -24,15 +26,17 @@ public class QuickyDTO {
 
 	public QuickyDTO(Quicky quicky) {
 		this();
-		this.id = String.valueOf(quicky.getId());
+		this.id = quicky.getId() != null ? String.valueOf(quicky.getId()) : StringUtils.EMPTY;
 		this.title = quicky.getTitle();
 		this.description = quicky.getDescription();
 		this.usergroup = quicky.getUsergroup();
 		this.email = quicky.getPresenter().getEmail();
+		this.presenterName = quicky.getPresenter().getFirstname() + " " + quicky.getPresenter().getLastname();
+		this.presenterId = String.valueOf(quicky.getPresenter().getId());
 		this.submissionDate = quicky.getSubmissionDate();
 		this.setLocation(quicky.getLocation());
 	}
-	
+
 	public Quicky toQuicky() {
 		Quicky quicky = new Quicky();
 		quicky.setDescription(this.getDescription());
@@ -41,7 +45,7 @@ public class QuickyDTO {
 		quicky.setTitle(this.getTitle());
 		quicky.setSubmissionDate(this.getSubmissionDate());
 		quicky.setId(StringUtils.isEmpty(this.id) ? null : new BigInteger(this.id));
-		
+
 		return quicky;
 	}
 
@@ -60,21 +64,21 @@ public class QuickyDTO {
 			return false;
 		QuickyDTO other = (QuickyDTO) obj;
 		return new EqualsBuilder().//
-				append(title, other.title).//
-				append(description, other.description).//
-				append(location, other.location).//
-				append(submissionDate, other.submissionDate).//
-				append(email, other.email).isEquals();
+		            append(title, other.title).//
+		            append(description, other.description).//
+		            append(location, other.location).//
+		            append(submissionDate, other.submissionDate).//
+		            append(email, other.email).isEquals();
 	}
 
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().//
-				append(title).//
-				append(description).//
-				append(location).//
-				append(submissionDate).//
-				append(email).toHashCode();
+		            append(title).//
+		            append(description).//
+		            append(location).//
+		            append(submissionDate).//
+		            append(email).toHashCode();
 	}
 
 	public String getTitle() {
@@ -131,5 +135,21 @@ public class QuickyDTO {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getPresenterName() {
+		return presenterName;
+	}
+
+	public void setPresenterName(String presenterName) {
+		this.presenterName = presenterName;
+	}
+
+	public String getPresenterId() {
+		return presenterId;
+	}
+
+	public void setPresenterId(String presenterId) {
+		this.presenterId = presenterId;
 	}
 }

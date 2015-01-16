@@ -1,12 +1,44 @@
 <!DOCTYPE html>
-<html
-	xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org">
-	<head th:include="common/header :: common-header"></head>
-	
-	<body>
-		<nav th:replace="common/navbar :: navbar"></nav>
-		USER DETAIL
-	  	<div th:replace="common/footer :: common-footer"></div>
-	</body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header :: common-header"></head>
+
+<body>
+	<nav th:replace="common/navbar :: navbar"></nav>
+	<div class="container" th:inline="text">
+		<div class="row">
+			<div class="col-xs-12 col-md-8 col-md-offset-2">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title text-center" th:inline="text">[[${user.firstname + ' ' + user.lastname}]]</h3>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label>Email</label> [[${user.email}]]
+						</div>
+						<div class="form-group">
+							<label>Company</label> [[${user.company == null ? '--' :
+							user.company}]]
+						</div>
+						<div class="form-group">
+							<label>About</label> [[${user.about == null ? '--' :
+							user.about}]]
+						</div>
+						<div class="form-group">
+							<label>Technos</label> [[${user.shamefulTechnologie == null ?
+							'--' : user.shamefulTechnologie}]]
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-6">
+								<a th:href="@{/profile/edit}"
+									class="btn btn-default btn-lg btn-block">Edit</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="common/footer :: common-footer"></div>
+</body>
 </html>
