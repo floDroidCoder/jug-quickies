@@ -48,6 +48,25 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="row">
+			<div class="col-xs-12 col-md-8 col-md-offset-2">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						My Quickies
+					</div>
+					<div class="panel-body">
+						<div th:each="quicky: ${quickies}" class="col-xs-12">
+							<a th:href="@{/quicky/{id}(id=${quicky.id})}">
+					        	<span th:text="${quicky.title}">Title</span>
+					        </a>
+					        <span th:text="${quicky.submissionDate}">Date</span>
+					        <span th:text="${quicky.location}">Location</span>
+					      </div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div th:replace="common/footer :: common-footer"></div>

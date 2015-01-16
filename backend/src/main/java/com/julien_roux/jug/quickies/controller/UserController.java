@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.julien_roux.jug.quickies.exception.UnauthorizedActionException;
+import com.julien_roux.jug.quickies.model.Quicky;
 import com.julien_roux.jug.quickies.model.User;
 import com.julien_roux.jug.quickies.model.dto.UserDTO;
+import com.julien_roux.jug.quickies.repository.QuickyRepository;
 import com.julien_roux.jug.quickies.repository.UserRepository;
 import com.julien_roux.jug.quickies.security.UserService;
 
@@ -30,14 +32,13 @@ public class UserController {
 	private static final String PROFILE_EDIT_PAGE = "/profile/profile-edit";
 	private static final String PROFILE_DETAIL_PAGE = "/profile/profile-detail";
 	private static final String USER_DETAIL_PAGE = "/users/user-detail";
-	private UserRepository userRepository;
-	private UserService userService;
 
 	@Autowired
-	public UserController(UserRepository userRepository, UserService userService) {
-		this.userRepository = userRepository;
-		this.userService = userService;
-	}
+	private UserRepository userRepository;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private QuickyRepository quickyRepository;
 
 	// ************************************************************************
 	// Get
@@ -57,9 +58,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public String getProfile(Principal principal, Model model) {
+	public String getProfile(Principal principal, Model model) throws Exception {
+		if (principal == null) {
+			throw new UnauthorizedActionException();
+		}
 		User user = userRepository.findByEmail(principal.getName());
-		System.out.println(user);
+		List<Quicky> quickies = quickyRepository.findByPresenter(user);
+		model.addAttribute("quickies", quickies);
 		model.addAttribute("user", new UserDTO(user));
 		return PROFILE_DETAIL_PAGE;
 	}
@@ -80,7 +85,7 @@ public class UserController {
 		user.setPassword(userDTO.getPassword());
 		user.setRole("USER_ROLE");
 		user.setShamefulTechnologie(userDTO.getShamefulTechnologie());
-		
+
 		userRepository.save(user);
 		userService.signin(user);
 		model.addAttribute("user", new UserDTO(user));
@@ -100,10 +105,11 @@ public class UserController {
 		model.addAttribute("user", new UserDTO(user));
 		return PROFILE_EDIT_PAGE;
 	}
-	
+
 	@RequestMapping(value = "/profile/edit", method = RequestMethod.POST)
-	public String updateUser(@Valid @ModelAttribute("user") User userDTO, Model model, Principal principal) throws Exception {
-		if(principal == null || !StringUtils.equals(userDTO.getEmail(), principal.getName())) {
+	public String updateUser(@Valid @ModelAttribute("user") User userDTO, Model model, Principal principal)
+	            throws Exception {
+		if (principal == null || !StringUtils.equals(userDTO.getEmail(), principal.getName())) {
 			throw new UnauthorizedActionException();
 		}
 		User user = userRepository.findByEmail(principal.getName());
@@ -113,7 +119,7 @@ public class UserController {
 		user.setFirstname(userDTO.getFirstname());
 		user.setLastname(userDTO.getLastname());
 		user.setShamefulTechnologie(userDTO.getShamefulTechnologie());
-		
+
 		userRepository.save(user);
 		model.addAttribute("user", new UserDTO(user));
 		return PROFILE_DETAIL_PAGE;

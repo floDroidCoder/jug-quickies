@@ -143,9 +143,7 @@ public class QuickyController {
 	// ************************************************************************
 
 	@RequestMapping(value = "/quicky/{id}/vote", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public String vote(@PathVariable BigInteger id, Principal principal) {
+	public String vote(@PathVariable BigInteger id, Model model, Principal principal) {
 		User currentUser = userRepository.findByEmail(principal.getName());
 		Quicky quicky = quickyRepository.findOne(id);
 
@@ -156,7 +154,8 @@ public class QuickyController {
 			vote.setVoter(currentUser);
 			voteRepository.save(vote);
 		}
-
+		model.addAttribute("quicky", new QuickyDTO(quicky));
+		model.addAttribute("vote", vote);
 		return DETAIL_PAGE;
 	}
 

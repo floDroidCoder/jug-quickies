@@ -13,7 +13,7 @@ public class UserDTO {
 	private String id;
 	private String lastname;
 	private String firstname;
-	
+
 	@NotEmpty
 	@Email
 	private String email;
@@ -36,7 +36,7 @@ public class UserDTO {
 		this.company = user.getCompany();
 		this.about = user.getAbout();
 	}
-	
+
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
@@ -58,7 +58,7 @@ public class UserDTO {
 	public int hashCode() {
 		return new HashCodeBuilder().append(email).toHashCode();
 	}
-	
+
 	public String getLastname() {
 		return lastname;
 	}
