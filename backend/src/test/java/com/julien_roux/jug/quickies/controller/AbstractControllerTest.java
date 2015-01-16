@@ -42,6 +42,7 @@ public abstract class AbstractControllerTest {
 	protected MockMvc mockMvc;
 
 	protected User user;
+	protected User anotherUser;
 	protected User admin;
 
 	private Authentication auth;
@@ -55,6 +56,9 @@ public abstract class AbstractControllerTest {
 		user = new User("julien@roux.com", "tOnPèreSuceD#sCh4me@uX", "USER_ROLE");
 		userRepository.save(user);
 		
+		anotherUser = new User("fake@email.com", "tOnPèreSuceD#sCh4me@uX", "USER_ROLE");
+		userRepository.save(anotherUser);
+		
 		admin = new User("florian@genaudet.com", "T@MèreB4iseDesDroMadAires", "USER_ADMIN");
 		userRepository.save(admin);
 	}
@@ -62,6 +66,13 @@ public abstract class AbstractControllerTest {
 	protected void connectUser() {
 		userService.signin(user);
 		UserDetails userDetails = userService.loadUserByUsername(user.getEmail());
+		auth = new UsernamePasswordAuthenticationToken(userDetails,null);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+	}
+	
+	protected void connectWrongUser() {
+		userService.signin(anotherUser);
+		UserDetails userDetails = userService.loadUserByUsername(anotherUser.getEmail());
 		auth = new UsernamePasswordAuthenticationToken(userDetails,null);
         SecurityContextHolder.getContext().setAuthentication(auth);
 	}

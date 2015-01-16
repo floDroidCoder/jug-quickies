@@ -12,7 +12,7 @@
   	      </div>
   	      <div class="modal-body">
   	      	<div id="errors" class="text-center errors" style="display:none; color: red; font-weigth: bold">
-	            <span class="glyphicon glyphicon-warning-sign"></span> Oh no ! Authentication failed !
+	            <span class="glyphicon glyphicon-warning-sign"></span>
 	        </div>
 	     
   	        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -97,7 +97,7 @@
 			</div>
   	      </div>
   	      <div class="modal-footer">
-  	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="close()">Close</button>
+  	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
   	        <button type="button" class="btn btn-primary" onclick="handleClick()">Sign in</button>
   	      </div>
   	    </div>
@@ -114,8 +114,21 @@
 	  		var csrf = $('#accordion .collapse.in input[name="_csrf"]');
 	  		var action = form.attr('action');
 	  		
+	  		var errors = '';
+	  		$('#errors').html('');
+	  		
 	  		if (confirm.attr('name') && confirm.val() != password.val()) {
-	  			$('#errors').show();
+	  			errors += 'Passwords must match<br/>';
+	  		}
+	  		if (!email.val()) {
+	  			errors += 'Email is required<br/>';
+	  		}
+	  		if (!password.val()) {
+	  			errors += 'Password is required<br/>';
+	  		}
+	  		
+	  		if (errors.length > 0) {
+	  			$('#errors').html(errors).show();
 	  			return false;
 	  		}
 	  		
@@ -127,14 +140,11 @@
  						_csrf: csrf.val()
  					}
   			).fail(function(data, status) {
-  				$('#errors').show();
+  				$('#errors').html('Authentication failed').show();
   			}
-  			).done(function() {
-  				location.reload(true);
+  			).done(function(data) {
+  				window.location.href= '/profile/edit';
   			});	
-	  	}
-	  	function close() {
-	  		$('#errors').hide();
 	  	}
 	  	//]]>
   	</script>

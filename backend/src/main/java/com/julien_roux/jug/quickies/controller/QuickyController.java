@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.julien_roux.jug.quickies.exception.UnauthorizedActionException;
 import com.julien_roux.jug.quickies.model.Quicky;
 import com.julien_roux.jug.quickies.model.User;
+import com.julien_roux.jug.quickies.model.Vote;
 import com.julien_roux.jug.quickies.model.dto.QuickyDTO;
 import com.julien_roux.jug.quickies.repository.QuickyRepository;
 import com.julien_roux.jug.quickies.repository.UserRepository;
+import com.julien_roux.jug.quickies.repository.VoteRepository;
 
 @Controller
 public class QuickyController {
@@ -33,15 +35,13 @@ public class QuickyController {
 	private static final String DETAIL_PAGE = "/quickies/quicky-detail";
 	private static final String EDIT_PAGE = "/quickies/quicky-edit";
 	private static final String HOME = "index";
-	
-	private QuickyRepository quickyRepository;
-	private UserRepository userRepository;
 
 	@Autowired
-	public QuickyController(QuickyRepository quickyRepository, UserRepository userRepository) {
-		this.quickyRepository = quickyRepository;
-		this.userRepository = userRepository;
-	}
+	private QuickyRepository quickyRepository;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private VoteRepository voteRepository;
 
 	// ************************************************************************
 	// Get
@@ -55,15 +55,23 @@ public class QuickyController {
 		List<QuickyDTO> quickyList = new ArrayList<QuickyDTO>();
 		for (Quicky quicky : quickies) {
 			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
+			List<Vote> votes = voteRepository.findByQuicky(quicky);
+
 			quicky.setPresenter(tmpUser);
-			quickyList.add(new QuickyDTO(quicky));
+			QuickyDTO quickyDto = new QuickyDTO(quicky);
+			quickyDto.setNbVote(votes.size());
+			quickyList.add(quickyDto);
 		}
 		return quickyList;
 	}
 
 	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.GET)
-	public String get(@PathVariable BigInteger id, Model model) {
+	public String get(@PathVariable BigInteger id, Model model, Principal principal) {
 		Quicky quicky = quickyRepository.findOne(id);
+		if (principal != null) {
+			User currentuser = userRepository.findByEmail(principal.getName());
+			model.addAttribute("vote", voteRepository.findByVoterAndQuicky(currentuser, quicky));
+		}
 		model.addAttribute("quicky", new QuickyDTO(quicky));
 		return DETAIL_PAGE;
 	}
@@ -71,7 +79,7 @@ public class QuickyController {
 	// ************************************************************************
 	// Create
 	// ************************************************************************
-	
+
 	@RequestMapping(value = "/quicky/create", method = RequestMethod.GET)
 	public String create(Model model) {
 		QuickyDTO quickyDTO = new QuickyDTO();
@@ -80,17 +88,18 @@ public class QuickyController {
 	}
 
 	@RequestMapping(value = "/quicky/create", method = RequestMethod.POST)
-	public String submit(@Valid @ModelAttribute("quicky") QuickyDTO quickyDTO, BindingResult result, Principal principal, Model model) {
+	public String submit(@Valid @ModelAttribute("quicky") QuickyDTO quickyDTO, BindingResult result,
+	            Principal principal, Model model) {
 		if (result.hasErrors()) {
-            return EDIT_PAGE;
-        }
-		
+			return EDIT_PAGE;
+		}
+
 		Quicky quicky = quickyDTO.toQuicky();
-		
-		User presenter = userRepository.findByEmail(principal.getName());		
+
+		User presenter = userRepository.findByEmail(principal.getName());
 		quicky.setPresenter(presenter);
 		quicky = quickyRepository.save(quicky);
-		
+
 		model.addAttribute("quicky", new QuickyDTO(quicky));
 		return DETAIL_PAGE;
 	}
@@ -102,7 +111,7 @@ public class QuickyController {
 	@RequestMapping(value = "/quicky/{id}/edit", method = RequestMethod.GET)
 	public String edit(@PathVariable BigInteger id, Model model, Principal principal) throws Exception {
 		Quicky quicky = quickyRepository.findOne(id);
-		if(principal == null || !quicky.getPresenter().getEmail().equals(principal.getName())) {
+		if (principal == null || !quicky.getPresenter().getEmail().equals(principal.getName())) {
 			throw new UnauthorizedActionException();
 		}
 		model.addAttribute("quicky", new QuickyDTO(quicky));
@@ -111,19 +120,19 @@ public class QuickyController {
 	}
 
 	@RequestMapping(value = "/quicky/{id}/edit", method = RequestMethod.POST)
-	public String update(@Valid @ModelAttribute("quicky") QuickyDTO quickyDTO, @PathVariable BigInteger id, Model model, Principal principal) throws Exception {
+	public String update(@Valid @ModelAttribute("quicky") QuickyDTO quickyDTO, @PathVariable BigInteger id,
+	            Model model, Principal principal) throws Exception {
 		Quicky quicky = quickyRepository.findOne(id);
-		
-		if(principal == null || !StringUtils.equals(quickyDTO.getEmail(), principal.getName())) {
-			//TODO 
-			throw new Exception();
+
+		if (principal == null || !StringUtils.equals(quicky.getPresenter().getEmail(), principal.getName())) {
+			throw new UnauthorizedActionException();
 		}
-		
+
 		quicky.setDescription(quickyDTO.getDescription());
 		quicky.setUsergroup(quickyDTO.getUsergroup());
 		quicky.setTitle(quickyDTO.getTitle());
 		quicky.setDescription(quickyDTO.getDescription());
-		
+
 		quickyRepository.save(quicky);
 		model.addAttribute("quicky", new QuickyDTO(quicky));
 		return DETAIL_PAGE;
@@ -136,7 +145,19 @@ public class QuickyController {
 	@RequestMapping(value = "/quicky/{id}/vote", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public void vote(@PathVariable BigInteger id) {
+	public String vote(@PathVariable BigInteger id, Principal principal) {
+		User currentUser = userRepository.findByEmail(principal.getName());
+		Quicky quicky = quickyRepository.findOne(id);
+
+		Vote vote = voteRepository.findByVoterAndQuicky(currentUser, quicky);
+		if (vote == null) {
+			vote = new Vote();
+			vote.setQuicky(quicky);
+			vote.setVoter(currentUser);
+			voteRepository.save(vote);
+		}
+
+		return DETAIL_PAGE;
 	}
 
 	// ************************************************************************

@@ -142,18 +142,18 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		result.andExpect(model().attributeExists("quicky"));
 	}
 
-	@Test(expected = Exception.class)
+	@Test
 	public void updateQuickyWrongUser() throws Exception {
-		connectUser();
+		connectWrongUser();
 		String url = "/quicky/{0}/edit";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, quicky.getId()).//
 				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
 				param("description", quicky.getDescription()).//
-				param("email", "fake@gmail.com").//
 				param("title", quicky.getTitle()).//
 				param("usergroup", quicky.getUsergroup()));
 		ResultActions result = executeRequest(request);
-		result.andExpect(status().isUnauthorized());
+		result.andExpect(status().isOk());
+		result.andExpect(view().name("errors/unauthorized"));
 	}
 	
 	// ************************************************************************

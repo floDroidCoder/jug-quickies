@@ -72,7 +72,7 @@ public class UserControllerTest extends AbstractControllerTest {
 				param("shamefulTechnologie", toCreate.getShamefulTechnologie()));
 		
 		ResultActions result = executeRequest(request);
-		result.andExpect(view().name("/profile/profile-detail"));
+		result.andExpect(view().name("/profile/profile-edit"));
 		result.andExpect(model().attributeExists("user"));
 	}
 

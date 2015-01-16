@@ -1,17 +1,27 @@
 package com.julien_roux.jug.quickies.model.dto;
 
-import java.math.BigInteger;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.julien_roux.jug.quickies.model.User;
 
 public class UserDTO {
 
 	private String id;
-	private String lastname, firstname, email, role, shamefulTechnologie, company, about, password;
+	private String lastname;
+	private String firstname;
+	
+	@NotEmpty
+	@Email
+	private String email;
+	private String role;
+	private String shamefulTechnologie;
+	private String company;
+	private String about;
+	private String password;
 
 	public UserDTO() {
 	}

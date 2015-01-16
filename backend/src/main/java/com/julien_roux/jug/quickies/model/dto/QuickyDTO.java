@@ -14,8 +14,12 @@ import com.julien_roux.jug.quickies.model.Quicky;
 public class QuickyDTO {
 
 	private String id;
-	private String title, description, usergroup, email, location;
-
+	private String title;
+	private String description;
+	private String usergroup;
+	private String email;
+	private String location;
+	private Integer nbVote;
 	private String presenterName, presenterId;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
@@ -152,4 +156,12 @@ public class QuickyDTO {
 	public void setPresenterId(String presenterId) {
 		this.presenterId = presenterId;
 	}
+
+	public Integer getNbVote() {
+    	return nbVote;
+    }
+
+	public void setNbVote(Integer nbVote) {
+    	this.nbVote = nbVote;
+    }
 }

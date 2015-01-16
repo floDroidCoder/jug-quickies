@@ -84,7 +84,7 @@ public class UserController {
 		userRepository.save(user);
 		userService.signin(user);
 		model.addAttribute("user", new UserDTO(user));
-		return PROFILE_DETAIL_PAGE;
+		return PROFILE_EDIT_PAGE;
 	}
 
 	// ************************************************************************
