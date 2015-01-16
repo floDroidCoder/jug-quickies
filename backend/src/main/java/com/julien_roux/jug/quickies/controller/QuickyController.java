@@ -143,7 +143,10 @@ public class QuickyController {
 	// ************************************************************************
 
 	@RequestMapping(value = "/quicky/{id}/vote", method = RequestMethod.GET)
-	public String vote(@PathVariable BigInteger id, Model model, Principal principal) {
+	public String vote(@PathVariable BigInteger id, Model model, Principal principal) throws UnauthorizedActionException {
+		if (principal == null) {
+			throw new UnauthorizedActionException();
+		}
 		User currentUser = userRepository.findByEmail(principal.getName());
 		Quicky quicky = quickyRepository.findOne(id);
 
