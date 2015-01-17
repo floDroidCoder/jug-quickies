@@ -2,7 +2,7 @@
 var Session = React.createClass({
   render: function() {
   	var dateClass = 'session-date ' + (this.props.session.open ? 'open' : 'closed');
-    var user =  this.props.session.presenter ? this.props.session.presenter: this.props.session.email;
+    var user =  this.props.session.presenterName ? this.props.session.presenterName: this.props.session.email;
     	
     return (
       <div className="session row text-left">
