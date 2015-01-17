@@ -57,11 +57,13 @@
 					</div>
 					<div class="panel-body">
 						<div th:each="quicky: ${quickies}" class="col-xs-12">
-							<a th:href="@{/quicky/{id}(id=${quicky.id})}">
-					        	<span th:text="${quicky.title}">Title</span>
+					        <span th:text="${quicky.title}" class="col-xs-3">Title</span>
+					        <span th:text="${#calendars.format(quicky.submissionDate, 'yyyy-MM-dd HH:mm')}" class="col-xs-3">Date</span>
+					        <span th:text="${quicky.location}" class="col-xs-3">Location</span>
+					        
+					        <a th:href="@{/quicky/{id}(id=${quicky.id})}" class="col-xs-3">
+					        	<i class="fa fa-edit"></i> <span class="visible-sm">EDIT</span>
 					        </a>
-					        <span th:text="${quicky.submissionDate}">Date</span>
-					        <span th:text="${quicky.location}">Location</span>
 					      </div>
 					</div>
 				</div>

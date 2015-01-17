@@ -33,6 +33,7 @@ import com.julien_roux.jug.quickies.repository.VoteRepository;
 @Controller
 public class QuickyController {
 
+	private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm";
 	private static final String DETAIL_PAGE = "/quickies/quicky-detail";
 	private static final String EDIT_PAGE = "/quickies/quicky-edit";
 
@@ -162,7 +163,7 @@ public class QuickyController {
 			throw new UnauthorizedActionException();
 		}
 		model.addAttribute("quicky", new QuickyDTO(quicky));
-		model.addAttribute("dateformat", "yyyy-MM-dd'T'HH:mm");
+		model.addAttribute("dateformat", DATE_FORMAT);
 		return EDIT_PAGE;
 	}
 

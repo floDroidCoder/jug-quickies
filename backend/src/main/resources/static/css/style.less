@@ -11,7 +11,7 @@ h1 {
 }
 .container {
 	.session {
-		height: 100px;
+		min-height: 100px;
 		margin: 0;
 		margin-bottom: 3px;
 		border: 2px solid #22A7F0;
@@ -19,22 +19,24 @@ h1 {
 		background-color: rgba(255,255,255,0.7);
 	
 		div {
-			height: 100px;
-			
-			
 			color: @textColor;
 			font-weight: 600;
 
 			&.like {
 				font-size: 2rem;
-				line-height: 100px;
+				line-height: 50px;
 				text-align: center;
 				color: white;
 				padding-left: 0px;
 				padding-right: 0px;
 				background-color: @baseColor;
+				
+				height: 50px;
+				border-bottom-right-radius: 5px;
 			}
-			
+			&.session-text {
+				min-height: 100px;
+			}
 		}
 		a {
 			text-decoration: none;
