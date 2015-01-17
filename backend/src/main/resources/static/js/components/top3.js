@@ -45,6 +45,18 @@ var SessionList = React.createClass({
 	      }.bind(this)
 	    });
   },
+  componentWillReceiveProps: function(nextProps) {
+	  $.ajax({
+	      url: nextProps.url,
+	      dataType: 'json',
+	      success: function(data) {
+	        this.setState({data: data});
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	  });
+  },
   componentDidMount: function() { 
 	this.loadData();
 	setInterval(this.loadData, this.props.pollInterval);
@@ -64,4 +76,47 @@ var SessionList = React.createClass({
     </div>
     );
   }
+});
+
+var SessionFilter = React.createClass({
+	getInitialState: function() {
+	    return {usergroup: 'all'};
+	},
+	changeUserGroup: function(usergroup) {
+		this.setState({usergroup: usergroup});
+	},
+	componentDidMount: function() {
+		var component = this;
+		$('#filters button').on('click', function() {
+			$('#filters button').removeClass('btn-selected');
+			$(this).addClass('btn-selected');
+			component.changeUserGroup($(this).val());
+		})
+	},
+	render: function() {
+		var baseUrl = this.props.baseUrl + this.state.usergroup;
+		var urlPast = baseUrl + '/past';
+		var urlFutur = baseUrl + '/futur';
+		
+		return (
+				<div className="row" id="filters">
+					<div className="btn-group btn-group-justified" role="group" aria-label="...">
+					  <div className="btn-group" role="group">
+					    <button type="button" className="btn btn-default btn-selected" value="ALL">All</button>
+					  </div>
+					  <div className="btn-group" role="group">
+					    <button type="button" className="btn btn-default" value="JUG">JUG</button>
+					  </div>
+					  <div className="btn-group" role="group">
+					    <button type="button" className="btn btn-default" value=".NET">.NET</button>
+					  </div>
+					  <div className="btn-group" role="group">
+					    <button type="button" className="btn btn-default" value="JSR">JsRomandie</button>
+					  </div>
+					</div>
+					<SessionList name="Past Quickies" url={urlPast} pollInterval="30000"/>
+				  	<SessionList name="Futur Quickies" url={urlFutur} pollInterval="30000"/>
+				</div>
+		);
+	}
 });

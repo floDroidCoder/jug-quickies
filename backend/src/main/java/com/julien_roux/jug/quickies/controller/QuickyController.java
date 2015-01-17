@@ -35,7 +35,6 @@ public class QuickyController {
 
 	private static final String DETAIL_PAGE = "/quickies/quicky-detail";
 	private static final String EDIT_PAGE = "/quickies/quicky-edit";
-	private static final String HOME = "index";
 
 	@Autowired
 	private QuickyRepository quickyRepository;
@@ -65,12 +64,18 @@ public class QuickyController {
 		}
 		return quickyList;
 	}
-	
-	@RequestMapping(value = "/quickies/past", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/quickies/{usergroup}/past", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<QuickyDTO> findAllPast() {
-		List<Quicky> quickies = quickyRepository.findBySubmissionDateBefore(new Date());
+	public List<QuickyDTO> findPastQuickies(@PathVariable String usergroup) {
+		List<Quicky> quickies;
+		if ("ALL".equals(usergroup.toUpperCase())) {
+			quickies = quickyRepository.findBySubmissionDateBefore(new Date());
+		} else {
+			quickies = quickyRepository.findBySubmissionDateBeforeAndUsergroupEquals(new Date(), usergroup);
+		}
+
 		List<QuickyDTO> quickyList = new ArrayList<QuickyDTO>();
 		for (Quicky quicky : quickies) {
 			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
@@ -83,12 +88,17 @@ public class QuickyController {
 		}
 		return quickyList;
 	}
-	
-	@RequestMapping(value = "/quickies/futur", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/quickies/{usergroup}/futur", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<QuickyDTO> findAllFutur() {
-		List<Quicky> quickies = quickyRepository.findBySubmissionDateAfter(new Date());
+	public List<QuickyDTO> findFuturQuickies(@PathVariable String usergroup) {
+		List<Quicky> quickies;
+		if ("ALL".equals(usergroup.toUpperCase())) {
+			quickies = quickyRepository.findBySubmissionDateAfter(new Date());
+		} else {
+			quickies = quickyRepository.findBySubmissionDateAfterAndUsergroupEquals(new Date(), usergroup);
+		}
 		List<QuickyDTO> quickyList = new ArrayList<QuickyDTO>();
 		for (Quicky quicky : quickies) {
 			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
@@ -180,7 +190,8 @@ public class QuickyController {
 	// ************************************************************************
 
 	@RequestMapping(value = "/quicky/{id}/vote", method = RequestMethod.GET)
-	public String vote(@PathVariable BigInteger id, Model model, Principal principal) throws UnauthorizedActionException {
+	public String vote(@PathVariable BigInteger id, Model model, Principal principal)
+	            throws UnauthorizedActionException {
 		if (principal == null) {
 			throw new UnauthorizedActionException();
 		}
