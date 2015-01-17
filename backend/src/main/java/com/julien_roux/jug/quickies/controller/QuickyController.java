@@ -169,6 +169,6 @@ public class QuickyController {
 	@RequestMapping(value = "/quicky/{id}/delete", method = RequestMethod.GET)
 	public String delete(@PathVariable BigInteger id) {
 		quickyRepository.delete(id);
-		return HOME;
+		return "redirect:/";
 	}
 }
