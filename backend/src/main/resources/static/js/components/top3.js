@@ -5,7 +5,7 @@ var Session = React.createClass({
     var user =  this.props.session.presenter ? this.props.session.presenter: this.props.session.email;
     	
     return (
-      <div className="session row">
+      <div className="session row text-left">
       	<div className="col-xs-3 col-sm-2 like">
       		{this.props.session.nbVote} <span className="glyphicon glyphicon-heart-empty"/>
       	</div>
@@ -18,8 +18,11 @@ var Session = React.createClass({
         		<span className="glyphicon glyphicon-calendar"></span>&nbsp;{new Date(this.props.session.submissionDate).format('dd-mm-yyyy HH:MM')}
         	</p>
         	<p className="location">
-        		<span className="glyphicon glyphicon-tree-conifer"></span>&nbsp;{this.props.session.location}
+        		<i className="fa fa-at"></i>&nbsp;{this.props.session.location}
         	</p>
+        	<p className="usergroup">
+	    		<i className="fa fa-group"></i>&nbsp;{this.props.session.usergroup}
+	    	</p>
         </div>
       </div>
     );
@@ -55,8 +58,8 @@ var SessionList = React.createClass({
     return (
     <div className="col-sm-12 col-md-6">
 	       <h1 className="text-center">{this.props.name}</h1>
-	       <div className="session-list">
-	        	{sessionNodes}
+	       <div className="session-list text-center">
+	        	{sessionNodes.length > 0 ? sessionNodes: 'No quicky yet'}
 	      </div>
     </div>
     );

@@ -7,8 +7,8 @@ var bannerData = [
 React.render(
   <div>
   	<Carousel data={bannerData} id="carousel-kitten"/>
-  	<SessionList name="Next Sessions" url="/quickies" pollInterval="30000"/>
-  	<SessionList name="Past Sessions" url="/quickies" pollInterval="30000"/>
+  	<SessionList name="Past Quickies" url="/quickies/past" pollInterval="30000"/>
+  	<SessionList name="Futur Quickies" url="/quickies/futur" pollInterval="30000"/>
   </div>,
   document.getElementById('content')
 );

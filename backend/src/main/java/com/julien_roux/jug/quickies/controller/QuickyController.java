@@ -3,6 +3,7 @@ package com.julien_roux.jug.quickies.controller;
 import java.math.BigInteger;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -52,6 +53,42 @@ public class QuickyController {
 	@ResponseBody
 	public List<QuickyDTO> findAll() {
 		List<Quicky> quickies = quickyRepository.findAll();
+		List<QuickyDTO> quickyList = new ArrayList<QuickyDTO>();
+		for (Quicky quicky : quickies) {
+			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
+			List<Vote> votes = voteRepository.findByQuicky(quicky);
+
+			quicky.setPresenter(tmpUser);
+			QuickyDTO quickyDto = new QuickyDTO(quicky);
+			quickyDto.setNbVote(votes.size());
+			quickyList.add(quickyDto);
+		}
+		return quickyList;
+	}
+	
+	@RequestMapping(value = "/quickies/past", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public List<QuickyDTO> findAllPast() {
+		List<Quicky> quickies = quickyRepository.findBySubmissionDateBefore(new Date());
+		List<QuickyDTO> quickyList = new ArrayList<QuickyDTO>();
+		for (Quicky quicky : quickies) {
+			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
+			List<Vote> votes = voteRepository.findByQuicky(quicky);
+
+			quicky.setPresenter(tmpUser);
+			QuickyDTO quickyDto = new QuickyDTO(quicky);
+			quickyDto.setNbVote(votes.size());
+			quickyList.add(quickyDto);
+		}
+		return quickyList;
+	}
+	
+	@RequestMapping(value = "/quickies/futur", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public List<QuickyDTO> findAllFutur() {
+		List<Quicky> quickies = quickyRepository.findBySubmissionDateAfter(new Date());
 		List<QuickyDTO> quickyList = new ArrayList<QuickyDTO>();
 		for (Quicky quicky : quickies) {
 			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
