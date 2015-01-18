@@ -89,6 +89,24 @@ public class QuickyController {
 		return quickyList;
 	}
 
+	@RequestMapping(value = "/quickies/futur", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public List<QuickyDTO> findAllFuturQuickies() {
+		List<Quicky> quickies = quickyRepository.findBySubmissionDateAfterOrderBySubmissionDateDesc(new Date());
+		List<QuickyDTO> quickyList = quickiesToDtoList(quickies);
+		return quickyList;
+	}
+
+	@RequestMapping(value = "/quickies/past", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public List<QuickyDTO> findAllPastQuickies() {
+		List<Quicky> quickies = quickyRepository.findBySubmissionDateBeforeOrderBySubmissionDateDesc(new Date());
+		List<QuickyDTO> quickyList = quickiesToDtoList(quickies);
+		return quickyList;
+	}
+
 	@RequestMapping(value = "/quicky/{id}", method = RequestMethod.GET)
 	public String get(@PathVariable BigInteger id, Model model, Principal principal) {
 		Quicky quicky = quickyRepository.findOne(id);
@@ -206,7 +224,7 @@ public class QuickyController {
 		for (Quicky quicky : quickies) {
 			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
 			quicky.setPresenter(tmpUser);
-			
+
 			QuickyDTO quickyDto = new QuickyDTO(quicky);
 			quickyList.add(quickyDto);
 		}

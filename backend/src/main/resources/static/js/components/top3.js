@@ -114,8 +114,8 @@ var SessionFilter = React.createClass({
 					    <button type="button" className="btn btn-default" value="JSR">JsRomandie</button>
 					  </div>
 					</div>
-					<SessionList name="Past Quickies" url={urlPast} pollInterval="30000"/>
-				  	<SessionList name="Futur Quickies" url={urlFutur} pollInterval="30000"/>
+					<SessionList name="Top Past Quickies" url={urlPast} pollInterval="30000"/>
+				  	<SessionList name="Top Futur Quickies" url={urlFutur} pollInterval="30000"/>
 				</div>
 		);
 	}

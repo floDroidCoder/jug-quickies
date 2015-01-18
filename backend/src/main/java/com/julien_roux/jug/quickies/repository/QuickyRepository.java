@@ -13,6 +13,10 @@ public interface QuickyRepository extends MongoRepository<Quicky, BigInteger> {
 	public List<Quicky> findByPresenter(User presenter);
 
 	public List<Quicky> findByUsergroup(String usergroup);
+	
+	public List<Quicky> findBySubmissionDateBeforeOrderBySubmissionDateDesc(Date date);
+	
+	public List<Quicky> findBySubmissionDateAfterOrderBySubmissionDateDesc(Date date);
 
 	public List<Quicky> findFirst3BySubmissionDateBeforeOrderByNbVoteDesc(Date date);
 
