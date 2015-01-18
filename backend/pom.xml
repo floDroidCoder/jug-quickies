@@ -42,6 +42,18 @@
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 
+		<!-- TELNET -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-remote-shell</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.crashub</groupId>
+			<artifactId>crash.connectors.telnet</artifactId>
+		</dependency>
+
+
+
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
@@ -130,9 +142,9 @@
 							<phase>install</phase>
 						</execution>
 					</executions>
-					
+
 					<configuration>
-					    <mainClass>com.julien_roux.jug.quickies.QuickiesLauncher</mainClass>
+						<mainClass>com.julien_roux.jug.quickies.QuickiesLauncher</mainClass>
 						<executable>bower</executable>
 						<workingDirectory>${basedir}/src/main/resources/static</workingDirectory>
 						<arguments>
