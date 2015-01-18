@@ -11,10 +11,14 @@ import com.julien_roux.jug.quickies.model.User;
 
 public interface QuickyRepository extends MongoRepository<Quicky, BigInteger> {
 	public List<Quicky> findByPresenter(User presenter);
-	
-	public List<Quicky> findBySubmissionDateBefore(Date date);
-	public List<Quicky> findBySubmissionDateAfter(Date date);
-	
-	public List<Quicky> findBySubmissionDateBeforeAndUsergroupEquals(Date date, String usergroup);
-	public List<Quicky> findBySubmissionDateAfterAndUsergroupEquals(Date date, String usergroup);
+
+	public List<Quicky> findByUsergroup(String usergroup);
+
+	public List<Quicky> findFirst3BySubmissionDateBeforeOrderByNbVoteDesc(Date date);
+
+	public List<Quicky> findFirst3BySubmissionDateAfterOrderByNbVoteDesc(Date date);
+
+	public List<Quicky> findFirst3BySubmissionDateBeforeAndUsergroupEqualsOrderByNbVoteDesc(Date date, String usergroup);
+
+	public List<Quicky> findFirst3BySubmissionDateAfterAndUsergroupEqualsOrderByNbVoteDesc(Date date, String usergroup);
 }

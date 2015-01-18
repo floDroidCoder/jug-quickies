@@ -15,13 +15,17 @@ public class Quicky extends Entity {
 
 	private Date submissionDate;
 
+	private Integer nbVote;
+
 	public Quicky() {
+		this.nbVote = 0;
 	}
 
 	public Quicky(String title, String description, String usergroup) {
 		this.title = title;
 		this.description = description;
 		this.usergroup = usergroup;
+		this.nbVote = 0;
 	}
 
 	// ************************************************************************
@@ -36,21 +40,21 @@ public class Quicky extends Entity {
 			return false;
 		Quicky other = (Quicky) obj;
 		return new EqualsBuilder().//
-				append(title, other.title).//
-				append(description, other.description).//
-				append(submissionDate, other.submissionDate).//
-				append(presenter, other.presenter).//
-				append(location, other.location).isEquals();
+		            append(title, other.title).//
+		            append(description, other.description).//
+		            append(submissionDate, other.submissionDate).//
+		            append(presenter, other.presenter).//
+		            append(location, other.location).isEquals();
 	}
 
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(). //
-				append(title).//
-				append(description).//
-				append(submissionDate).//
-				append(presenter).//
-				append(location).toHashCode();
+		            append(title).//
+		            append(description).//
+		            append(submissionDate).//
+		            append(presenter).//
+		            append(location).toHashCode();
 	}
 
 	// ************************************************************************
@@ -101,5 +105,13 @@ public class Quicky extends Entity {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public Integer getNbVote() {
+		return nbVote;
+	}
+
+	public void setNbVote(Integer nbVote) {
+		this.nbVote = nbVote;
 	}
 }

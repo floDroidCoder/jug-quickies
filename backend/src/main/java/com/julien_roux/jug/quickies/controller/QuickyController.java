@@ -2,14 +2,15 @@ package com.julien_roux.jug.quickies.controller;
 
 import java.math.BigInteger;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,17 +53,8 @@ public class QuickyController {
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<QuickyDTO> findAll() {
-		List<Quicky> quickies = quickyRepository.findAll();
-		List<QuickyDTO> quickyList = new ArrayList<QuickyDTO>();
-		for (Quicky quicky : quickies) {
-			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
-			List<Vote> votes = voteRepository.findByQuicky(quicky);
-
-			quicky.setPresenter(tmpUser);
-			QuickyDTO quickyDto = new QuickyDTO(quicky);
-			quickyDto.setNbVote(votes.size());
-			quickyList.add(quickyDto);
-		}
+		List<Quicky> quickies = quickyRepository.findAll(new Sort(Sort.Direction.DESC, "submissionDate"));
+		List<QuickyDTO> quickyList = quickiesToDtoList(quickies);
 		return quickyList;
 	}
 
@@ -72,21 +64,13 @@ public class QuickyController {
 	public List<QuickyDTO> findPastQuickies(@PathVariable String usergroup) {
 		List<Quicky> quickies;
 		if ("ALL".equals(usergroup.toUpperCase())) {
-			quickies = quickyRepository.findBySubmissionDateBefore(new Date());
+			quickies = quickyRepository.findFirst3BySubmissionDateBeforeOrderByNbVoteDesc(new Date());
 		} else {
-			quickies = quickyRepository.findBySubmissionDateBeforeAndUsergroupEquals(new Date(), usergroup);
+			quickies = quickyRepository.findFirst3BySubmissionDateBeforeAndUsergroupEqualsOrderByNbVoteDesc(new Date(),
+			            usergroup);
 		}
 
-		List<QuickyDTO> quickyList = new ArrayList<QuickyDTO>();
-		for (Quicky quicky : quickies) {
-			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
-			List<Vote> votes = voteRepository.findByQuicky(quicky);
-
-			quicky.setPresenter(tmpUser);
-			QuickyDTO quickyDto = new QuickyDTO(quicky);
-			quickyDto.setNbVote(votes.size());
-			quickyList.add(quickyDto);
-		}
+		List<QuickyDTO> quickyList = quickiesToDtoList(quickies);
 		return quickyList;
 	}
 
@@ -96,20 +80,12 @@ public class QuickyController {
 	public List<QuickyDTO> findFuturQuickies(@PathVariable String usergroup) {
 		List<Quicky> quickies;
 		if ("ALL".equals(usergroup.toUpperCase())) {
-			quickies = quickyRepository.findBySubmissionDateAfter(new Date());
+			quickies = quickyRepository.findFirst3BySubmissionDateAfterOrderByNbVoteDesc(new Date());
 		} else {
-			quickies = quickyRepository.findBySubmissionDateAfterAndUsergroupEquals(new Date(), usergroup);
+			quickies = quickyRepository.findFirst3BySubmissionDateAfterAndUsergroupEqualsOrderByNbVoteDesc(new Date(),
+			            usergroup);
 		}
-		List<QuickyDTO> quickyList = new ArrayList<QuickyDTO>();
-		for (Quicky quicky : quickies) {
-			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
-			List<Vote> votes = voteRepository.findByQuicky(quicky);
-
-			quicky.setPresenter(tmpUser);
-			QuickyDTO quickyDto = new QuickyDTO(quicky);
-			quickyDto.setNbVote(votes.size());
-			quickyList.add(quickyDto);
-		}
+		List<QuickyDTO> quickyList = quickiesToDtoList(quickies);
 		return quickyList;
 	}
 
@@ -202,9 +178,13 @@ public class QuickyController {
 		Vote vote = voteRepository.findByVoterAndQuicky(currentUser, quicky);
 		if (vote == null) {
 			vote = new Vote();
+			quicky.setNbVote(quicky.getNbVote() + 1);
+
 			vote.setQuicky(quicky);
 			vote.setVoter(currentUser);
-			voteRepository.save(vote);
+			vote = voteRepository.save(vote);
+
+			quickyRepository.save(quicky);
 		}
 		model.addAttribute("quicky", new QuickyDTO(quicky));
 		model.addAttribute("vote", vote);
@@ -219,5 +199,17 @@ public class QuickyController {
 	public String delete(@PathVariable BigInteger id) {
 		quickyRepository.delete(id);
 		return "redirect:/";
+	}
+
+	private List<QuickyDTO> quickiesToDtoList(List<Quicky> quickies) {
+		List<QuickyDTO> quickyList = new LinkedList<QuickyDTO>();
+		for (Quicky quicky : quickies) {
+			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
+			quicky.setPresenter(tmpUser);
+			
+			QuickyDTO quickyDto = new QuickyDTO(quicky);
+			quickyList.add(quickyDto);
+		}
+		return quickyList;
 	}
 }

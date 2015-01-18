@@ -38,6 +38,7 @@ public class QuickyDTO {
 		this.presenterName = quicky.getPresenter().getFirstname() + " " + quicky.getPresenter().getLastname();
 		this.presenterId = String.valueOf(quicky.getPresenter().getId());
 		this.submissionDate = quicky.getSubmissionDate();
+		this.nbVote = quicky.getNbVote();
 		this.setLocation(quicky.getLocation());
 	}
 
@@ -158,10 +159,10 @@ public class QuickyDTO {
 	}
 
 	public Integer getNbVote() {
-    	return nbVote;
-    }
+		return nbVote;
+	}
 
 	public void setNbVote(Integer nbVote) {
-    	this.nbVote = nbVote;
-    }
+		this.nbVote = nbVote;
+	}
 }
