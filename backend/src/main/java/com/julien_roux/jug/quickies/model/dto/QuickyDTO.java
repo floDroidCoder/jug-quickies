@@ -31,7 +31,6 @@ public class QuickyDTO {
 	@NotNull
 	private String location;
 	
-	
 	private Integer nbVote;
 	private String presenterName, presenterId;
 
