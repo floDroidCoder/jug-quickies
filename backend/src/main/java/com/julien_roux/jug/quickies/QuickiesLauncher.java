@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 @EnableAutoConfiguration
 public class QuickiesLauncher {
-	
+
 	public static void main(String[] args) {
 		System.out.println("Starting Quickies application...");
 		SpringApplication.run(QuickiesLauncher.class, args);
-    	System.out.println("end.");
+		System.out.println("end.");
 	}
 }
