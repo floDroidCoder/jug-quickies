@@ -54,19 +54,20 @@ public class ScheduledTasks {
 
 		User user = new User();
 		user.setEmail(userScreenName + "@twitter.com");
+		if (quicky != null) {
+			Vote vote = voteRepository.findByVoterAndQuicky(user, quicky);
+			if (vote == null) {
+				vote = new Vote();
+				quicky.setNbVote(quicky.getNbVote() + 1);
 
-		Vote vote = voteRepository.findByVoterAndQuicky(user, quicky);
-		if (vote == null) {
-			vote = new Vote();
-			quicky.setNbVote(quicky.getNbVote() + 1);
+				vote.setQuicky(quicky);
+				vote.setVoter(user);
+				voteRepository.save(vote);
+				quickyRepository.save(quicky);
 
-			vote.setQuicky(quicky);
-			vote.setVoter(user);
-			voteRepository.save(vote);
-			quickyRepository.save(quicky);
-
-			twitter.updateStatus(String.format("@%s : Vote OK for %s %s", userScreenName, quicky.getTitle(),
-			            "http://sd-44145.dedibox.fr/quicky/" + quicky.getId()));
+				twitter.updateStatus(String.format("@%s : Vote OK for %s %s", userScreenName, quicky.getTitle(),
+				            "http://sd-44145.dedibox.fr/quicky/" + quicky.getId()));
+			}
 		}
 	}
 }
