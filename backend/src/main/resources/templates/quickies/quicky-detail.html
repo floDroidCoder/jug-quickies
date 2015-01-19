@@ -12,7 +12,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="row">
-							<div th:class="'panel-title' + ${canEdit ? 'col-xs-6' : 'col-xs-12'}" th:inline="text">
+							<div th:class="'panel-title ' + (${canEdit} ? 'col-xs-6' : 'col-xs-12')" th:inline="text">
 								[[${quicky.title}]]
 							</div>
 							<div class="col-xs-3 pull-right" th:if="${canEdit}">
