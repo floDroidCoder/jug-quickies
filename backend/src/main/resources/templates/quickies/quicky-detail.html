@@ -16,15 +16,15 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="panel-title text-center col-md-6" th:inline="text">
+							<div class="panel-title text-center col-sm-6" th:inline="text">
 								[[${quicky.title}]]
 							</div>
-							<div class="col-md-2 col-xs-3 pull-right">
+							<div class="col-md-2 col-xs-3 pull-right" th:if="${canEdit}">
 								<a th:href="@{/quicky/{id}/delete(id=${quicky.id})}" class="btn btn-danger btn-lg btn-block">
 									<i class="fa fa-remove"></i>
 								</a>
 							</div>
-							<div class="col-md-2 col-xs-3 pull-right">
+							<div class="col-md-2 col-xs-3 pull-right" th:if="${canEdit}">
 								<a th:href="@{/quicky/{id}/edit(id=${quicky.id})}" class="btn btn-success btn-lg btn-block">
 									<i class="fa fa-edit"></i>
 								</a>
@@ -55,12 +55,12 @@
 								</a>
 							</div>
 							<div class="col-md-3 col-xs-4">
-								<a th:href="'https://www.facebook.com/sharer/sharer.php?u=http://sd-44145.dedibox.fr' + @{/quicky/{id}(id=${quicky.id})}" class="btn btn-default btn-lg btn-block">
+								<a th:href="'https://www.facebook.com/sharer/sharer.php?u=http://sd-44145.dedibox.fr:8090' + @{/quicky/{id}(id=${quicky.id})}" class="btn btn-default btn-lg btn-block">
 									<i class="fa fa-facebook"></i> Share
 								</a>
 							</div>
 							<div class="col-md-3 col-xs-4">
-								<a th:href="'http://www.twitter.com/share?url=http://sd-44145.dedibox.fr' + @{/quicky/{id}(id=${quicky.id}) } + '&amp;text=%23UGQuickie%20%23ReadyAimFired%20' +${quicky.title}" target="_blank" class="btn btn-default btn-lg btn-block">
+								<a th:href="'http://www.twitter.com/share?url=http://sd-44145.dedibox.fr:8090' + @{/quicky/{id}(id=${quicky.id}) } + '&amp;text=%23UGQuickie%20%23ReadyAimFired%20' +${quicky.title}" target="_blank" class="btn btn-default btn-lg btn-block">
 									<i class="fa fa-twitter"></i> Tweet
 								</a>
 							</div>

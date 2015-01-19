@@ -113,6 +113,7 @@ public class QuickyController {
 		if (principal != null) {
 			User currentuser = userRepository.findByEmail(principal.getName());
 			model.addAttribute("vote", voteRepository.findByVoterAndQuicky(currentuser, quicky));
+			model.addAttribute("canEdit", quicky.getPresenter().getEmail().equals(principal.getName()));
 		}
 		model.addAttribute("quicky", new QuickyDTO(quicky));
 		return DETAIL_PAGE;
@@ -163,7 +164,10 @@ public class QuickyController {
 
 	@RequestMapping(value = "/quicky/{id}/edit", method = RequestMethod.POST)
 	public String update(@Valid @ModelAttribute("quicky") QuickyDTO quickyDTO, @PathVariable BigInteger id,
-	            Model model, Principal principal) throws Exception {
+	            BindingResult result, Model model, Principal principal) throws Exception {
+		if (result.hasErrors()) {
+			return EDIT_PAGE;
+		}
 		Quicky quicky = quickyRepository.findOne(id);
 
 		if (principal == null || !StringUtils.equals(quicky.getPresenter().getEmail(), principal.getName())) {

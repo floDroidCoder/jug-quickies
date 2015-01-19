@@ -23,7 +23,7 @@ import com.julien_roux.jug.quickies.model.dto.QuickyDTO;
 import com.julien_roux.jug.quickies.repository.QuickyRepository;
 
 public class QuickyControllerTest extends AbstractControllerTest {
-	
+
 	@Autowired
 	private QuickyRepository quickyRepository;
 	private Quicky quicky;
@@ -31,7 +31,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	@Before
 	public void setup() throws Exception {
 		super.setup();
-		
+
 		quickyRepository.deleteAll();
 		quicky = new Quicky("Jsf en environnement pro", "du troll de qualité", "jug");
 		quicky.setLocation("HEPIA");
@@ -40,7 +40,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		quickyRepository.save(quicky);
 		assertThat(quicky.getId()).isNotNull();
 	}
-	
+
 	@Test
 	public void findAll() throws Exception {
 		connectUser();
@@ -48,9 +48,9 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
 		ResultActions result = executeRequest(request);
 		result.andExpect(status().isOk());
-		result.andExpect(content().string(startsWith("[{\"id\":\""+quicky.getId() + "\"")));
+		result.andExpect(content().string(startsWith("[{\"id\":\"" + quicky.getId() + "\"")));
 	}
-	
+
 	@Test
 	public void getQuicky() throws Exception {
 		connectUser();
@@ -61,7 +61,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		result.andExpect(view().name("/quickies/quicky-detail"));
 		result.andExpect(model().attribute("quicky", new QuickyDTO(quicky)));
 	}
-	
+
 	@Test
 	public void getQuickyPost() throws Exception {
 		connectUser();
@@ -75,7 +75,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	// ************************************************************************
 	// Create
 	// ************************************************************************
-	
+
 	@Test
 	public void newQuicky() throws Exception {
 		connectUser();
@@ -85,7 +85,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		result.andExpect(status().isOk());
 		result.andExpect(view().name("/quickies/quicky-edit"));
 	}
-	
+
 	@Test
 	public void createQuicky() throws Exception {
 		connectUser();
@@ -95,15 +95,14 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		toCreate.setTitle("title");
 		toCreate.setUsergroup("usergroup");
 		toCreate.setLocation("location");
-		
+
 		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url).//
-				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
-				param("description", toCreate.getDescription()).//
-				param("title", toCreate.getTitle()).//
-				param("usergroup", toCreate.getUsergroup()).
-				param("location", toCreate.getLocation())
-				);
-		
+		            contentType(MediaType.APPLICATION_FORM_URLENCODED).//
+		            param("submissionDate", "2015-01-01T12:00").//
+		            param("description", toCreate.getDescription()).//
+		            param("title", toCreate.getTitle()).//
+		            param("usergroup", toCreate.getUsergroup()).param("location", toCreate.getLocation()));
+
 		ResultActions result = executeRequest(request);
 		result.andExpect(status().isOk());
 		result.andExpect(view().name("/quickies/quicky-detail"));
@@ -113,7 +112,7 @@ public class QuickyControllerTest extends AbstractControllerTest {
 	// ************************************************************************
 	// Modify
 	// ************************************************************************
-	
+
 	@Test
 	public void editQuicky() throws Exception {
 		connectUser();
@@ -124,18 +123,18 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		result.andExpect(view().name("/quickies/quicky-edit"));
 		result.andExpect(model().attribute("quicky", new QuickyDTO(quicky)));
 	}
-	
+
 	@Test
 	public void updateQuicky() throws Exception {
 		connectUser();
 		String url = "/quicky/{0}/edit";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, quicky.getId()).//
-				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
-				param("description", quicky.getDescription()).//
-				param("email", quicky.getPresenter().getEmail()).//
-				param("title", quicky.getTitle()).//
-				param("usergroup", quicky.getUsergroup()).//
-				param("location", quicky.getLocation()));
+		            contentType(MediaType.APPLICATION_FORM_URLENCODED).//
+		            param("submissionDate", "2015-01-01T12:00").//
+		            param("description", quicky.getDescription()).//
+		            param("title", quicky.getTitle()).//
+		            param("usergroup", quicky.getUsergroup()).//
+		            param("location", quicky.getLocation()));
 		ResultActions result = executeRequest(request);
 		result.andExpect(status().isOk());
 		result.andExpect(view().name("/quickies/quicky-detail"));
@@ -147,19 +146,21 @@ public class QuickyControllerTest extends AbstractControllerTest {
 		connectWrongUser();
 		String url = "/quicky/{0}/edit";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, quicky.getId()).//
-				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
-				param("description", quicky.getDescription()).//
-				param("title", quicky.getTitle()).//
-				param("usergroup", quicky.getUsergroup()));
+		            contentType(MediaType.APPLICATION_FORM_URLENCODED).//
+		            param("submissionDate", "2015-01-01T12:00").//
+		            param("description", quicky.getDescription()).//
+		            param("title", quicky.getTitle()).//
+		            param("usergroup", quicky.getUsergroup())).//
+		            param("location", quicky.getLocation());
 		ResultActions result = executeRequest(request);
 		result.andExpect(status().isOk());
 		result.andExpect(view().name("errors/unauthorized"));
 	}
-	
+
 	// ************************************************************************
 	// Delete
 	// ************************************************************************
-	
+
 	@Test
 	public void deleteQuicky() throws Exception {
 		connectUser();

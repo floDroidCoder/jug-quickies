@@ -3,10 +3,13 @@ package com.julien_roux.jug.quickies.model.dto;
 import java.math.BigInteger;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.julien_roux.jug.quickies.model.Quicky;
@@ -14,15 +17,26 @@ import com.julien_roux.jug.quickies.model.Quicky;
 public class QuickyDTO {
 
 	private String id;
+	
+	@Length(max=125)
+	@NotNull
 	private String title;
+	
+	@NotNull
 	private String description;
+	@NotNull
 	private String usergroup;
-	private String email;
+	
+	@Length(max=125)
+	@NotNull
 	private String location;
+	
+	
 	private Integer nbVote;
 	private String presenterName, presenterId;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	@NotNull
 	private Date submissionDate;
 
 	public QuickyDTO() {
@@ -34,7 +48,6 @@ public class QuickyDTO {
 		this.title = quicky.getTitle();
 		this.description = quicky.getDescription();
 		this.usergroup = quicky.getUsergroup();
-		this.email = quicky.getPresenter().getEmail();
 		this.presenterName = quicky.getPresenter().getFirstname() + " " + quicky.getPresenter().getLastname();
 		this.presenterId = String.valueOf(quicky.getPresenter().getId());
 		this.submissionDate = quicky.getSubmissionDate();
@@ -73,7 +86,7 @@ public class QuickyDTO {
 		            append(description, other.description).//
 		            append(location, other.location).//
 		            append(submissionDate, other.submissionDate).//
-		            append(email, other.email).isEquals();
+		            isEquals();
 	}
 
 	@Override
@@ -83,7 +96,7 @@ public class QuickyDTO {
 		            append(description).//
 		            append(location).//
 		            append(submissionDate).//
-		            append(email).toHashCode();
+		            toHashCode();
 	}
 
 	public String getTitle() {
@@ -108,14 +121,6 @@ public class QuickyDTO {
 
 	public void setUsergroup(String usergroup) {
 		this.usergroup = usergroup;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public Date getSubmissionDate() {
