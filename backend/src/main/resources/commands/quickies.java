@@ -95,8 +95,7 @@ public class quickies extends BaseCommand {
 
 				vote.setQuicky(quicky);
 				vote.setVoter(currentUser);
-				vote = voteRepository.save(vote);
-
+				voteRepository.save(vote);
 				quickyRepository.save(quicky);
 			}
 		} catch (Exception e) {

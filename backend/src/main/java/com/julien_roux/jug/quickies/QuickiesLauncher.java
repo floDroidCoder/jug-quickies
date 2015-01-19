@@ -12,7 +12,7 @@ public class QuickiesLauncher {
 
 	public static void main(String[] args) {
 		System.out.println("Starting Quickies application...");
-		SpringApplication.run(QuickiesLauncher.class, args);
+		SpringApplication.run(new Object[] {QuickiesLauncher.class, ScheduledTasks.class}, args);
 		System.out.println("end.");
 	}
 }
