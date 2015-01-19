@@ -85,7 +85,7 @@ public class quickies extends BaseCommand {
 			User currentUser = userRepository.findByEmail(userEmail);
 			Quicky quicky = quickyRepository.findOne(new BigInteger(id));
 			if (currentUser == null || quicky == null) {
-				throw new Exception();
+				throw new Exception("User or quicky doesn't exists");
 			}
 
 			Vote vote = voteRepository.findByVoterAndQuicky(currentUser, quicky);
@@ -100,7 +100,7 @@ public class quickies extends BaseCommand {
 				quickyRepository.save(quicky);
 			}
 		} catch (Exception e) {
-			throw new ScriptException("Unable to vote for this quicky");
+			throw new ScriptException("Unable to vote for this quicky" + e.getMessage());
 		}
 
 		return "OK";
