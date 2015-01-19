@@ -2,9 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head th:include="common/header :: common-header">
-	<meta property="og:title" content="${quicky.title}" />
-	<meta property="og:site_name" content="JUG Quicky Challenge"/>
-	<meta property="og:url" content="http://sd-44145.dedibox.fr/quicky/${quicky.id}" />
+	<meta property="og:title" th:content="${quicky.title}" />
+	<meta property="og:site_name" th:content="JUG Quicky Challenge"/>
+	<meta property="og:url" th:content="http://sd-44145.dedibox.fr:8090/quicky/${quicky.id}" />
+	<meta property="og:image" content="http://sd-44145.dedibox.fr:8090/img/ads_banner/kitten_0.gif" />
 </head>
 
 <body>
