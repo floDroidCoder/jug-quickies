@@ -3,6 +3,7 @@ package com.julien_roux.jug.quickies;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import com.julien_roux.jug.quickies.brainfuck.BrainfuckEngineTest;
 import com.julien_roux.jug.quickies.controller.QuickyControllerTest;
 import com.julien_roux.jug.quickies.controller.UserControllerTest;
 import com.julien_roux.jug.quickies.repository.model.QuickyTest;
@@ -21,7 +22,8 @@ import com.julien_roux.jug.quickies.repository.mongodb.UserRepositoryMongoDbTest
    QuickyTest.class,
    UserTest.class,
    QuickyRepositoryMongoDbTest.class,
-   UserRepositoryMongoDbTest.class
+   UserRepositoryMongoDbTest.class,
+   BrainfuckEngineTest.class
 })
 public class TestSuite {
 
