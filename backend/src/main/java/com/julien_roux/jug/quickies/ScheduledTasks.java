@@ -37,7 +37,7 @@ public class ScheduledTasks {
 		for (Status status : result.getTweets()) {
 			String statusText = status.getText();
 			if (statusText.contains("#ReadyAimFired") && statusText.contains("#Vote")) {
-				Pattern pattern = Pattern.compile("#Vote_(.*)?");
+				Pattern pattern = Pattern.compile("#Vote_([0-9]*)?");
 				Matcher matcher = pattern.matcher(statusText);
 				if (matcher.find()) {
 					saveVoteForQuicky(status, matcher, twitter);

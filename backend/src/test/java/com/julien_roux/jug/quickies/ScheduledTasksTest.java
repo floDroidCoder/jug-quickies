@@ -10,9 +10,9 @@ import org.junit.Test;
 public class ScheduledTasksTest {
 	@Test
 	public void testParsing() {
-		String tweet = "React le reacteur #UGQuickie #ReadyAiMFired #Vote_123456789";
+		String tweet = "#UGQuickie #ReadyAimFired #Vote_26225296480733527651036323651 Un autre test telnet";
 		
-		Pattern pattern = Pattern.compile("#Vote_(.*)?");
+		Pattern pattern = Pattern.compile("#Vote_([0-9]*)?");
 		Matcher matcher = pattern.matcher(tweet);
 		if (matcher.find())
 		{
