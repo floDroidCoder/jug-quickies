@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-<head th:include="common/header :: common-header">
-	<meta property="og:title" th:content="${quicky.title}" />
-	<meta property="og:site_name" th:content="JUG Quicky Challenge"/>
-	<meta property="og:url" th:content="http://sd-44145.dedibox.fr:8090/quicky/${quicky.id}" />
-	<meta property="og:image" content="http://sd-44145.dedibox.fr:8090/img/ads_banner/kitten_0.gif" />
-</head>
+<head th:include="common/header :: common-header" th:with="quicky=${quicky}"></head>
 
 <body>
 	<nav th:replace="common/navbar :: navbar"></nav>
@@ -65,7 +60,7 @@
 								</a>
 							</div>
 							<div class="col-xs-4">
-								<a th:href="'https://www.facebook.com/sharer/sharer.php?u=http://sd-44145.dedibox.fr:8090' + @{/quicky/{id}(id=${quicky.id})}" class="btn btn-default btn-lg btn-block">
+								<a th:href="'https://www.facebook.com/sharer/sharer.php?u=http://sd-44145.dedibox.fr:8090' + @{/quicky/{id}(id=${quicky.id})}" target="_blanck" class="btn btn-default btn-lg btn-block">
 									<i class="fa fa-facebook"></i> <span class="hidden-xs">Share</span>
 								</a>
 							</div>

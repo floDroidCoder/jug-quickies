@@ -8,6 +8,11 @@
 		
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+	    
+		<meta th:if="${quicky != null}" property="og:site_name" content="JUG Quicky Challenge"/>
+	    <meta th:if="${quicky != null}" property="og:title" th:content="${quicky.title}" />
+		<meta th:if="${quicky != null}" property="og:url" th:content="'http://sd-44145.dedibox.fr:8090/quicky/' + ${quicky.id}" />
+		<meta th:if="${quicky != null}" property="og:image" content="http://sd-44145.dedibox.fr:8090/img/ads_banner/kitten_0.gif" />
 	
 		<link rel="icon" href="favicon.ico" />
 		<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,700'  />
