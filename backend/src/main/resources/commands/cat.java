@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class cat extends BaseCommand {
 	@Command
-	@Usage("List all quickies")
+	@Usage("Print brainfuck ascii cats")
 	public String miaou() {
 		String response = "Miaouuuu";
 		
