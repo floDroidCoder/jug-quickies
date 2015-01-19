@@ -1,3 +1,5 @@
+package com.julien_roux.jug.quickies;
+
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -24,6 +26,7 @@ import com.julien_roux.jug.quickies.repository.VoteRepository;
 @Usage("Quicky app")
 @Component
 public class quickies extends BaseCommand {
+
 	@Command
 	@Usage("List all quickies")
 	public String list(InvocationContext<Object> context, @Usage("specify the usergroup") @Argument String usergroup) {
