@@ -12,17 +12,17 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="panel-title col-sm-6" th:inline="text">
+							<div th:class="'panel-title' + ${canEdit ? 'col-xs-6' : 'col-xs-12'}" th:inline="text">
 								[[${quicky.title}]]
 							</div>
-							<div class="col-md-2 col-xs-3 pull-right" th:if="${canEdit}">
+							<div class="col-xs-3 pull-right" th:if="${canEdit}">
 								<a th:href="@{/quicky/{id}/delete(id=${quicky.id})}" class="btn btn-danger btn-lg btn-block">
-									<i class="fa fa-remove"></i>
+									<i class="fa fa-remove"></i> <span class="hidden-xs">Delete</span>
 								</a>
 							</div>
-							<div class="col-md-2 col-xs-3 pull-right" th:if="${canEdit}">
+							<div class="col-xs-3 pull-right" th:if="${canEdit}">
 								<a th:href="@{/quicky/{id}/edit(id=${quicky.id})}" class="btn btn-success btn-lg btn-block">
-									<i class="fa fa-edit"></i>
+									<i class="fa fa-edit"></i> <span class="hidden-xs">Edit</span>
 								</a>
 							</div>
 						</div>
