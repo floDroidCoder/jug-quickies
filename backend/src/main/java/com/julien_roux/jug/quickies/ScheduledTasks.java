@@ -65,7 +65,8 @@ public class ScheduledTasks {
 			voteRepository.save(vote);
 			quickyRepository.save(quicky);
 
-			twitter.updateStatus("@" + userScreenName + " --> Vote Ok for quicky " + id);
+			twitter.updateStatus(String.format("@%s : Vote OK for %s %s", userScreenName, quicky.getTitle(),
+			            "http://sd-44145.dedibox.fr/quicky/" + quicky.getId()));
 		}
 	}
 }
