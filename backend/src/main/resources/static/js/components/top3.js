@@ -110,7 +110,7 @@ var SessionFilter = React.createClass({
 					    <button type="button" className="btn btn-default" value="JUG">JUG</button>
 					  </div>
 					  <div className="btn-group" role="group">
-					    <button type="button" className="btn btn-default" value=".NET">.NET</button>
+					    <button type="button" className="btn btn-default" value="NUG">.NET</button>
 					  </div>
 					  <div className="btn-group" role="group">
 					    <button type="button" className="btn btn-default" value="JSR">JsRomandie</button>
