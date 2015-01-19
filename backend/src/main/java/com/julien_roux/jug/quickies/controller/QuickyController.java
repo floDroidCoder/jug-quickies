@@ -58,7 +58,7 @@ public class QuickyController {
 		return quickyList;
 	}
 
-	@RequestMapping(value = "/quickies/{usergroup}/past", method = RequestMethod.GET)
+	@RequestMapping(value = "/quickies/{usergroup}/top-past", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<QuickyDTO> findPastQuickies(@PathVariable String usergroup) {
@@ -74,7 +74,7 @@ public class QuickyController {
 		return quickyList;
 	}
 
-	@RequestMapping(value = "/quickies/{usergroup}/futur", method = RequestMethod.GET)
+	@RequestMapping(value = "/quickies/{usergroup}/top-futur", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<QuickyDTO> findFuturQuickies(@PathVariable String usergroup) {
@@ -89,20 +89,33 @@ public class QuickyController {
 		return quickyList;
 	}
 
-	@RequestMapping(value = "/quickies/futur", method = RequestMethod.GET)
+	@RequestMapping(value = "/quickies/{usergroup}/futur", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<QuickyDTO> findAllFuturQuickies() {
-		List<Quicky> quickies = quickyRepository.findBySubmissionDateAfterOrderBySubmissionDateDesc(new Date());
+	public List<QuickyDTO> findAllFuturQuickies(@PathVariable String usergroup) {
+		List<Quicky> quickies;
+		if ("ALL".equals(usergroup.toUpperCase())) {
+			quickies = quickyRepository.findBySubmissionDateAfterOrderBySubmissionDateDesc(new Date());
+		} else {
+			quickies = quickyRepository.findBySubmissionDateAfterAndUsergroupEqualsOrderBySubmissionDateDesc(
+			            new Date(), usergroup);
+		}
+
 		List<QuickyDTO> quickyList = quickiesToDtoList(quickies);
 		return quickyList;
 	}
 
-	@RequestMapping(value = "/quickies/past", method = RequestMethod.GET)
+	@RequestMapping(value = "/quickies/{usergroup}/past", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<QuickyDTO> findAllPastQuickies() {
-		List<Quicky> quickies = quickyRepository.findBySubmissionDateBeforeOrderBySubmissionDateDesc(new Date());
+	public List<QuickyDTO> findAllPastQuickies(@PathVariable String usergroup) {
+		List<Quicky> quickies;
+		if ("ALL".equals(usergroup.toUpperCase())) {
+			quickies = quickyRepository.findBySubmissionDateBeforeOrderBySubmissionDateDesc(new Date());
+		} else {
+			quickies = quickyRepository.findBySubmissionDateBeforeAndUsergroupEqualsOrderBySubmissionDateDesc(
+			            new Date(), usergroup);
+		}
 		List<QuickyDTO> quickyList = quickiesToDtoList(quickies);
 		return quickyList;
 	}

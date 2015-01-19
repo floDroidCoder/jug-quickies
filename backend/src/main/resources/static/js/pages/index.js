@@ -8,8 +8,6 @@ React.render(
   <div>
   	<Carousel data={bannerData} id="carousel-kitten"/>
   	<SessionFilter baseUrl="/quickies/"/>
-  	<SessionList name="All Past Quickies" url="/quickies/past" pollInterval="30000"/>
-  	<SessionList name="All Futur Quickies" url="/quickies/futur" pollInterval="30000"/>
   </div>,
   document.getElementById('content')
 );

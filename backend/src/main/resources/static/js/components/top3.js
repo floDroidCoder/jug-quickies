@@ -94,9 +94,11 @@ var SessionFilter = React.createClass({
 		})
 	},
 	render: function() {
-		var baseUrl = this.props.baseUrl + this.state.usergroup;
-		var urlPast = baseUrl + '/past';
-		var urlFutur = baseUrl + '/futur';
+		var baseUGUrl = this.props.baseUrl + this.state.usergroup;
+		var urlTopPast = baseUGUrl + '/top-past';
+		var urlTopFutur = baseUGUrl + '/top-futur';
+		var urlAllPast = baseUGUrl + '/past';
+		var urlAllFutur = baseUGUrl + '/futur';
 		
 		return (
 				<div className="row" id="filters">
@@ -114,8 +116,10 @@ var SessionFilter = React.createClass({
 					    <button type="button" className="btn btn-default" value="JSR">JsRomandie</button>
 					  </div>
 					</div>
-					<SessionList name="Top Past Quickies" url={urlPast} pollInterval="30000"/>
-				  	<SessionList name="Top Futur Quickies" url={urlFutur} pollInterval="30000"/>
+					<SessionList name="Top Past Quickies" url={urlTopPast} pollInterval="30000"/>
+				  	<SessionList name="Top Futur Quickies" url={urlTopFutur} pollInterval="30000"/>
+				  	<SessionList name="All Past Quickies" url={urlAllPast} pollInterval="30000"/>
+				  	<SessionList name="All Futur Quickies" url={urlAllFutur} pollInterval="30000"/>
 				</div>
 		);
 	}
