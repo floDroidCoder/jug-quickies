@@ -14,11 +14,20 @@ Ext.application({
     name: 'UGQuickies',
 
     requires: [
-        'Ext.MessageBox'
+        'Ext.MessageBox',
+        'Ext.Ajax'
     ],
 
     views: [
         'Main'
+    ],
+
+    models: [
+        'Quicky'
+    ],
+
+    stores : [
+        'QuickyStore'
     ],
 
     icon: {
