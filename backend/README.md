@@ -13,3 +13,6 @@ http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.
 
 __React__
 http://facebook.github.io/react/docs/
+
+__Thymeleaf
+http://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#difference-between-thinclude-and-threplace
