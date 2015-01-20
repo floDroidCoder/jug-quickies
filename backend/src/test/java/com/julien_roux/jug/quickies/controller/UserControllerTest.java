@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.Test;
@@ -117,6 +118,8 @@ public class UserControllerTest extends AbstractControllerTest {
 		String url = "/user/{0}/delete";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, user.getId()));
 		ResultActions result = executeRequest(request);
+		result.andExpect(status().is3xxRedirection());
 		result.andExpect(content().string(startsWith("")));
+		result.andExpect(view().name("redirect:/admin"));
 	}
 }
