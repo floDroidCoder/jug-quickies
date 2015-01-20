@@ -62,16 +62,16 @@ var SessionList = React.createClass({
 	setInterval(this.loadData, this.props.pollInterval);
   },
   render: function() {
-  	var sessionNodes = this.state.data.map(function(session) {
+  	var sessionNodes = this.state.data.length > 0 ? this.state.data.map(function(session) {
   		return (
-  			<Session session={session}></Session>
+  			<Session key={session.id} session={session}></Session>
   		);
-  	});
+  	}, this) : 'No Quicky yet';
     return (
     <div className="col-sm-12 col-md-6">
 	       <h1 className="text-center">{this.props.name}</h1>
 	       <div className="session-list text-center">
-	        	{sessionNodes.length > 0 ? sessionNodes: 'No quicky yet'}
+		        {sessionNodes}
 	      </div>
     </div>
     );
