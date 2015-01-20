@@ -68,7 +68,7 @@ var SessionList = React.createClass({
   		);
   	}, this) : 'No Quicky yet';
     return (
-    <div className="col-sm-12 col-md-6">
+    <div className="col-sm-12 col-md-6" style="min-height: 180px;">
 	       <h1 className="text-center">{this.props.name}</h1>
 	       <div className="session-list text-center">
 		        {sessionNodes}
