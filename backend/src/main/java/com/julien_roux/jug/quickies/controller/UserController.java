@@ -130,9 +130,9 @@ public class UserController {
 	// ************************************************************************
 
 	@RequestMapping(value = "/user/{id}/delete", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public void deleteUser(@PathVariable BigInteger id) {
+	public String deleteUser(@PathVariable BigInteger id) {
 		userRepository.delete(id);
+		
+		return "redirect:/admin";
 	}
 }

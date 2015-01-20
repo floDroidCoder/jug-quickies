@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+	<head th:include="common/header :: common-header"></head>
+<body>
+	<nav th:replace="common/navbar :: navbar"></nav>
+  	<div class="container" style="min-height: 500px">
+  		<h1 class="text-center">Admin zone</h1>
+		<div class="row">
+			<div class="col-xs-12 col-md-8 col-md-offset-2">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Users
+					</div>
+					<div class="panel-body">
+						<div th:each="user: ${users}" class="col-xs-12">
+							<span th:text="${user.email}" class="col-xs-3">User email</span>
+							<span th:text="${user.role}" class="col-xs-3">User role</span>
+							<a th:href="@{/user/{id}(id=${user.id})}" class="col-xs-3">
+					        	<i class="fa fa-eye"></i> <span class="hidden-xs">VIEW</span>
+					        </a>
+					        <a th:href="@{/user/{id}/delete(id=${user.id})}" class="col-xs-3">
+					        	<i class="fa fa-remove"></i> <span class="hidden-xs">DELETE</span>
+					        </a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-md-8 col-md-offset-2">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						User groups
+					</div>
+					<div class="panel-body">
+						<div th:each="group: ${groups}" class="col-xs-12">
+							<span th:text="${group.id}" class="col-xs-3">Group Id</span>
+							<span th:text="${group.name}" class="col-xs-3">Group name</span>
+					        <a th:href="@{/user/{id}/delete(id=${user.id})}" class="col-xs-3">
+					        	<i class="fa fa-remove"></i> <span class="hidden-xs">DELETE</span>
+					        </a>
+						</div>
+						<form th:action="@{/admin/group}" method="POST">
+							
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<nav th:replace="common/footer :: common-footer"></nav>
+</body>
+</html>
