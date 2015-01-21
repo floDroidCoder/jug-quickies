@@ -3,8 +3,8 @@ package com.julien_roux.jug.quickies.controller;
 import java.math.BigInteger;
 import java.security.Principal;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -237,14 +237,11 @@ public class QuickyController {
 	}
 
 	private List<QuickyDTO> quickiesToDtoList(List<Quicky> quickies) {
-		List<QuickyDTO> quickyList = new LinkedList<QuickyDTO>();
-		for (Quicky quicky : quickies) {
+		return  quickies.stream().map(quicky -> {
 			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
 			quicky.setPresenter(tmpUser);
 
-			QuickyDTO quickyDto = new QuickyDTO(quicky);
-			quickyList.add(quickyDto);
-		}
-		return quickyList;
+			return new QuickyDTO(quicky); 
+		}).collect(Collectors.toList());
 	}
 }
