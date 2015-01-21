@@ -1,5 +1,6 @@
 package com.julien_roux.jug.quickies;
 
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -25,6 +26,7 @@ import com.julien_roux.jug.quickies.repository.mongodb.UserRepositoryMongoDbTest
    UserRepositoryMongoDbTest.class,
    BrainfuckEngineTest.class
 })
+@Ignore
 public class TestSuite {
 
 }

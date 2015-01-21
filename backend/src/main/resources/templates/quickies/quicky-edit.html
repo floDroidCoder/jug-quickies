@@ -14,39 +14,42 @@
 	  				    <h3 class="panel-title text-center">Create a quicky</h3>
 	  				  </div>
 	  				  <div class="panel-body">
-	  				  	<div th:if="${param.error}" th:inline="text">
-	  				  		[[${param.error}]]
+	  				  	<div th:if="${errors != null}">
+	  				  		<div th:each="error: ${errors}" class="col-xs-12">
+	  				  			<span th:inline="text">[[${error}]]</span>
+	  				  		</div>
 	  				  	</div>
 	  				    <form class="form-horizontal" role="form" th:action="${quicky.id != null} ? @{/quicky/{id}/edit(id=${quicky.id})} : @{/quicky/create}" method="POST">
 	  				      <div class="form-group">
 	  				        <label for="title" class="col-sm-2 control-label">Title</label>
 	  				        <div class="col-sm-10">
-	  				          <input type="text" class="form-control" name="title" placeholder="Title" maxlength="125" th:value="${quicky.title}"/>
+	  				          <input type="text" class="form-control" name="title" placeholder="Title" maxlength="125" th:value="${quicky.title}" required="required"/>
 	  				        </div>
 	  				      </div>
 	  				      <div class="form-group">
 	  				        <label for="submissionDate" class="col-sm-2 control-label">Date</label>
 	  				        <div class="col-sm-10">
 	  				          <input type="datetime-local" class="form-control" name="submissionDate" placeholder="Date" 
-	  				          	th:value="${quicky.submissionDate!= null ? #calendars.format(quicky.submissionDate, dateformat) : ''}"/>
+	  				          	th:value="${quicky.submissionDate!= null ? #calendars.format(quicky.submissionDate, dateformat) : ''}"
+	  				          	required="required"/>
 	  				        </div>
 	  				      </div>
 	  				      <div class="form-group">
 	  				        <label for="location" class="col-sm-2 control-label">Location</label>
 	  				        <div class="col-sm-10">
-	  				          <input type="text" class="form-control" name="location" placeholder="Location" th:value="${quicky.location}"/>
+	  				          <input type="text" class="form-control" name="location" placeholder="Location" th:value="${quicky.location}" required="required"/>
 	  				        </div>
 	  				      </div>
 	  				      <div class="form-group">
 	  				        <label for="description" class="col-sm-2 control-label">Description</label>
 	  				        <div class="col-sm-10">
-	  				          <textarea class="form-control" rows="3" name="description" placeholder="Description" th:inline="text">[[${quicky.description == null ? '' : quicky.description}]]</textarea>
+	  				          <textarea class="form-control" rows="3" name="description" placeholder="Description" th:inline="text" required="required">[[${quicky.description == null ? '' : quicky.description}]]</textarea>
 	  				        </div>
 	  				      </div>
 	  				      <div class="form-group">
 	  				        <label for="usergroup" class="col-sm-2 control-label">User Group</label>
 	  				        <div class="col-sm-10">
-	  				          <select class="form-control" name="usergroup" th:value="${quicky.usergroup}">
+	  				          <select class="form-control" name="usergroup" th:value="${quicky.usergroup}" required="required">
 	  				          	<option value="">--</option>
 	  				          	<option value="JUG" th:selected="${quicky.usergroup == 'JUG'}">Java User Group</option>
 	  				          	<option value="JSR" th:selected="${quicky.usergroup == 'JSR'}">JS Romandie</option>
