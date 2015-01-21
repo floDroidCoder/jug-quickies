@@ -238,11 +238,14 @@ public class QuickyController {
 	}
 
 	private List<QuickyDTO> quickiesToDtoList(List<Quicky> quickies) {
-		return  quickies.stream().map(quicky -> {
-			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
-			quicky.setPresenter(tmpUser);
-
-			return new QuickyDTO(quicky); 
-		}).collect(Collectors.toList());
+		return quickies.stream()
+					.sorted((q1, q2) -> -Integer.compare(q1.getNbVote(), q2.getNbVote()))
+					.map(quicky -> {
+						User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
+						quicky.setPresenter(tmpUser);
+			
+						return new QuickyDTO(quicky);
+					})
+					.collect(Collectors.toList());
 	}
 }
