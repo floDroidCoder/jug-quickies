@@ -2,6 +2,7 @@ package com.julien_roux.jug.quickies.controller;
 
 import java.math.BigInteger;
 import java.security.Principal;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.julien_roux.jug.quickies.exception.UnauthorizedActionException;
 import com.julien_roux.jug.quickies.model.Quicky;
 import com.julien_roux.jug.quickies.model.User;
+import com.julien_roux.jug.quickies.model.dto.QuickyDTO;
 import com.julien_roux.jug.quickies.model.dto.UserDTO;
 import com.julien_roux.jug.quickies.repository.QuickyRepository;
 import com.julien_roux.jug.quickies.repository.UserRepository;
@@ -47,8 +49,8 @@ public class UserController {
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<User> findAll() {
-		return userRepository.findAll();
+	public List<UserDTO> findAll() {
+		return usersToDtoList(userRepository.findAll());
 	}
 
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
@@ -134,5 +136,14 @@ public class UserController {
 		userRepository.delete(id);
 		
 		return "redirect:/admin";
+	}
+
+	private List<UserDTO> usersToDtoList(List<User> users) {
+		List<UserDTO> userList = new LinkedList<UserDTO>();
+		for (User user : users) {
+			UserDTO quickyDto = new UserDTO(user);
+			userList.add(quickyDto);
+		}
+		return userList;
 	}
 }

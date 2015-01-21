@@ -27,7 +27,7 @@ public class UserControllerTest extends AbstractControllerTest {
 		String url = "/users";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
 		ResultActions result = executeRequest(request);
-		result.andExpect(content().string(startsWith("[{\"id\":"+user.getId())));
+		result.andExpect(content().string(startsWith("[{\"id\":\"" + user.getId() + "\"")));
 	}
 	
 	@Test

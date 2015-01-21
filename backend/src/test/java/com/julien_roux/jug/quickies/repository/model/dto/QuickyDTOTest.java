@@ -10,11 +10,15 @@ public class QuickyDTOTest extends AbstractModelTest<QuickyDTO> {
 	@Override
 	public QuickyDTO getEntity() {
 		QuickyDTO dto = new QuickyDTO();
-		dto.setDescription("description");
+		dto.setDescription("description dto");
+		dto.setId("id dto");
+		dto.setLocation("location dto");
+		dto.setNbVote(1);
+		dto.setPresenterId("123456789");
+		dto.setPresenterName("Georges Wolinski");
 		dto.setSubmissionDate(new Date());
-		dto.setTitle("title");
-		dto.setUsergroup("usergroup");
-		dto.setId("id");
+		dto.setTitle("title dto");
+		dto.setUsergroup("usergroup dto");
 		return dto;
 	}
 

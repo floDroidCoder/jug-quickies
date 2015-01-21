@@ -9,9 +9,10 @@ public class QuickyTest extends AbstractEntityTest<Quicky> {
 	public Quicky getEntity() {
 		Quicky entity = new Quicky("titleDb", "descriptionDb", "usergroupDb");
 		entity.setId(null);
-		entity.setPresenter(null);
-		entity.setSubmissionDate(new Date());
+		entity.setPresenter(new UserTest().getEntity());
+		entity.setSubmissionDate(new Date(1));
 		entity.setLocation("locationDb");
+		entity.setNbVote(1);
 		return entity;
 	}	
 }

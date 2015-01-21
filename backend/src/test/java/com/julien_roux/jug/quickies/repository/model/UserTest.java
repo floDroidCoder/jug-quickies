@@ -10,6 +10,8 @@ public class UserTest extends AbstractEntityTest<User> {
 		entity.setFirstname("firstname test");
 		entity.setLastname("lastname test");
 		entity.setShamefulTechnologie("shamefulTechnologie test");
+		entity.setId(null);
+		entity.setAbout("about test");
 		return entity;
 	}
 

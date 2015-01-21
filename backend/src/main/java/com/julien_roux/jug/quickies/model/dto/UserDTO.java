@@ -1,5 +1,6 @@
 package com.julien_roux.jug.quickies.model.dto;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -28,7 +29,7 @@ public class UserDTO {
 
 	public UserDTO(User user) {
 		this();
-		this.id = String.valueOf(user.getId());
+		this.id = user.getId() != null ? String.valueOf(user.getId()) : StringUtils.EMPTY;
 		this.lastname = user.getLastname();
 		this.firstname = user.getFirstname();
 		this.email = user.getEmail();
