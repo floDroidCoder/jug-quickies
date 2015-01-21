@@ -147,6 +147,7 @@ public class QuickyController {
 	public String submit(@Valid @ModelAttribute("quicky") QuickyDTO quickyDTO, BindingResult result,
 	            Principal principal, Model model) {
 		if (result.hasErrors()) {
+			model.addAttribute("errors", result);
 			return EDIT_PAGE;
 		}
 

@@ -10,16 +10,12 @@ import com.julien_roux.jug.quickies.exception.UnauthorizedActionException;
 
 @ControllerAdvice
 public class ExceptionHandlingController {
-	  // Total control - setup a model and return the view name yourself. Or consider
-	  // subclassing ExceptionHandlerExceptionResolver (see below).
-	  @ExceptionHandler(UnauthorizedActionException.class)
-	  public ModelAndView handleError(HttpServletRequest req, Exception exception) {
-//	    logger.error("Request: " + req.getRequestURL() + " raised " + exception);
-
-	    ModelAndView mav = new ModelAndView();
-	    mav.addObject("exception", exception);
-	    mav.addObject("url", req.getRequestURL());
-	    mav.setViewName("errors/unauthorized");
-	    return mav;
-	  }
+	@ExceptionHandler(UnauthorizedActionException.class)
+	public ModelAndView handleError(HttpServletRequest req, Exception exception) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("exception", exception);
+		mav.addObject("url", req.getRequestURL());
+		mav.setViewName("errors/unauthorized");
+		return mav;
+	}
 }
