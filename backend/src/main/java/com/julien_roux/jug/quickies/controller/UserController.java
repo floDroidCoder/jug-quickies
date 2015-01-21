@@ -2,8 +2,8 @@ package com.julien_roux.jug.quickies.controller;
 
 import java.math.BigInteger;
 import java.security.Principal;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.julien_roux.jug.quickies.exception.UnauthorizedActionException;
 import com.julien_roux.jug.quickies.model.Quicky;
 import com.julien_roux.jug.quickies.model.User;
-import com.julien_roux.jug.quickies.model.dto.QuickyDTO;
 import com.julien_roux.jug.quickies.model.dto.UserDTO;
 import com.julien_roux.jug.quickies.repository.QuickyRepository;
 import com.julien_roux.jug.quickies.repository.UserRepository;
@@ -134,16 +133,13 @@ public class UserController {
 	@RequestMapping(value = "/user/{id}/delete", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable BigInteger id) {
 		userRepository.delete(id);
-		
+
 		return "redirect:/admin";
 	}
 
 	private List<UserDTO> usersToDtoList(List<User> users) {
-		List<UserDTO> userList = new LinkedList<UserDTO>();
-		for (User user : users) {
-			UserDTO quickyDto = new UserDTO(user);
-			userList.add(quickyDto);
-		}
-		return userList;
+		return users.stream().map(user -> {
+			return new UserDTO(user);
+		}).collect(Collectors.toList());
 	}
 }
