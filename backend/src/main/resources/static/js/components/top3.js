@@ -67,11 +67,12 @@ var SessionList = React.createClass({
   			<Session key={session.id} session={session}></Session>
   		);
   	});
+  	var noQuicky = (<div>No Quicky Yet</div>);
     return (
     <div className="col-sm-12 col-md-6">
 	       <h1 className="text-center">{this.props.name}</h1>
 	       <div className="session-list text-center">
-		        {sessionNodes.length > 0 ? sessionNodes : 'No quicky yet'}
+		        {sessionNodes.length > 0 ? sessionNodes : noQuicky}
 	      </div>
     </div>
     );
@@ -132,10 +133,14 @@ var SessionFilter = React.createClass({
 					  </div>
 					  {groups}
 					</div>
-					<SessionList name="Top Past Quickies" url={urlTopPast} pollInterval="30000"/>
-				  	<SessionList name="Top Futur Quickies" url={urlTopFutur} pollInterval="30000"/>
-				  	<SessionList name="All Past Quickies" url={urlAllPast} pollInterval="30000"/>
-				  	<SessionList name="All Futur Quickies" url={urlAllFutur} pollInterval="30000"/>
+					<div className="row">
+						<SessionList name="Top Past Quickies" url={urlTopPast} pollInterval="30000"/>
+					  	<SessionList name="Top Futur Quickies" url={urlTopFutur} pollInterval="30000"/>
+				  	</div>
+				  	<div className="row">
+					  	<SessionList name="All Past Quickies" url={urlAllPast} pollInterval="30000"/>
+					  	<SessionList name="All Futur Quickies" url={urlAllFutur} pollInterval="30000"/>
+				  	</div>
 				</div>
 		);
 	}
