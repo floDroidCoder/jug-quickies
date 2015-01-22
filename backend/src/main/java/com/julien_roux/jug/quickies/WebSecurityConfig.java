@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setEncoding("UTF-8");
 		filter.setForceEncoding(true);
 
-		http./*addFilterBefore(filter, CsrfFilter.class).*/exceptionHandling().accessDeniedPage("/403")
+		http.addFilterBefore(filter, CsrfFilter.class).exceptionHandling().accessDeniedPage("/403")
 			.and()
 		            .authorizeRequests().anyRequest().permitAll()
 		    .and()
