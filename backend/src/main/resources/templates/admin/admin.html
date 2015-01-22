@@ -36,15 +36,12 @@
 					</div>
 					<div class="panel-body">
 						<div th:each="group: ${groups}" class="col-xs-12">
-							<span th:text="${group.id}" class="col-xs-3">Group Id</span>
-							<span th:text="${group.name}" class="col-xs-3">Group name</span>
-					        <a th:href="@{/user/{id}/delete(id=${user.id})}" class="col-xs-3">
+							<span th:text="${group.name}" class="col-xs-9">Group name</span>
+					        <a th:href="@{/usergroup/{id}/delete(id=${group.id})}" class="col-xs-3">
 					        	<i class="fa fa-remove"></i> <span class="hidden-xs">DELETE</span>
 					        </a>
 						</div>
-						<form th:action="@{/admin/group}" method="POST">
-							
-						</form>
+						<a th:href="@{/usergroup/create}">CREATE</a>
 					</div>
 				</div>
 			</div>

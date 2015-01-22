@@ -51,10 +51,10 @@
 	  				        <div class="col-sm-10">
 	  				          <select class="form-control" name="usergroup" th:value="${quicky.usergroup}" required="required">
 	  				          	<option value="">--</option>
-	  				          	<option value="JUG" th:selected="${quicky.usergroup == 'JUG'}">Java User Group</option>
-	  				          	<option value="JSR" th:selected="${quicky.usergroup == 'JSR'}">JS Romandie</option>
-	  				          	<option value="NUG" th:selected="${quicky.usergroup == 'NUG'}">.Net User Group</option>
-	  				          	
+	  				          	<option th:each="group : ${groups}" th:value="${group.name}" 
+	  				          		th:text="${group.name}" th:selected="${quicky.usergroup == group.name}">
+	  				          		Option
+	  				          	</option>
 	  				          </select>
 	  				        </div>
 	  				      </div>

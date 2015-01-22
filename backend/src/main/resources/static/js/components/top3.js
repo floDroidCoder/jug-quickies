@@ -80,18 +80,34 @@ var SessionList = React.createClass({
 
 var SessionFilter = React.createClass({
 	getInitialState: function() {
-	    return {usergroup: 'all'};
+	    return {usergroup: 'all', groupList: []};
 	},
 	changeUserGroup: function(usergroup) {
 		this.setState({usergroup: usergroup});
 	},
-	componentDidMount: function() {
+	loadGroups: function() {
+		$.ajax({
+	      url: '/usergroups',
+	      dataType: 'json',
+	      success: function(data) {
+	        this.setState({groupList: data});
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
+	},
+	attachEvents: function() {
 		var component = this;
-		$('#filters button').on('click', function() {
+		$(document).on('click', '#filters button', function() {
 			$('#filters button').removeClass('btn-selected');
 			$(this).addClass('btn-selected');
 			component.changeUserGroup($(this).val());
-		})
+		});
+	},
+	componentDidMount: function() {
+		this.loadGroups();
+		this.attachEvents();
 	},
 	render: function() {
 		var baseUGUrl = this.props.baseUrl + this.state.usergroup;
@@ -100,21 +116,21 @@ var SessionFilter = React.createClass({
 		var urlAllPast = baseUGUrl + '/past';
 		var urlAllFutur = baseUGUrl + '/futur';
 		
+		var groups = this.state.groupList.map(function(usergroup) {
+		   return (
+			   <div className="btn-group" role="group">
+			   		<button type="button" className="btn btn-default" value={usergroup.name}>{usergroup.name}</button>
+			   </div>
+		  );
+		});
+		
 		return (
 				<div className="row" id="filters">
 					<div className="btn-group btn-group-justified" role="group" aria-label="...">
 					  <div className="btn-group" role="group">
 					    <button type="button" className="btn btn-default btn-selected" value="ALL">All</button>
 					  </div>
-					  <div className="btn-group" role="group">
-					    <button type="button" className="btn btn-default" value="JUG">JUG</button>
-					  </div>
-					  <div className="btn-group" role="group">
-					    <button type="button" className="btn btn-default" value="NUG">.NET</button>
-					  </div>
-					  <div className="btn-group" role="group">
-					    <button type="button" className="btn btn-default" value="JSR">JsRomandie</button>
-					  </div>
+					  {groups}
 					</div>
 					<SessionList name="Top Past Quickies" url={urlTopPast} pollInterval="30000"/>
 				  	<SessionList name="Top Futur Quickies" url={urlTopFutur} pollInterval="30000"/>

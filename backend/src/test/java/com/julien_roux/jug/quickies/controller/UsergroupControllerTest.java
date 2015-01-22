@@ -18,9 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import com.julien_roux.jug.quickies.model.Quicky;
 import com.julien_roux.jug.quickies.model.Usergroup;
-import com.julien_roux.jug.quickies.model.dto.QuickyDTO;
 import com.julien_roux.jug.quickies.model.dto.UsergroupDTO;
 import com.julien_roux.jug.quickies.repository.UsergroupRepository;
 
@@ -28,7 +26,7 @@ public class UsergroupControllerTest extends AbstractControllerTest {
 
 	@Autowired
 	private UsergroupRepository usergroupRepository;
-	
+
 	private Usergroup usergroup;
 
 	@Before
@@ -93,20 +91,16 @@ public class UsergroupControllerTest extends AbstractControllerTest {
 		connectUser();
 		String url = "/usergroup/create";
 		UsergroupDTO toCreate = new UsergroupDTO();
-		toCreate.setCreationDate(new Date());
 		toCreate.setCreatorId("1010101");
 		toCreate.setName("usergroup");
 
 		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url).//
 		            contentType(MediaType.APPLICATION_FORM_URLENCODED).//
-		            param("creationDate", "2015-01-01T12:00").//
-		            param("creatorId", toCreate.getCreatorId()).//
 		            param("name", toCreate.getName()));
 
 		ResultActions result = executeRequest(request);
-		result.andExpect(status().isOk());
-		result.andExpect(view().name("/usergroups/usergroup-detail"));
-		result.andExpect(model().attributeExists("usergroup"));
+		result.andExpect(status().is3xxRedirection());
+		result.andExpect(view().name("redirect:/admin"));
 	}
 
 	// ************************************************************************
@@ -130,13 +124,10 @@ public class UsergroupControllerTest extends AbstractControllerTest {
 		String url = "/usergroup/{0}/edit";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, usergroup.getId()).//
 		            contentType(MediaType.APPLICATION_FORM_URLENCODED).//
-		            param("creationDate", "2015-01-01T12:00").//
-		            param("creatorId", usergroup.getCreatorId()).//
 		            param("name", usergroup.getName()));
 		ResultActions result = executeRequest(request);
-		result.andExpect(status().isOk());
-		result.andExpect(view().name("/usergroups/usergroup-detail"));
-		result.andExpect(model().attributeExists("usergroup"));
+		result.andExpect(status().is3xxRedirection());
+		result.andExpect(view().name("redirect:/admin"));
 	}
 
 	// ************************************************************************

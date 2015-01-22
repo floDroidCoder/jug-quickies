@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.julien_roux.jug.quickies.exception.UnauthorizedActionException;
 import com.julien_roux.jug.quickies.model.User;
 import com.julien_roux.jug.quickies.repository.UserRepository;
+import com.julien_roux.jug.quickies.repository.UsergroupRepository;
 
 @Controller
 public class AdminController {
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private UsergroupRepository usergroupRepository;
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String get(Model model, Principal principal) throws UnauthorizedActionException {
@@ -28,7 +32,8 @@ public class AdminController {
 		}
 
 		model.addAttribute("users", userRepository.findAll());
-		model.addAttribute("groups", null);
+		model.addAttribute("groups", usergroupRepository.findAll());
+		
 		return "/admin/admin";
 	}
 }

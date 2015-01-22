@@ -29,6 +29,7 @@ import com.julien_roux.jug.quickies.model.Vote;
 import com.julien_roux.jug.quickies.model.dto.QuickyDTO;
 import com.julien_roux.jug.quickies.repository.QuickyRepository;
 import com.julien_roux.jug.quickies.repository.UserRepository;
+import com.julien_roux.jug.quickies.repository.UsergroupRepository;
 import com.julien_roux.jug.quickies.repository.VoteRepository;
 
 @Controller
@@ -44,6 +45,8 @@ public class QuickyController {
 	private UserRepository userRepository;
 	@Autowired
 	private VoteRepository voteRepository;
+	@Autowired
+	private UsergroupRepository usergroupRepository;
 
 	// ************************************************************************
 	// Get
@@ -140,6 +143,8 @@ public class QuickyController {
 	public String create(Model model) {
 		QuickyDTO quickyDTO = new QuickyDTO();
 		model.addAttribute("quicky", quickyDTO);
+		model.addAttribute("groups", usergroupRepository.findAll());
+
 		return EDIT_PAGE;
 	}
 
@@ -172,6 +177,7 @@ public class QuickyController {
 			throw new UnauthorizedActionException();
 		}
 		model.addAttribute("quicky", new QuickyDTO(quicky));
+		model.addAttribute("groups", usergroupRepository.findAll());
 		model.addAttribute("dateformat", DATE_FORMAT);
 		return EDIT_PAGE;
 	}
@@ -238,14 +244,11 @@ public class QuickyController {
 	}
 
 	private List<QuickyDTO> quickiesToDtoList(List<Quicky> quickies) {
-		return quickies.stream()
-					.sorted((q1, q2) -> -Integer.compare(q1.getNbVote(), q2.getNbVote()))
-					.map(quicky -> {
-						User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
-						quicky.setPresenter(tmpUser);
-			
-						return new QuickyDTO(quicky);
-					})
-					.collect(Collectors.toList());
+		return quickies.stream().sorted((q1, q2) -> -Integer.compare(q1.getNbVote(), q2.getNbVote())).map(quicky -> {
+			User tmpUser = userRepository.findByEmail(quicky.getPresenter().getEmail());
+			quicky.setPresenter(tmpUser);
+
+			return new QuickyDTO(quicky);
+		}).collect(Collectors.toList());
 	}
 }

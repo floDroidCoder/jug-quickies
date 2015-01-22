@@ -3,24 +3,19 @@ package com.julien_roux.jug.quickies.model.dto;
 import java.math.BigInteger;
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.julien_roux.jug.quickies.model.Usergroup;
 
 public class UsergroupDTO {
-	
+
 	private String id, name, creatorName, creatorId;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	@NotNull
 	private Date creationDate;
-	
+
 	public UsergroupDTO() {
 	}
 
@@ -34,12 +29,11 @@ public class UsergroupDTO {
 
 	public Usergroup toUsergroup() {
 		Usergroup usergroup = new Usergroup();
-		usergroup.setCreationDate(this.creationDate);
 		usergroup.setName(this.name);
 		usergroup.setId(StringUtils.isEmpty(this.id) ? null : new BigInteger(this.id));
 		return usergroup;
 	}
-	
+
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
@@ -55,17 +49,17 @@ public class UsergroupDTO {
 			return false;
 		UsergroupDTO other = (UsergroupDTO) obj;
 		return new EqualsBuilder().//
-				append(name, other.name).//
-				append(creatorName, other.creatorName).//
-				isEquals();
+		            append(name, other.name).//
+		            append(creatorName, other.creatorName).//
+		            isEquals();
 	}
 
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().//
-				append(name).//
-				append(creatorName).//
-				toHashCode();
+		            append(name).//
+		            append(creatorName).//
+		            toHashCode();
 	}
 
 	public String getId() {

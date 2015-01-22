@@ -2,8 +2,9 @@ package com.julien_roux.jug.quickies.controller;
 
 import java.math.BigInteger;
 import java.security.Principal;
-import java.util.LinkedList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -31,6 +32,7 @@ public class UsergroupController {
 
 	private static final String USERGROUP_EDIT_PAGE = "/usergroups/usergroup-edit";
 	private static final String USERGROUP_DETAIL_PAGE = "/usergroups/usergroup-detail";
+	private static final String ADMIN = "redirect:/admin";
 
 	@Autowired
 	private UsergroupRepository usergroupRepository;
@@ -64,7 +66,7 @@ public class UsergroupController {
 		model.addAttribute("usergroup", usergroupDTO);
 		return USERGROUP_EDIT_PAGE;
 	}
-	
+
 	@RequestMapping(value = "/usergroup/create", method = RequestMethod.POST)
 	public String submit(@Valid @ModelAttribute("usergroup") UsergroupDTO usergroupDTO, BindingResult result,
 	            Principal principal, Model model) {
@@ -73,13 +75,14 @@ public class UsergroupController {
 		}
 
 		Usergroup usergroup = usergroupDTO.toUsergroup();
+		usergroup.setCreationDate(new Date());
 
 		User creator = userRepository.findByEmail(principal.getName());
 		usergroup.setCreator(creator);
 		usergroup = usergroupRepository.save(usergroup);
 
 		model.addAttribute("usergroup", new UsergroupDTO(usergroup));
-		return USERGROUP_DETAIL_PAGE;
+		return ADMIN;
 	}
 
 	// ************************************************************************
@@ -108,10 +111,9 @@ public class UsergroupController {
 		Usergroup usergroup = usergroupRepository.findOne(id);
 		usergroup.setName(usergroupDTO.getName());
 
-
 		usergroupRepository.save(usergroup);
 		model.addAttribute("usergroup", new UsergroupDTO(usergroup));
-		return USERGROUP_DETAIL_PAGE;
+		return ADMIN;
 	}
 
 	// ************************************************************************
@@ -121,16 +123,13 @@ public class UsergroupController {
 	@RequestMapping(value = "/usergroup/{id}/delete", method = RequestMethod.GET)
 	public String deleteUsergroup(@PathVariable BigInteger id) {
 		usergroupRepository.delete(id);
-		
+
 		return "redirect:/admin";
 	}
 
 	private List<UsergroupDTO> usergroupsToDtoList(List<Usergroup> usergroups) {
-		List<UsergroupDTO> usergroupList = new LinkedList<UsergroupDTO>();
-		for (Usergroup usergroup : usergroups) {
-			UsergroupDTO usergroupDto = new UsergroupDTO(usergroup);
-			usergroupList.add(usergroupDto);
-		}
-		return usergroupList;
+		return usergroups.stream().map(ug -> {
+			return new UsergroupDTO(ug);
+		}).collect(Collectors.toList());
 	}
 }
