@@ -6,7 +6,7 @@
 	<nav class="navbar navbar-default" role="navigation">
   		<div class="container-fluid">
 		   <div class="navbar-header">
-		     <a class="navbar-brand" th:href="@{/}">JUG Quickies</a>
+		     <a class="navbar-brand" th:href="@{/}">UG Quickies</a>
 		     <button th:if="${#httpServletRequest.remoteUser == null}" type="button" class="btn btn-default navbar-btn pull-right" data-toggle="modal" data-target="#myModal">Sign in</button>
 		     <form sec:authorize="hasRole('USER_ROLE') || hasRole('ADMIN_ROLE')" th:action="@{/logout}" method="post">
 		     	<button type="submit" class="btn btn-default navbar-btn pull-right">Disconnect</button>
