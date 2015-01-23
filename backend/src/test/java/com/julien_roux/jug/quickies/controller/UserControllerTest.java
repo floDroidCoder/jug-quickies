@@ -65,7 +65,7 @@ public class UserControllerTest extends AbstractControllerTest {
 				contentType(MediaType.APPLICATION_FORM_URLENCODED).//
 				param("lastname", toCreate.getLastname()).//
 				param("firstname", toCreate.getFirstname()).//
-				param("email", toCreate.getEmail()).//
+				param("email", toCreate.getEmail() +"_NEW").//
 				param("password", toCreate.getPassword()).//
 				param("company", toCreate.getCompany()).//
 				param("about", toCreate.getAbout()).//

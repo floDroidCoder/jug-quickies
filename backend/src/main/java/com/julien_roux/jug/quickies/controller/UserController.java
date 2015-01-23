@@ -53,8 +53,15 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-	public String get(@PathVariable BigInteger id, Model model) {
-		model.addAttribute("user", userRepository.findOne(id));
+	public String get(@PathVariable BigInteger id, Model model, Principal principal) {
+		if (principal != null) {
+			User currentUser = userRepository.findByEmail(principal.getName());
+			model.addAttribute("canEdit", currentUser.getId().equals(id));
+		} else {
+			model.addAttribute("canEdit", false);
+		}
+
+		model.addAttribute("user", new UserDTO(userRepository.findOne(id)));
 		return USER_DETAIL_PAGE;
 	}
 
@@ -76,6 +83,11 @@ public class UserController {
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public String create(@Valid @ModelAttribute("user") UserDTO userDTO, Model model) throws Exception {
+		User existingUser = userRepository.findByEmail(userDTO.getEmail());
+		if (existingUser != null) {
+			throw new Exception("User already exists");
+		}
+
 		User user = new User();
 		user.setAbout(userDTO.getAbout());
 		user.setCompany(userDTO.getCompany());

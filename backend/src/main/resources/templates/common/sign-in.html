@@ -122,7 +122,8 @@
  						_csrf: csrf.val()
  					}
   			).fail(function(data, status) {
-  				$('#errors').html('Authentication failed').show();
+  				var message = data.responseJSON.message ?  ' : ' + data.responseJSON.message : '';
+  				$('#errors').html('Authentication failed' + message).show();
   			}
   			).done(function(data) {
   				window.location.href= '/profile';

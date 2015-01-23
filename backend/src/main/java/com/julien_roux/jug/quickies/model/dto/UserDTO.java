@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.julien_roux.jug.quickies.model.User;
+import com.julien_roux.jug.quickies.utils.MD5Encoder;
 
 public class UserDTO {
 
@@ -130,5 +131,9 @@ public class UserDTO {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getMd5email() {
+		return MD5Encoder.toMD5(email);
 	}
 }

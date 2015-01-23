@@ -3,13 +3,13 @@ var Session = React.createClass({
   render: function() {
   	var dateClass = 'session-date ' + (this.props.session.open ? 'open' : 'closed');
     var user =  this.props.session.presenterName ? this.props.session.presenterName: this.props.session.email;
-    	
+    var imgSrc = 'http://www.gravatar.com/avatar/' + this.props.session.presenterMD5;
     return (
       <div className="session row text-left">
       	<div className="col-xs-3 col-sm-2 like">
       		{this.props.session.nbVote} <span className="glyphicon glyphicon-heart-empty"/>
       	</div>
-      	<div className="col-xs-9 col-sm-10 session-text">
+      	<div className="col-xs-6 col-sm-8 session-text">
         	<p>
         		<a href={'/quicky/' + this.props.session.id }>{this.props.session.title}</a>&nbsp;
         	 	by <a href={'/user/' + this.props.session.presenterId} className="authorLink">{user}</a>
@@ -24,6 +24,9 @@ var Session = React.createClass({
 	    		<i className="fa fa-group"></i>&nbsp;{this.props.session.usergroup}
 	    	</p>
         </div>
+        <div className="col-xs-3 col-sm-2 avatar">
+            <img src={imgSrc} />
+          </div>
       </div>
     );
   }

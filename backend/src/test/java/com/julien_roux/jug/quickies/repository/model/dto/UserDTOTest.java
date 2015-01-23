@@ -19,5 +19,5 @@ public class UserDTOTest extends AbstractModelTest<UserDTO> {
 		dto.setId("id dto");
 		return dto;
 	}
-
+	
 }

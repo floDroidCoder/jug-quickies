@@ -13,26 +13,27 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.julien_roux.jug.quickies.model.Quicky;
+import com.julien_roux.jug.quickies.utils.MD5Encoder;
 
 public class QuickyDTO {
 
 	private String id;
-	
-	@Length(max=125)
+
+	@Length(max = 125)
 	@NotNull
 	private String title;
-	
+
 	@NotNull
 	private String description;
 	@NotNull
 	private String usergroup;
-	
-	@Length(max=125)
+
+	@Length(max = 125)
 	@NotNull
 	private String location;
-	
+
 	private Integer nbVote;
-	private String presenterName, presenterId;
+	private String presenterName, presenterId, presenterMD5;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	@NotNull
@@ -49,6 +50,7 @@ public class QuickyDTO {
 		this.usergroup = quicky.getUsergroup();
 		this.presenterName = quicky.getPresenter().getFirstname() + " " + quicky.getPresenter().getLastname();
 		this.presenterId = String.valueOf(quicky.getPresenter().getId());
+		this.presenterMD5 = MD5Encoder.toMD5(quicky.getPresenter().getEmail());
 		this.submissionDate = quicky.getSubmissionDate();
 		this.nbVote = quicky.getNbVote();
 		this.setLocation(quicky.getLocation());
@@ -168,5 +170,13 @@ public class QuickyDTO {
 
 	public void setNbVote(Integer nbVote) {
 		this.nbVote = nbVote;
+	}
+
+	public String getPresenterMD5() {
+		return presenterMD5;
+	}
+
+	public void setPresenterMD5(String presenterMD5) {
+		this.presenterMD5 = presenterMD5;
 	}
 }
