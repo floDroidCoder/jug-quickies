@@ -13,10 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import com.julien_roux.jug.quickies.WebSecurityConfig;
 import com.julien_roux.jug.quickies.model.dto.UserDTO;
 
 public class UserControllerTest extends AbstractControllerTest {
-	
+
 	// ************************************************************************
 	// Get
 	// ************************************************************************
@@ -47,7 +48,7 @@ public class UserControllerTest extends AbstractControllerTest {
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, user.getId()));
 		ResultActions result = executeRequest(request);
 		result.andExpect(view().name("/users/user-detail"));
-		result.andExpect(model().attribute("user", user));
+		result.andExpect(model().attribute("user", new UserDTO(user)));
 	}
 
 	// ************************************************************************

@@ -12,6 +12,25 @@ import org.springframework.stereotype.Service;
 import com.julien_roux.jug.quickies.model.User;
 import com.julien_roux.jug.quickies.repository.UserRepository;
 
+/**
+                         _
+ _._ _..._ .-',     _.._(`))
+'-. `     '  /-._.-'    ',/
+   )         \            '.
+  / _    _    |             \
+ |  a    a    /              |
+ \   .-.                     ;  
+  '-('' ).-'       ,'       ;
+     '-;           |      .'
+        \           \    /
+        | 7  .__  _.-\   \
+        | |  |  ``/  /`  /
+       /,_|  |   /,_/   /
+          /,_/      '`-' 
+
+	Pig in charge of security
+
+ */
 @Service
 public class UserService implements UserDetailsService {
 

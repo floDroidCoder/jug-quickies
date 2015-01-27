@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.julien_roux.jug.quickies.WebSecurityConfig;
 import com.julien_roux.jug.quickies.exception.UnauthorizedActionException;
 import com.julien_roux.jug.quickies.model.Quicky;
 import com.julien_roux.jug.quickies.model.User;
@@ -40,7 +41,7 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private QuickyRepository quickyRepository;
-
+	
 	// ************************************************************************
 	// Get
 	// ************************************************************************
@@ -95,7 +96,8 @@ public class UserController {
 		user.setFirstname(userDTO.getFirstname());
 		user.setId(null);
 		user.setLastname(userDTO.getLastname());
-		user.setPassword(userDTO.getPassword());
+		String password = userDTO.getPassword();
+		user.setPassword(WebSecurityConfig.encodePassword(password));
 		user.setRole("USER_ROLE");
 		user.setShamefulTechnologie(userDTO.getShamefulTechnologie());
 
