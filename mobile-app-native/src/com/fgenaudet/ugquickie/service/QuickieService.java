@@ -9,8 +9,7 @@ import org.apache.http.util.EntityUtils;
 import android.util.Log;
 
 public class QuickieService {
-//	private static final String BASE_URL = "http://sd-44145.dedibox.fr:8090";
-	private static final String BASE_URL = "http://192.168.1.80:8080/";
+	private static final String BASE_URL = "http://sd-44145.dedibox.fr:8090";
 	
 	public String load() {
 		try {
