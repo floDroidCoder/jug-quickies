@@ -135,6 +135,16 @@ public class QuickyController {
 		return DETAIL_PAGE;
 	}
 
+	@RequestMapping(value = "/quicky/rest/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	@ResponseStatus(value = HttpStatus.OK)
+	/**
+	 *	Used by Android app ! 
+	 */
+	public Quicky getQuicky(@PathVariable BigInteger id, Model model, Principal principal) {
+		return quickyRepository.findOne(id);
+	}
+
 	// ************************************************************************
 	// Create
 	// ************************************************************************
