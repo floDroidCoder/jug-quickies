@@ -61,7 +61,14 @@ public class UsergroupController {
 	// ************************************************************************
 
 	@RequestMapping(value = "/usergroup/create", method = RequestMethod.GET)
-	public String create(Model model) {
+	public String create(Model model, Principal principal) throws UnauthorizedActionException {
+		if (principal == null) {
+			throw new UnauthorizedActionException();
+		}
+		User currentUser = userRepository.findByEmail(principal.getName());
+		if (currentUser == null || !"ADMIN_ROLE".equals(currentUser.getRole())) {
+			throw new UnauthorizedActionException();
+		}
 		UsergroupDTO usergroupDTO = new UsergroupDTO();
 		model.addAttribute("usergroup", usergroupDTO);
 		return USERGROUP_EDIT_PAGE;
@@ -69,9 +76,16 @@ public class UsergroupController {
 
 	@RequestMapping(value = "/usergroup/create", method = RequestMethod.POST)
 	public String submit(@Valid @ModelAttribute("usergroup") UsergroupDTO usergroupDTO, BindingResult result,
-	            Principal principal, Model model) {
+	            Principal principal, Model model) throws UnauthorizedActionException {
 		if (result.hasErrors()) {
 			return USERGROUP_EDIT_PAGE;
+		}
+		if (principal == null) {
+			throw new UnauthorizedActionException();
+		}
+		User currentUser = userRepository.findByEmail(principal.getName());
+		if (currentUser == null || !"ADMIN_ROLE".equals(currentUser.getRole())) {
+			throw new UnauthorizedActionException();
 		}
 
 		Usergroup usergroup = usergroupDTO.toUsergroup();
@@ -94,6 +108,10 @@ public class UsergroupController {
 		if (principal == null) {
 			throw new UnauthorizedActionException();
 		}
+		User currentUser = userRepository.findByEmail(principal.getName());
+		if (currentUser == null || !"ADMIN_ROLE".equals(currentUser.getRole())) {
+			throw new UnauthorizedActionException();
+		}
 		Usergroup usergroup = usergroupRepository.findOne(id);
 		model.addAttribute("usergroup", new UsergroupDTO(usergroup));
 		return USERGROUP_EDIT_PAGE;
@@ -103,6 +121,10 @@ public class UsergroupController {
 	public String update(@Valid @ModelAttribute("usergroup") UsergroupDTO usergroupDTO, @PathVariable BigInteger id,
 	            BindingResult result, Model model, Principal principal) throws Exception {
 		if (principal == null) {
+			throw new UnauthorizedActionException();
+		}
+		User currentUser = userRepository.findByEmail(principal.getName());
+		if (currentUser == null || !"ADMIN_ROLE".equals(currentUser.getRole())) {
 			throw new UnauthorizedActionException();
 		}
 		if (result.hasErrors()) {
@@ -121,7 +143,14 @@ public class UsergroupController {
 	// ************************************************************************
 
 	@RequestMapping(value = "/usergroup/{id}/delete", method = RequestMethod.GET)
-	public String deleteUsergroup(@PathVariable BigInteger id) {
+	public String deleteUsergroup(@PathVariable BigInteger id, Principal principal) throws UnauthorizedActionException {
+		if (principal == null) {
+			throw new UnauthorizedActionException();
+		}
+		User currentUser = userRepository.findByEmail(principal.getName());
+		if (currentUser == null || !"ADMIN_ROLE".equals(currentUser.getRole())) {
+			throw new UnauthorizedActionException();
+		}
 		usergroupRepository.delete(id);
 
 		return "redirect:/admin";

@@ -77,8 +77,27 @@ public class UsergroupControllerTest extends AbstractControllerTest {
 	// ************************************************************************
 
 	@Test
-	public void newUsergroup() throws Exception {
+	public void newUsergroupAsGuest() throws Exception {
+		String url = "/usergroup/create";
+		MockHttpServletRequestBuilder request = prepareNonSecureRequest(get(url));
+		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
+		result.andExpect(view().name("errors/unauthorized"));
+	}
+	
+	@Test
+	public void newUsergroupAsUser() throws Exception {
 		connectUser();
+		String url = "/usergroup/create";
+		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
+		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
+		result.andExpect(view().name("errors/unauthorized"));
+	}
+
+	@Test
+	public void newUsergroupAsAdmin() throws Exception {
+		connectAdmin();
 		String url = "/usergroup/create";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url));
 		ResultActions result = executeRequest(request);
@@ -87,8 +106,37 @@ public class UsergroupControllerTest extends AbstractControllerTest {
 	}
 
 	@Test
-	public void createUsergroup() throws Exception {
+	public void createUsergroupAsGuest() throws Exception {
+		String url = "/usergroup/create";
+		MockHttpServletRequestBuilder request = prepareNonSecureRequest(post(url).//
+		            contentType(MediaType.APPLICATION_FORM_URLENCODED).//
+		            param("name", "name"));
+
+		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
+		result.andExpect(view().name("errors/unauthorized"));
+	}
+
+	@Test
+	public void createUsergroupAsUser() throws Exception {
 		connectUser();
+		String url = "/usergroup/create";
+		UsergroupDTO toCreate = new UsergroupDTO();
+		toCreate.setCreatorId("1010101");
+		toCreate.setName("usergroup");
+
+		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url).//
+		            contentType(MediaType.APPLICATION_FORM_URLENCODED).//
+		            param("name", toCreate.getName()));
+
+		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
+		result.andExpect(view().name("errors/unauthorized"));
+	}
+
+	@Test
+	public void createUsergroupAsAdmin() throws Exception {
+		connectAdmin();
 		String url = "/usergroup/create";
 		UsergroupDTO toCreate = new UsergroupDTO();
 		toCreate.setCreatorId("1010101");
@@ -108,8 +156,27 @@ public class UsergroupControllerTest extends AbstractControllerTest {
 	// ************************************************************************
 
 	@Test
-	public void editUsergroup() throws Exception {
+	public void editUsergroupAsGuest() throws Exception {
+		String url = "/usergroup/{0}/edit";
+		MockHttpServletRequestBuilder request = prepareNonSecureRequest(get(url, usergroup.getId()));
+		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
+		result.andExpect(view().name("errors/unauthorized"));
+	}
+
+	@Test
+	public void editUsergroupAsUser() throws Exception {
 		connectUser();
+		String url = "/usergroup/{0}/edit";
+		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, usergroup.getId()));
+		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
+		result.andExpect(view().name("errors/unauthorized"));
+	}
+
+	@Test
+	public void editUsergroupAsAdmin() throws Exception {
+		connectAdmin();
 		String url = "/usergroup/{0}/edit";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, usergroup.getId()));
 		ResultActions result = executeRequest(request);
@@ -119,8 +186,31 @@ public class UsergroupControllerTest extends AbstractControllerTest {
 	}
 
 	@Test
-	public void updateUsergroup() throws Exception {
+	public void updateUsergroupAsGuest() throws Exception {
+		String url = "/usergroup/{0}/edit";
+		MockHttpServletRequestBuilder request = prepareNonSecureRequest(post(url, usergroup.getId()).//
+		            contentType(MediaType.APPLICATION_FORM_URLENCODED).//
+		            param("name", usergroup.getName()));
+		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
+		result.andExpect(view().name("errors/unauthorized"));
+	}
+
+	@Test
+	public void updateUsergroupAsUser() throws Exception {
 		connectUser();
+		String url = "/usergroup/{0}/edit";
+		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, usergroup.getId()).//
+		            contentType(MediaType.APPLICATION_FORM_URLENCODED).//
+		            param("name", usergroup.getName()));
+		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
+		result.andExpect(view().name("errors/unauthorized"));
+	}
+
+	@Test
+	public void updateUsergroupAsAdmin() throws Exception {
+		connectAdmin();
 		String url = "/usergroup/{0}/edit";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(post(url, usergroup.getId()).//
 		            contentType(MediaType.APPLICATION_FORM_URLENCODED).//
@@ -135,8 +225,18 @@ public class UsergroupControllerTest extends AbstractControllerTest {
 	// ************************************************************************
 
 	@Test
-	public void deleteUsergroup() throws Exception {
+	public void deleteUsergroupAsUser() throws Exception {
 		connectUser();
+		String url = "/usergroup/{0}/delete";
+		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, usergroup.getId()));
+		ResultActions result = executeRequest(request);
+		result.andExpect(status().isOk());
+		result.andExpect(view().name("errors/unauthorized"));
+	}
+	
+	@Test
+	public void deleteUsergroup() throws Exception {
+		connectAdmin();
 		String url = "/usergroup/{0}/delete";
 		MockHttpServletRequestBuilder request = prepareSecureRequest(get(url, usergroup.getId()));
 		ResultActions result = executeRequest(request);

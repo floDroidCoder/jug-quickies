@@ -12,8 +12,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @Document(collection = "jug_user")
 public class User extends Entity {
 
-	public static final String ROLE_USER = "ROLE_USER";
-	public static final String ROLE_ADMIN = "ROLE_ADMIN";
+	public static final String ROLE_USER = "USER_ROLE";
+	public static final String ROLE_ADMIN = "ADMIN_ROLE";
 
 	private String lastname, firstname, email, role, shamefulTechnologie, company, password, about;
 

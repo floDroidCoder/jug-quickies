@@ -59,7 +59,7 @@ public abstract class AbstractControllerTest {
 		anotherUser = new User("fake@email.com", "tOnFrèrEN1Qu3deSChÉvr£s", "USER_ROLE");
 		userRepository.save(anotherUser);
 		
-		admin = new User("florian@genaudet.com", "T@MèreB4iseDesDroMadAires", "USER_ADMIN");
+		admin = new User("florian@genaudet.com", "T@MèreB4iseDesDroMadAires", "ADMIN_ROLE");
 		userRepository.save(admin);
 	}
 	
