@@ -141,8 +141,12 @@ public class QuickyController {
 	/**
 	 *	Used by Android app ! 
 	 */
-	public Quicky getQuicky(@PathVariable BigInteger id, Model model, Principal principal) {
-		return quickyRepository.findOne(id);
+	public QuickyDTO getQuicky(@PathVariable BigInteger id, Model model, Principal principal) {
+		Quicky quicky = quickyRepository.findOne(id);
+		if (quicky != null) {
+			return new QuickyDTO(quicky);
+		}
+		return null;
 	}
 
 	// ************************************************************************
